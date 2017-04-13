@@ -1,0 +1,80 @@
+<!-- HEADER -->
+<div class="row">
+
+</div>
+
+<!-- TITLE -->
+<div class="row">
+    <div class="eleven columns">
+        <h1>Test Report: NET</h1>
+    </div>
+</div>
+
+<!-- BODY -->
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Stories and Tasks</th>
+                    <td>{{issues.length}}</td>
+                    <td>???</td>
+                </tr>
+                <tr>
+                    <th>Bugs</th>
+                    <td>???</td>
+                    <td>???</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <ul>
+        {{#each issues}}
+            <li>
+                {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key fields.summary}}}
+                {{#if fields.issuelinks.length}}
+                    <ul>
+                        {{#each fields.issuelinks}}
+                            {{#if this.outwardIssue}}
+                                <li>
+                                    {{this.type.outward}} {{{buglabel this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                </li>
+                            {{/if}}
+                            {{#if this.inwardIssue}}
+                                <li>
+                                    {{this.type.inward}} {{{buglabel this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                </li>
+                            {{/if}}
+                        {{/each}}
+                    </ul>
+                {{else}}
+                    <ul>
+                        <li>no related issues</li>
+                    </ul>
+                {{/if}}
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+</div>
