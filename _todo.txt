@@ -1,0 +1,41 @@
+This is a list of functionality for the barebones version
+
++=====================================================================+
+Pages required: 2
+
+1st page loads:
+    Api call to JIRA for projects
+    Api call to TestRail for projects
+    object to create:
+        {projects: [
+            {
+                jiraname: aaaa,
+                jiraid: 112233,
+                testrailid: 123
+            }, ...
+        ]}
+    Render
+        populate a selector with the projects
+        ok button right next to it
+        ? all other elements hidden
+
+        after selecting a project and clicking ok:
+        ajax call to get test runs
+
+        Button to init loading the next page (2nd)
+            url params need to include the project's name and id
+            /?pname=NET&pid=112233
+    
+2nd page loads
+    Api call to JIRA for project related Stories and Tasks (should include the related issues as well)
+        object to create, pretty much just use the response object
+    Api call to JIRA for project related Bugs
+        object to create, pretty much just use the response object
+    Api call to TestRail for test plan
+    Render
+        Graph: 
+
+possible issues that need to be tackled:
+    JIRA api constraint that only max 50 issues will be sent in 1 response, what if we have more
+
++=====================================================================+
