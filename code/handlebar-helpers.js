@@ -1,5 +1,15 @@
 
 module.exports = {
+    debug: (optionalValue)=>{
+        console.log("Current Context");
+        console.log("====================");
+        console.log(this);
+        if (optionalValue) {
+            console.log("Value");
+            console.log("====================");
+            console.log(optionalValue);
+        }
+    },
     jiralabel: (icon, type, key, summary)=>{
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
         
