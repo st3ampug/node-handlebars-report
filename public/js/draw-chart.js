@@ -1,4 +1,5 @@
-
+var data = '{{JSON.stringify(issues)}}';
+console.log(data);
 var ctx = document.getElementById("myChart").getContext("2d");
 ctx.canvas.width = 300;
 ctx.canvas.height = 300;
