@@ -1,16 +1,3 @@
-const ACCESS = {
-    urls: {
-        iraurl: "https://waracle.atlassian.net/rest/api/2",
-        testrailurl: "https://waracle.testrail.com/index.php?/api/v2"
-    },
-    login: {
-        jirauser: "b.polgar@waracle.com",
-        jirapass: "Bb041204",
-        testrailuser: "test.account@waracle.com",
-        testrailpass: "Waracle2017"
-    }
-}
-
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
