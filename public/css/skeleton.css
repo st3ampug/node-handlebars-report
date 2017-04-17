@@ -25,32 +25,6 @@
 - Media Queries
 */
 
-/* Custom
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-#logo { 
-    display: block; 
-    float: left; 
-    margin: 15px 0; 
-    padding: 0;
-    width: 10px; /* portion of the image you wish to display */
-    height: 10px; /* portion of the image you wish to display */
-    overflow: hidden; /* hide the rest of the image */
-}
-#logo img {
-    width: 16px; 
-    height: 16px; /* you'll see this is 2x the height of the viewed image */
-    padding: 0; 
-    margin: 0;
-}
-#logo a { 
-    display: block; 
-    float: left; 
-    margin: 0; 
-    padding: 0; 
-}
-#logo a:hover { 
-    margin-top: -50px; /* move up to show the over portion of the image */
-}
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

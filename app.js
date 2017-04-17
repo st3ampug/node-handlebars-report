@@ -103,6 +103,19 @@ app.get('/test', function (req, res) {
     }
 });
 
+app.get('/spinner', function (req, res) {
+    res.render(
+        'spinner');
+
+    // this part will create an object out of the query string
+    if (req.url.indexOf('?') >= 0) {
+        qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
+
+        // do stuff
+        console.log(qparams);
+    }
+});
+
 app.listen(3000);
 
 
@@ -123,8 +136,25 @@ function basicAuth(u, p) {
 }
 
 function mergeObjects(o1, o2) {
-    return {
-        jira: o1,
-        testrail: o2
-    };
+    var retobj = [];
+    for(var i = 0; i < o1.length; i++) {
+        var tmp = {};
+        
+        tmp.jiraid = o1[i].id;
+        tmp.jiraname = o1[i].name;
+        tmp.jirakey = o1[i].key;
+        tmp.testrailname = "";
+        tmp.testrailid = "";
+        
+        for(var j = 0; j < o2.length; j++) {
+            if(o1[i].name == o2[j].name) {
+                tmp.testrailname = o2[j].name;
+                tmp.testrailid = o2[j].id;
+            }
+        }
+        console.log(tmp);
+        retobj.push(tmp);
+    }
+    
+    return retobj;
 }

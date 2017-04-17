@@ -20,17 +20,36 @@
     </div>
     <div class="nine columns">
         <h3>JIRA projects</h3>
-        {{debug context}}
-        {{#each context.jira}}
-            <p>{{this.key}}: {{this.name}}</p>
-        {{/each}}
-        <h3>TestRail projects</h3>
-        {{#each context.testrail}}
-            <p>{{id}}: {{name}}</p>
-        {{/each}}
+        <select id="projectselect" size=10 autocomplete="off">
+            {{#each context}}
+                <option id="projectoption" value="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
+                    testrailid="{{this.testrailid}}" testrailname="{{this.testrailname}}">{{this.jirakey}}: {{this.jiraname}}</option>
+            {{/each}}
+        </select>
+        <table id="projecttable" class="u-full-width">
+            <thead>
+                <tr>
+                    <th>TESTRAILID</th>
+                    <th>JIRAID</th>
+                    <th>JIRAKEY</th>
+                    <th>NAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context}}
+                <tr id="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
+                    testrailid="{{this.testrailid}}" testrailname="{{this.testrailname}}">
+                    <td>{{this.testrailid}}</td>
+                    <td>{{this.jiraid}}</td>
+                    <td>{{this.jirakey}}</td>
+                    <td>{{this.jiraname}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     <div class="one column">
-        <button id="submitproject">OK</button>
+        <button id="projectsubmit">OK</button>
     </div> 
     <div class="one column">
         &nbsp;
@@ -56,3 +75,7 @@
 <div class="row">
     
 </div>
+
+<!-- ++++++++++++++++++++++++++ SCRIPTS ++++++++++++++++++++++++++ -->
+<script src="js/events-globals.js"></script>
+<script src="js/events-home.js"></script>
