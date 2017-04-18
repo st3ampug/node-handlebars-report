@@ -4,6 +4,13 @@ const PROJECTOPTIONID = "projectoption";
 const PROJECTSUBMITID = "projectsubmit";
 const PROJECTSELECTID = "projectselect";
 const PROJECTTABLEID = "projecttable";
+const PROJECTROWCLASS = "projectrow";
+const PROJECTSELECTIONID = "projectselection";
+const PROJECTCOLLAPSEID = "project-collapse";
+const PROJECTEXPANDID = "project-expand";
+const PROJECTCOLLAPSEDID = "projectbody-collapsed";
+const PROJECTEXPANDEDID = "projectbody-expanded";
+
 const JIRAKEYATTR = "jirakey";
 const JIRANAMEATTR = "jiraname";
 const JIRAIDATTR = "jiraid";
@@ -12,8 +19,13 @@ const TESTRAILNAMEATTR = "testrailname";
 const SELECTED          = "selected";
 const NOTSELECTED       = "no";
 
+const PROJECTSELECTTEXT = "Selected: ";
+
 var projecttable = document.getElementById(PROJECTTABLEID);
 var projectsubmit = document.getElementById(PROJECTSUBMITID);
+var projectrows = document.getElementsByClassName(PROJECTROWCLASS);
+var projectcollapse = document.getElementById(PROJECTCOLLAPSEID);
+var projectexpand = document.getElementById(PROJECTEXPANDID);
 
 // =====================================================================================
 
@@ -22,12 +34,31 @@ var projectsubmit = document.getElementById(PROJECTSUBMITID);
 window.addEventListener('load', function(){
     console.log("onload");
 
+    // INIT
+    var projectobj = {
+        jiraid: "",
+        jirakey: "",
+        jiraname: "",
+        testrailid: "",
+        testrailname: ""
+    };
+
+    // set div visibility on load
+    $("#" + PROJECTCOLLAPSEDID).hide();
+
+
+
+
+    // LISTENERS
+
     projecttable.addEventListener("click", function(ev) {
         console.log(ev.currentTarget);
 
         if(ev.target.tagName.toLowerCase() == "td") {
             console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
+
             highlightRow(ev.target.parentNode.id);
+            selectProject(ev.target.parentNode.id, projectobj);
         }
         if(ev.target.tagName.toLowerCase() == "tr") {
             console.log(ev.target.id);
@@ -44,6 +75,13 @@ window.addEventListener('load', function(){
         
     });
 
+    projectcollapse.addEventListener("click", function(ev) {
+        changeCollapseState(PROJECTEXPANDEDID, PROJECTCOLLAPSEDID);
+    });
+    projectexpand.addEventListener("click", function(ev) {
+        changeCollapseState(PROJECTCOLLAPSEDID, PROJECTEXPANDEDID);
+    });
+
     
 });
 
@@ -53,17 +91,39 @@ window.addEventListener('load', function(){
 
 function highlightRow(id) {
     var row = document.getElementById(id);
-    if(row.getAttribute(SELECTED) != SELECTED)
-        row.setAttribute(SELECTED, SELECTED);
-    else
-        row.setAttribute(SELECTED, NOTSELECTED);
+
+    for(var i = 0; i < projectrows.length; i++) {
+        projectrows[i].setAttribute(SELECTED, NOTSELECTED);
+    }
+    row.setAttribute(SELECTED, SELECTED);
+
+    // var row = document.getElementById(id);
+    // if(row.getAttribute(SELECTED) != SELECTED)
+    //     row.setAttribute(SELECTED, SELECTED);
+    // else
+    //     row.setAttribute(SELECTED, NOTSELECTED);
+}
+
+function changeCollapseState(tocollapseID, toexpandID) {
+    $("#" + toexpandID).show("slow");
+    $("#" + tocollapseID).hide();
+}
+
+function selectProject(trID, objtochange) {
+    $("#" + PROJECTSELECTIONID).text( PROJECTSELECTTEXT + $("#" + trID).attr("jiraname") );
+
+    objtochange.jiraid = $("#" + trID).attr("jiraid");
+    objtochange.jirakey = $("#" + trID).attr("id");
+    objtochange.jiraname = $("#" + trID).attr("jiraname");
+    objtochange.testrailid = $("#" + trID).attr("testrailid");
+    objtochange.testrailname = $("#" + trID).attr("testrailname");
 }
 
 
 
 
 
-
+// old code stuff!!
 
 function loginCookieValidate() {
     if(loginCookiePresent()) {

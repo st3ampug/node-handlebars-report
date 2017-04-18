@@ -32,3 +32,17 @@
 tr[selected='selected'] {
   background-color: orange;
 }
+
+#projectbody-collapsed {
+    visibility: visible;
+}
+
+#projectbody-expanded {
+    visibility: visible;
+}
+
+#project-expand, #project-collapse, .hidden-msg, .textalign-middle {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 58px;
+}

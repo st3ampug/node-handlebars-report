@@ -6,7 +6,7 @@
 
 <!-- =========================== TITLE =========================== -->
 <div class="row">
-    <div class="eleven columns">
+    <div class="twelve columns">
         <h1>Config</h1>
     </div>
 </div>
@@ -14,18 +14,24 @@
 <!-- =========================== BODY  =========================== -->
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
 
-<div class="row">
-    <div class="one column">
-        &nbsp;
-    </div>
-    <div class="nine columns">
+<div class="row" id="projectheader">
+    <div class="six columns">
         <h3>JIRA projects</h3>
-        <select id="projectselect" size=10 autocomplete="off">
-            {{#each context}}
-                <option id="projectoption" value="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
-                    testrailid="{{this.testrailid}}" testrailname="{{this.testrailname}}">{{this.jirakey}}: {{this.jiraname}}</option>
-            {{/each}}
-        </select>
+    </div>
+    <div class="six columns">
+        <h4 id="projectselection">Selected: n/a</h4>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 2 and 3 +++++++++++++++++++++++ -->
+
+<div class="row" id="projectbody-expanded">
+    <div class="one column">
+        <div id="project-collapse">
+            [ - ]
+        </div>
+    </div>
+    <div class="eight columns">
         <table id="projecttable" class="u-full-width">
             <thead>
                 <tr>
@@ -37,7 +43,7 @@
             </thead>
             <tbody>
                 {{#each context}}
-                <tr id="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
+                <tr class="projectrow" id="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
                     testrailid="{{this.testrailid}}" testrailname="{{this.testrailname}}">
                     <td>{{this.testrailid}}</td>
                     <td>{{this.jiraid}}</td>
@@ -48,29 +54,34 @@
             </tbody>
         </table>
     </div>
-    <div class="one column">
-        <button id="projectsubmit">OK</button>
+    <div class="one column textalign-middle">
+        <button id="projectsubmit">Submit</button>
     </div> 
-    <div class="one column">
-        &nbsp;
-    </div> 
-</div>
-
-<!-- +++++++++++++++++++++++++++ ROW 2 +++++++++++++++++++++++++++ -->
-
-<div class="row">
-    <div class="one column">
-        &nbsp;
-    </div>
-    <div class="ten columns">
-        
-    </div>
-    <div class="one column">
+    <div class="two columns">
         &nbsp;
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
+<!-- +++++ -->
+
+<div class="row" id="projectbody-collapsed">
+    <div class="one column">
+        <div id="project-expand">
+            [ + ]
+        </div>
+    </div>
+    <div class="two columns">
+        <h6 class="hidden-msg">projects hidden</h6>
+    </div>
+    <div class="seven columns">
+        <hr>
+    </div>
+     <div class="two columns">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
 
 <div class="row">
     
