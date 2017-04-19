@@ -18,7 +18,7 @@
 </div>
 <div class="row">
     <div class="twelve columns">
-        <table id="storiestable">
+        <table id="storiestable" rowscount="{{context.stories.length}}">
             <thead>
                 <tr>
                     <th>ISSUETYPE</th>
@@ -58,7 +58,7 @@
 </div>
 <div class="row">
     <div class="twelve columns">
-        <table id="taskstable">
+        <table id="taskstable" rowscount="{{context.tasks.length}}">
             <thead>
                 <tr>
                     <th>ISSUETYPE</th>
@@ -91,14 +91,14 @@
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++ ROWS 3 ++++++++++++++++++++++++++ -->
 
 <div class="row">
     <h4>JIRA Bugs</h4>
 </div>
 <div class="row">
     <div class="twelve columns">
-        <table id="bugstable">
+        <table id="bugstable" rowscount="{{context.bugs.length}}">
             <thead>
                 <tr>
                     <th>ISSUETYPE</th>
@@ -131,30 +131,65 @@
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++ ROWS 4 ++++++++++++++++++++++++++ -->
 
 <div class="row">
     <h4>TestRail Plans</h4>
-    <hr>
+</div>
+<div class="row">
     <div class="twelve columns">
-        <ol>
-        {{#each context.testplans}}
-            <li>{{this.name}}</li>
-        {{/each}}
-        </ol>
+        <table id="testplanstable" rowscount="{{context.testplans.length}}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PASSED</th>
+                    <th>BLOCKED</th>
+                    <th>UNTESTED</th>
+                    <th>RETEST</th>
+                    <th>FAILED</th>
+                    <th>RUNS SUM</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.testplans}}
+                <tr class="testplanrow" id="{{this.id}}">
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.passed_count}}</td>
+                    <td>{{this.blocked_count}}</td>
+                    <td>{{this.untested_count}}</td>
+                    <td>{{this.retest_count}}</td>
+                    <td>{{this.failed_count}}</td>
+                    <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="myselection">
+        <div class="two columns">
+            <h5>Selected:</h5>
+        </div>
+        <div class="ten columns">
+            <div id="selectedtestplans"></div>
+        </div>
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 5 +++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++ ROWS 5 ++++++++++++++++++++++++++ -->
 
 <div class="row">
     <h4>TestRail Runs</h4>
 </div>
 <div class="row">
     <div class="twelve columns">
-        <table id="testrunstable">
+        <table id="testrunstable" rowscount="{{context.testruns.length}}">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>NAME</th>
                     <th>PASSED</th>
                     <th>BLOCKED</th>
@@ -166,7 +201,8 @@
             </thead>
             <tbody>
                 {{#each context.testruns}}
-                <tr class="testrunrow" id="{{this.key}}">
+                <tr class="testrunrow" id="{{this.id}}">
+                    <td>{{this.id}}</td>
                     <td>{{this.name}}</td>
                     <td>{{this.passed_count}}</td>
                     <td>{{this.blocked_count}}</td>
@@ -188,6 +224,20 @@
         <div class="ten columns">
             <div id="selectedtestruns"></div>
         </div>
+    </div>
+</div>
+
+<!-- ++++++++++++++++++++++++ ROWS LAST ++++++++++++++++++++++++++ -->
+
+<div class="row last-row">
+    <div class="three columns">
+        &nbsp;
+    </div>
+    <div class="six columns textalign-middle">
+        <button class="button-primary" id="selecitonsubmit">Submit Selection</button>
+    </div>
+    <div class="three columns">
+        &nbsp;
     </div>
 </div>
 

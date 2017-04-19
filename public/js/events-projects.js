@@ -1,31 +1,32 @@
 // Variables ===========================================================================
 
-const PROJECTOPTIONID = "projectoption";
-const PROJECTSUBMITID = "projectsubmit";
-const PROJECTSELECTID = "projectselect";
-const PROJECTTABLEID = "projecttable";
-const PROJECTROWCLASS = "projectrow";
-const PROJECTSELECTIONID = "projectselection";
-const PROJECTCOLLAPSEID = "project-collapse";
-const PROJECTEXPANDID = "project-expand";
-const PROJECTCOLLAPSEDID = "projectbody-collapsed";
-const PROJECTEXPANDEDID = "projectbody-expanded";
+const JIRASELECTIONID = "jiraselection";
+const TESTRAILSELECTIONID = "testrailselection";
+const JIRAPROJECTTABLEID = "jiraprojecttable";
+const JIRAPROJECTROWCLASS = "j-projectrow";
+const TESTRAILROJECTTABLEID = "testrailprojecttable";
+const TESTRAILPROJECTROWCLASS = "tr-projectrow";
+const SELECTIONSUBMITID = "selecitonsubmit";
 
-const JIRAKEYATTR = "jirakey";
+const JIRAKEYATTR = "id";
 const JIRANAMEATTR = "jiraname";
-const JIRAIDATTR = "jiraid";
-const TESTRAILIDATTR = "testrailid";
+const TESTRAILIDATTR = "id";
 const TESTRAILNAMEATTR = "testrailname";
 const SELECTED          = "selected";
 const NOTSELECTED       = "no";
 
 const PROJECTSELECTTEXT = "Selected: ";
 
-var projecttable = document.getElementById(PROJECTTABLEID);
-var projectsubmit = document.getElementById(PROJECTSUBMITID);
-var projectrows = document.getElementsByClassName(PROJECTROWCLASS);
-var projectcollapse = document.getElementById(PROJECTCOLLAPSEID);
-var projectexpand = document.getElementById(PROJECTEXPANDID);
+var jiraprojecttable = document.getElementById(JIRAPROJECTTABLEID);
+var jiraprojectrows = document.getElementsByClassName(JIRAPROJECTROWCLASS);
+var testrailprojecttable = document.getElementById(TESTRAILROJECTTABLEID);
+var testrailprojectrows = document.getElementsByClassName(TESTRAILPROJECTROWCLASS);
+var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
+
+var selections = {
+    jiraselection: "",
+    testrailselection: ""
+}
 
 // =====================================================================================
 
@@ -35,63 +36,24 @@ window.addEventListener('load', function(){
     console.log("onload");
 
     // INIT =============================================
-    var projectobj = {
-        jiraid: "",
-        jirakey: "",
-        jiraname: "",
-        testrailid: "",
-        testrailname: ""
-    };
-
-    // element states ===================================
-    if(typeof getUrlParameter("p") == 'undefined') {
-        // project parameter is NOT set in the url
-
-        $("#" + PROJECTCOLLAPSEDID).hide();
-        buttonDisabledSkeleton(PROJECTSUBMITID);
-    } else {
-        // project parameter is SET in the url
-
-        highlightRow(getUrlParameter("p"));
-        selectProject(getUrlParameter("p"), projectobj);
-
-        $("#" + PROJECTEXPANDEDID).hide();
-        buttonDisabledSkeleton(PROJECTSUBMITID);
-    }
+    initDataTableCustom(JIRAPROJECTTABLEID, 500);
+    initDataTableCustom(TESTRAILROJECTTABLEID, 500);
+    buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // LISTENERS =======================================
-    projecttable.addEventListener("click", function(ev) {
-        console.log(ev.currentTarget);
-
-        if(ev.target.tagName.toLowerCase() == "td") {
-            console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
-
-            highlightRow(ev.target.parentNode.id);
-            selectProject(ev.target.parentNode.id, projectobj);
-        }
-        if(ev.target.tagName.toLowerCase() == "tr") {
-            console.log(ev.target.id);
-        }
+    jiraprojecttable.addEventListener("click", function(ev) {
+        tableEventListener(ev, JIRASELECTIONID, jiraprojectrows, "jiraname", selections.jiraselection);
     });
 
-    projectsubmit.addEventListener("click", function(ev) {
-        console.log(PROJECTSUBMITID);
+    testrailprojecttable.addEventListener("click", function(ev) {
+        tableEventListener(ev, TESTRAILSELECTIONID, testrailprojectrows, "testrailname", selections.testrailselection);
+    });
 
-        // take the id's from the selected row and make the appropriate ajax api calls
-        // to determine what elements should be shown
-        // need story list (response should have related issues), tasks list (...), bug list
-        // from JIRA and test plans and runs from testrail (need to think about how to aggregate these)
-        
+    selectionsubmit.addEventListener("click", function(ev) {
+
         buttonDisabledSkeleton(PROJECTSUBMITID);
-        submitProjectInfo(projectobj);
+        submitProjectInfo(selections.jiraselection, selections.testrailselection);
         
-    });
-
-    projectcollapse.addEventListener("click", function(ev) {
-        changeCollapseState(PROJECTEXPANDEDID, PROJECTCOLLAPSEDID);
-    });
-    projectexpand.addEventListener("click", function(ev) {
-        changeCollapseState(PROJECTCOLLAPSEDID, PROJECTEXPANDEDID);
     });
 
     
@@ -101,7 +63,7 @@ window.addEventListener('load', function(){
 
 // Helpers =============================================================================
 
-function highlightRow(id) {
+function highlightRow(id, projectrows) {
     var row = document.getElementById(id);
 
     for(var i = 0; i < projectrows.length; i++) {
@@ -109,35 +71,64 @@ function highlightRow(id) {
     }
     row.setAttribute(SELECTED, SELECTED);
 
-    // var row = document.getElementById(id);
-    // if(row.getAttribute(SELECTED) != SELECTED)
-    //     row.setAttribute(SELECTED, SELECTED);
-    // else
-    //     row.setAttribute(SELECTED, NOTSELECTED);
 }
+
+// wow this mess needs to be straightened out!
+
+function displaySelection(selectionID, trID, attr, selectioncontainer) {
+    $("#" + selectionID).text( PROJECTSELECTTEXT + $("#" + trID).attr(attr) );
+    amendSelection(selectioncontainer, $("#" + trID).attr(attr))
+}
+
+function submitProjectInfo(jirakey, testrailid) {
+    var urls = window.location.href.split('?');
+
+    if(urls.length > 0 )
+        window.location.replace(urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid);
+}
+
+function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectionstring) {
+    console.log(ev.currentTarget);
+
+    if(ev.target.tagName.toLowerCase() == "td") {
+        console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
+
+        highlightRow(ev.target.parentNode.id, projectrows);
+        displaySelection(selectedcontainerid, ev.target.parentNode.id, attr, selections.jiraselection);
+    }
+    if(ev.target.tagName.toLowerCase() == "tr") {
+        console.log(ev.target.id);
+    }
+
+    checkSelectionStrings();
+}
+
+function amendSelection(container, selection) {
+    container = selection;
+}
+
+function checkSelectionStrings() {
+    console.log(selections.jiraselection);
+    console.log(selections.testrailselection);
+
+    if(
+        selections.jiraselection != "" &&
+        selections.testrailselection != ""
+    ) {
+        buttonEnabledSkeleton(SELECTIONSUBMITID);
+    }
+}
+
+
+
+
+
+
+// old code stuff!!
 
 function changeCollapseState(tocollapseID, toexpandID) {
     $("#" + toexpandID).show("slow");
     $("#" + tocollapseID).hide();
-}
-
-function selectProject(trID, objtochange) {
-    $("#" + PROJECTSELECTIONID).text( PROJECTSELECTTEXT + $("#" + trID).attr("jiraname") );
-
-    objtochange.jiraid = $("#" + trID).attr("jiraid");
-    objtochange.jirakey = $("#" + trID).attr("id");
-    objtochange.jiraname = $("#" + trID).attr("jiraname");
-    objtochange.testrailid = $("#" + trID).attr("testrailid");
-    objtochange.testrailname = $("#" + trID).attr("testrailname");
-
-    buttonEnabledSkeleton(PROJECTSUBMITID);
-}
-
-function submitProjectInfo(projobj) {
-    var urls = window.location.href.split('?');
-
-    if(urls.length > 0 )
-        window.location.replace(urls[0] + "?jkey=" + projobj.jirakey + "&tid=" + projobj.testrailid);
 }
 
 function getUrlParameter(sParam) {
@@ -155,10 +146,7 @@ function getUrlParameter(sParam) {
     }
 }
 
-
-
-
-// old code stuff!!
+// very old
 
 function loginCookieValidate() {
     if(loginCookiePresent()) {

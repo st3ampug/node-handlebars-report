@@ -14,84 +14,83 @@
 <!-- =========================== BODY  =========================== -->
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
 
-<div class="row" id="projectheader">
-    <div class="six columns">
-        <h3>JIRA projects</h3>
+<div class="row" id="j-projectheader">
+    <div class="five columns">
+        <h4>JIRA project</h3>
     </div>
-    <div class="six columns">
-        <h4 id="projectselection">Selected: n/a</h4>
+    <div class="seven columns">
+        <h4 id="jiraselection">Selected: n/a</h4>
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 2 and 3 +++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++ ROW 2 ++++++++++++++++++++++++++ -->
 
-<div class="row" id="projectbody-expanded">
-    <div class="one column">
-        <div id="project-collapse">
-            [ - ]
-        </div>
-    </div>
-    <div class="eight columns">
-        <table id="projecttable" class="u-full-width">
+<div class="row">
+    <div class="twelve columns">
+        <table id="jiraprojecttable" class="u-full-width">
             <thead>
                 <tr>
-                    <th>TESTRAILID</th>
-                    <th>JIRAID</th>
                     <th>JIRAKEY</th>
                     <th>NAME</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each context}}
-                <tr class="projectrow" id="{{this.jirakey}}" jiraname="{{this.jiraname}}" jiraid="{{this.jiraid}}"
-                    testrailid="{{this.testrailid}}" testrailname="{{this.testrailname}}">
-                    <td>{{this.testrailid}}</td>
-                    <td>{{this.jiraid}}</td>
-                    <td>{{this.jirakey}}</td>
-                    <td>{{this.jiraname}}</td>
+                {{#each context.jiraprojects}}
+                <tr class="j-projectrow" id="{{this.key}}" jiraname="{{this.name}}">
+                    <td>{{this.key}}</td>
+                    <td>{{this.name}}</td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
-    <div class="one column textalign-middle">
-        <button class="button-primary" id="projectsubmit">Submit</button>
-    </div> 
-    <div class="two columns">
-        &nbsp;
-    </div>
 </div>
 
-<!-- +++++ -->
+<!-- +++++++++++++++++++++++++++ ROW 3 ++++++++++++++++++++++++++ -->
 
-<div class="row" id="projectbody-collapsed">
-    <div class="one column">
-        <div id="project-expand">
-            [ + ]
-        </div>
-    </div>
-    <div class="two columns">
-        <h6 class="hidden-msg">projects hidden</h6>
+<div class="row" id="tr-projectheader">
+    <div class="five columns">
+        <h4>TestRail projects</h3>
     </div>
     <div class="seven columns">
-        <hr>
-    </div>
-     <div class="two columns">
-        &nbsp;
+        <h4 id="testrailselection">Selected: n/a</h4>
     </div>
 </div>
 
-<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
-
-<script id="story-template" type="text/x-handlebars-template">
-    {{#each storycontext.issues}}
-    <p>{{fields.issuetype.name}} {{key}} {{fields.summary}}</p>
-    {{/each}}
-</script>
+<!-- +++++++++++++++++++++++++++ ROW 4 ++++++++++++++++++++++++++ -->
 
 <div class="row">
     <div class="twelve columns">
-        <div class="story-content-placeholder"></div>
+        <table id="testrailprojecttable" class="u-full-width">
+            <thead>
+                <tr>
+                    <th>TESTRAILID</th>
+                    <th>NAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.testrailprojects}}
+                <tr class="tr-projectrow" id="{{this.id}}" testrailname="{{this.name}}">
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ++++++++++++++++++++++++ ROWS LAST ++++++++++++++++++++++++++ -->
+
+<div class="row last-row">
+    <div class="three columns">
+        &nbsp;
+    </div>
+    <div class="six columns textalign-middle">
+        <button class="button-primary" id="selecitonsubmit">Submit Selection</button>
+    </div>
+    <div class="three columns">
+        &nbsp;
     </div>
 </div>
 

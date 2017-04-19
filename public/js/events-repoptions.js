@@ -9,11 +9,13 @@ const SELECTEDTASKSID = "selectedtasks";
 const BUGSTABLEID = "bugstable";
 const BUGROWCLASS = "bugrow";
 const SELECTEDBUGSID = "selectedbugs";
-// plans missing 
+const TESTPLANSTABLEID = "testplanstable";
+const TESTPLANROWCLASS = "testplanrow";
+const SELECTEDTESTPLANSID = "selectedtestplans";
 const TESTRUNSTABLEID = "testrunstable";
 const TESTRUNROWCLASS = "testrunrow";
 const SELECTEDTESTRUNSID = "selectedtestruns";
-
+const SELECTIONSUBMITID = "selecitonsubmit";
 
 const SELECTED          = "selected";
 const NOTSELECTED       = "no";
@@ -24,7 +26,8 @@ var taskstable = document.getElementById(TASKSTABLEID);
 var taskrows = document.getElementsByClassName(TASKROWCLASS);
 var bugstable = document.getElementById(BUGSTABLEID);
 var bugrows = document.getElementsByClassName(BUGROWCLASS);
-//plans missing
+var testplanstable = document.getElementById(TESTPLANSTABLEID);
+var testplanrows = document.getElementsByClassName(TESTPLANROWCLASS);
 var testrunstable = document.getElementById(TESTRUNSTABLEID);
 var testrunrows = document.getElementsByClassName(TESTRUNROWCLASS);
 
@@ -48,55 +51,31 @@ window.addEventListener('load', function(){
     initDataTableCustom(STORIESTABLEID, 400);
     initDataTableCustom(TASKSTABLEID, 400);
     initDataTableCustom(BUGSTABLEID, 400);
+    initDataTableCustom(TESTPLANSTABLEID, 400);
     initDataTableCustom(TESTRUNSTABLEID, 400);
+
+    buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
     
 
     // LISTENERS =======================================
     storiestable.addEventListener("click", function(ev) {
-        console.log(ev.currentTarget);
-
-        if(ev.target.tagName.toLowerCase() == "td") {
-            console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
-
-            highlightRow(ev.target.parentNode.id);
-            amendSelection(selections.storyselection, ev.target.parentNode.id);
-            displaySelection(SELECTEDSTORIESID, selections.storyselection);
-        }
-        if(ev.target.tagName.toLowerCase() == "tr") {
-            console.log(ev.target.id);
-        }
+        tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection);
     });
 
     taskstable.addEventListener("click", function(ev) {
-        console.log(ev.currentTarget);
-
-        if(ev.target.tagName.toLowerCase() == "td") {
-            console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
-
-            highlightRow(ev.target.parentNode.id);
-            amendSelection(selections.taskselection, ev.target.parentNode.id);
-            displaySelection(SELECTEDTASKSID, selections.taskselection);
-        }
-        if(ev.target.tagName.toLowerCase() == "tr") {
-            console.log(ev.target.id);
-        }
+        tableEventListener(ev, SELECTEDTASKSID, selections.taskselection);
     });
 
     bugstable.addEventListener("click", function(ev) {
-        console.log(ev.currentTarget);
+        tableEventListener(ev, SELECTEDBUGSID, selections.bugselection);
+    });
 
-        if(ev.target.tagName.toLowerCase() == "td") {
-            console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
+    // plans missing
 
-            highlightRow(ev.target.parentNode.id);
-            amendSelection(selections.bugselection, ev.target.parentNode.id);
-            displaySelection(SELECTEDBUGSID, selections.bugselection);
-        }
-        if(ev.target.tagName.toLowerCase() == "tr") {
-            console.log(ev.target.id);
-        }
+    testrunstable.addEventListener("click", function(ev) {
+        tableEventListener(ev, SELECTEDTESTRUNSID, selections.testrunselection);
     });
     
 });
@@ -123,7 +102,6 @@ function amendSelection(container, selection) {
     } else {
         container.push(selection);
     }
-    
 }
 
 function displaySelection(id, container){
@@ -133,6 +111,35 @@ function displaySelection(id, container){
     }
 
     $("#" + id).html(tmp);
+}
+
+function tableEventListener(ev, selectedcontainerid, selectionarray) {
+    console.log(ev.currentTarget);
+
+    if(ev.target.tagName.toLowerCase() == "td") {
+        console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
+
+        highlightRow(ev.target.parentNode.id);
+        amendSelection(selectionarray, ev.target.parentNode.id);
+        displaySelection(selectedcontainerid, selectionarray);
+    }
+    if(ev.target.tagName.toLowerCase() == "tr") {
+        console.log(ev.target.id);
+    }
+
+    checkSelectionArrays();
+}
+
+function checkSelectionArrays() {
+    if(
+        ( storiestable.getAttribute("rowscount") == "0" || selections.storyselection.length > 0 ) &&
+        ( taskstable.getAttribute("rowscount") == "0" || selections.taskselection.length > 0 ) &&
+        ( bugstable.getAttribute("rowscount") == "0" || selections.bugselection.length > 0 ) &&
+        ( testplanstable.getAttribute("rowscount") == "0" || selections.testplanselection.length > 0 ) &&
+        ( testrunstable.getAttribute("rowscount") == "0" || selections.testrunselection.length > 0 )
+    ) {
+        buttonEnabledSkeleton(SELECTIONSUBMITID);
+    }
 }
 
 function changeCollapseState(tocollapseID, toexpandID) {

@@ -34,8 +34,8 @@
 #storiestable tr[selected='selected'],
 #taskstable tr[selected='selected'],
 #bugstable tr[selected='selected'],
-#planstable tr[selected='selected'],
-#runstable tr[selected='selected'] {
+#testplanstable tr[selected='selected'],
+#testrunstable tr[selected='selected'] {
   background-color: orange;
 }
 
@@ -65,4 +65,9 @@
     margin-right: 2px;
     padding-left: 1px;
     padding-right: 1px;
+}
+
+.last-row {
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
