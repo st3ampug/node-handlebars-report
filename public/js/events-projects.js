@@ -29,12 +29,12 @@ var projectexpand = document.getElementById(PROJECTEXPANDID);
 
 // =====================================================================================
 
-// Event Listeners =====================================================================
+// Page load ===========================================================================
 
 window.addEventListener('load', function(){
     console.log("onload");
 
-    // INIT
+    // INIT =============================================
     var projectobj = {
         jiraid: "",
         jirakey: "",
@@ -43,14 +43,23 @@ window.addEventListener('load', function(){
         testrailname: ""
     };
 
-    // set div visibility on load
-    $("#" + PROJECTCOLLAPSEDID).hide();
+    // element states ===================================
+    if(typeof getUrlParameter("p") == 'undefined') {
+        // project parameter is NOT set in the url
 
+        $("#" + PROJECTCOLLAPSEDID).hide();
+        buttonDisabledSkeleton(PROJECTSUBMITID);
+    } else {
+        // project parameter is SET in the url
 
+        highlightRow(getUrlParameter("p"));
+        selectProject(getUrlParameter("p"), projectobj);
 
+        $("#" + PROJECTEXPANDEDID).hide();
+        buttonDisabledSkeleton(PROJECTSUBMITID);
+    }
 
-    // LISTENERS
-
+    // LISTENERS =======================================
     projecttable.addEventListener("click", function(ev) {
         console.log(ev.currentTarget);
 
@@ -72,6 +81,9 @@ window.addEventListener('load', function(){
         // to determine what elements should be shown
         // need story list (response should have related issues), tasks list (...), bug list
         // from JIRA and test plans and runs from testrail (need to think about how to aggregate these)
+        
+        buttonDisabledSkeleton(PROJECTSUBMITID);
+        submitProjectInfo(projectobj);
         
     });
 
@@ -117,8 +129,31 @@ function selectProject(trID, objtochange) {
     objtochange.jiraname = $("#" + trID).attr("jiraname");
     objtochange.testrailid = $("#" + trID).attr("testrailid");
     objtochange.testrailname = $("#" + trID).attr("testrailname");
+
+    buttonEnabledSkeleton(PROJECTSUBMITID);
 }
 
+function submitProjectInfo(projobj) {
+    var urls = window.location.href.split('?');
+
+    if(urls.length > 0 )
+        window.location.replace(urls[0] + "?jkey=" + projobj.jirakey + "&tid=" + projobj.testrailid);
+}
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+}
 
 
 

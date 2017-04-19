@@ -1,0 +1,197 @@
+<!-- =========================== HEADER ========================== -->
+
+<div class="row">
+
+</div>
+
+<!-- =========================== TITLE =========================== -->
+<div class="row">
+    <div class="twelve columns">
+        <h1>Project Content</h1>
+    </div>
+</div>
+
+<!-- =========================== BODY  =========================== -->
+<!-- +++++++++++++++++++++++++++ ROWS 1 ++++++++++++++++++++++++++ -->
+<div class="row">
+    <h4>JIRA Stories</h4>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <table id="storiestable">
+            <thead>
+                <tr>
+                    <th>ISSUETYPE</th>
+                    <th>KEY</th>
+                    <th>SUMMARY</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.stories}}
+                <tr class="storyrow" id="{{this.key}}">
+                    <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
+                    <td>{{this.key}}</td>
+                    <td>{{this.fields.summary}}</td>
+                    <td>{{this.fields.status.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="myselection">
+        <div class="two columns">
+            <h5>Selected:</h5>
+        </div>
+        <div class="ten columns">
+            <div id="selectedstories"></div>
+        </div>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROWS 2 ++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <h4>JIRA Tasks</h4>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <table id="taskstable">
+            <thead>
+                <tr>
+                    <th>ISSUETYPE</th>
+                    <th>KEY</th>
+                    <th>SUMMARY</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.tasks}}
+                <tr class="taskrow" id="{{this.key}}">
+                    <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
+                    <td>{{this.key}}</td>
+                    <td>{{this.fields.summary}}</td>
+                    <td>{{this.fields.status.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="myselection">
+        <div class="two columns">
+            <h5>Selected:</h5>
+        </div>
+        <div class="ten columns">
+            <div id="selectedtasks"></div>
+        </div>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <h4>JIRA Bugs</h4>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <table id="bugstable">
+            <thead>
+                <tr>
+                    <th>ISSUETYPE</th>
+                    <th>KEY</th>
+                    <th>SUMMARY</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.bugs}}
+                <tr class="bugrow" id="{{this.key}}">
+                    <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
+                    <td>{{this.key}}</td>
+                    <td>{{this.fields.summary}}</td>
+                    <td>{{this.fields.status.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="myselection">
+        <div class="two columns">
+            <h5>Selected:</h5>
+        </div>
+        <div class="ten columns">
+            <div id="selectedbugs"></div>
+        </div>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <h4>TestRail Plans</h4>
+    <hr>
+    <div class="twelve columns">
+        <ol>
+        {{#each context.testplans}}
+            <li>{{this.name}}</li>
+        {{/each}}
+        </ol>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 5 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <h4>TestRail Runs</h4>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <table id="testrunstable">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>PASSED</th>
+                    <th>BLOCKED</th>
+                    <th>UNTESTED</th>
+                    <th>RETEST</th>
+                    <th>FAILED</th>
+                    <th>RUNS SUM</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.testruns}}
+                <tr class="testrunrow" id="{{this.key}}">
+                    <td>{{this.name}}</td>
+                    <td>{{this.passed_count}}</td>
+                    <td>{{this.blocked_count}}</td>
+                    <td>{{this.untested_count}}</td>
+                    <td>{{this.retest_count}}</td>
+                    <td>{{this.failed_count}}</td>
+                    <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="myselection">
+        <div class="two columns">
+            <h5>Selected:</h5>
+        </div>
+        <div class="ten columns">
+            <div id="selectedtestruns"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ++++++++++++++++++++++++++ SCRIPTS ++++++++++++++++++++++++++ -->
+<script src="js/secret/access.js"></script>
+<script src="js/events-globals.js"></script>
+<script src="js/events-repoptions.js"></script>

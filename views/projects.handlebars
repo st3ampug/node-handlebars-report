@@ -55,7 +55,7 @@
         </table>
     </div>
     <div class="one column textalign-middle">
-        <button id="projectsubmit">Submit</button>
+        <button class="button-primary" id="projectsubmit">Submit</button>
     </div> 
     <div class="two columns">
         &nbsp;
@@ -83,11 +83,19 @@
 
 <!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
 
+<script id="story-template" type="text/x-handlebars-template">
+    {{#each storycontext.issues}}
+    <p>{{fields.issuetype.name}} {{key}} {{fields.summary}}</p>
+    {{/each}}
+</script>
+
 <div class="row">
-    
+    <div class="twelve columns">
+        <div class="story-content-placeholder"></div>
+    </div>
 </div>
 
 <!-- ++++++++++++++++++++++++++ SCRIPTS ++++++++++++++++++++++++++ -->
 <script src="js/secret/access.js"></script>
 <script src="js/events-globals.js"></script>
-<script src="js/events-home.js"></script>
+<script src="js/events-projects.js"></script>

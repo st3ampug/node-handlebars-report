@@ -23,5 +23,10 @@ module.exports = {
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
 
         return '<span title="Bug">[' + iconimg + ' ' + key + ']: ' + summary + '</span>';
+    },
+    sumcounts: (passed, blocked, untested, retest, failed)=>{
+        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
+        
+        return sum;
     }
 }
