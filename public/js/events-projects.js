@@ -24,8 +24,8 @@ var testrailprojectrows = document.getElementsByClassName(TESTRAILPROJECTROWCLAS
 var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
 var selections = {
-    jiraselection: "",
-    testrailselection: ""
+    jiraselection: [],
+    testrailselection: []
 }
 
 // =====================================================================================
@@ -51,8 +51,9 @@ window.addEventListener('load', function(){
 
     selectionsubmit.addEventListener("click", function(ev) {
 
-        buttonDisabledSkeleton(PROJECTSUBMITID);
-        submitProjectInfo(selections.jiraselection, selections.testrailselection);
+        buttonDisabledSkeleton(SELECTIONSUBMITID);
+        submitProjectInfo(selections.jiraselection[0], selections.testrailselection[0]);
+        // length check was done when the button was enabled
         
     });
 
@@ -75,9 +76,8 @@ function highlightRow(id, projectrows) {
 
 // wow this mess needs to be straightened out!
 
-function displaySelection(selectionID, trID, attr, selectioncontainer) {
+function displaySelection(selectionID, trID, attr) {
     $("#" + selectionID).text( PROJECTSELECTTEXT + $("#" + trID).attr(attr) );
-    amendSelection(selectioncontainer, $("#" + trID).attr(attr))
 }
 
 function submitProjectInfo(jirakey, testrailid) {
@@ -87,14 +87,15 @@ function submitProjectInfo(jirakey, testrailid) {
         window.location.replace(urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid);
 }
 
-function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectionstring) {
+function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectionarray) {
     console.log(ev.currentTarget);
 
     if(ev.target.tagName.toLowerCase() == "td") {
         console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
 
         highlightRow(ev.target.parentNode.id, projectrows);
-        displaySelection(selectedcontainerid, ev.target.parentNode.id, attr, selections.jiraselection);
+        amendSelection(selectionarray, ev.target.parentNode.id)
+        displaySelection(selectedcontainerid, ev.target.parentNode.id, attr);
     }
     if(ev.target.tagName.toLowerCase() == "tr") {
         console.log(ev.target.id);
@@ -103,17 +104,17 @@ function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectio
     checkSelectionStrings();
 }
 
-function amendSelection(container, selection) {
-    container = selection;
+function amendSelection(container, selectionid) {
+    if(container.length < 2) {
+        container.splice(0, 1);
+        container.push(selectionid);
+    }
 }
 
 function checkSelectionStrings() {
-    console.log(selections.jiraselection);
-    console.log(selections.testrailselection);
-
     if(
-        selections.jiraselection != "" &&
-        selections.testrailselection != ""
+        selections.jiraselection.length > 0 &&
+        selections.testrailselection.length > 0
     ) {
         buttonEnabledSkeleton(SELECTIONSUBMITID);
     }

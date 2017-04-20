@@ -30,7 +30,8 @@
 }
 
 /* Has to be more specific than the DataTable's css! */
-#projecttable tr[selected='selected'],
+#jiraprojecttable tr[selected='selected'],
+#testrailprojecttable tr[selected='selected'],
 #storiestable tr[selected='selected'],
 #taskstable tr[selected='selected'],
 #bugstable tr[selected='selected'],
