@@ -5,7 +5,7 @@
 
 <!-- =========================== TITLE =========================== -->
 <div class="row">
-    <div class="eleven columns">
+    <div class="twelve columns">
         <h1>Test Report: Placeholder title</h1>
         <h6>a title field needs to be added the 2nd page</h6>
     </div>
@@ -15,37 +15,57 @@
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
 
 <div class="row">
-    <div class="six columns">
-        <canvas id="myChart" width="300" height="325"></canvas>
+    <div class="twelve columns">
+        <div class="my-title">
+            <h2>Test Runs</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+    <div class="five columns">
+        <div id="chart-canvas">
+            <canvas id="myChart" width="300" height="325"></canvas>
+        </div>
     </div>
     <div class="three columns">
-        <table>
-            <tbody>
-                <tr>
-                    <td>{{count context.testplans context.testruns "passed_count"}} ({{percent context.testplans context.testruns "passed_count"}}%)</td>
-                    <th>Passed</th>
-                </tr>
-                <tr>
-                    <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
-                    <th>Failed</th>
-                </tr>
-                <tr>
-                    <td>{{count context.testplans context.testruns "blocked_count"}} ({{percent context.testplans context.testruns "blocked_count"}}%)</td>
-                    <th>Blocked</th>
-                </tr>
-                <tr>
-                    <td>{{count context.testplans context.testruns "retest_count"}} ({{percent context.testplans context.testruns "retest_count"}}%)</td>
-                    <th>Retest</th>
-                </tr>
-                <tr>
-                    <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
-                    <th>Untested</th>
-                </tr>
-            </tbody>
-        </table>
+        <div id="chart-table">
+            <table class="u-full-width">
+                <tbody>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "passed_count"}} ({{percent context.testplans context.testruns "passed_count"}}%)</td>
+                        <th>Passed</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
+                        <th>Failed</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "blocked_count"}} ({{percent context.testplans context.testruns "blocked_count"}}%)</td>
+                        <th>Blocked</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "retest_count"}} ({{percent context.testplans context.testruns "retest_count"}}%)</td>
+                        <th>Retest</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
+                        <th>Untested</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="three columns">
-        aa
+    <div class="two columns">
+        <div id="chart-passed">
+            <h3>{{percent context.testplans context.testruns "passed_count"}}%<br />passed</h3>
+            <h6>{{count context.testplans context.testruns "untested_count"}} / {{countall context.testplans context.testruns}} untested</h6>
+        </div>
+    </div>
+    <div class="one column">
+        &nbsp;
     </div>
 </div>
 
@@ -75,11 +95,11 @@
                     {{count context.testplans context.testruns "failed_count"}},
                     ],
                 backgroundColor: [
-                    'rgba(3, 192, 60, 0.7)',
+                    'rgba(3, 192, 60, 0.9)',
                     'rgba(207, 207, 196, 0.7)',
                     'rgba(179, 158, 181, 0.7)',
                     'rgba(253, 253, 150, 0.7)',
-                    'rgba(255, 105, 97, 0.7)'
+                    'rgba(255, 105, 97, 0.9)'
                 ],
                 borderColor: [
                     'rgba(3, 192, 60, 1)',
@@ -105,7 +125,13 @@
 </script>
 
 <!-- +++++++++++++++++++++++++++ ROW 2 +++++++++++++++++++++++++++ -->
-
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h2>Stories, Tasks, Bugs</h2>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="one column">
         &nbsp;
@@ -122,13 +148,18 @@
             <tbody>
                 <tr>
                     <th>Stories</th>
-                    <td>{{context.issues.length}}</td>
-                    <td>???</td>
+                    <td>{{context.stories.length}}</td>
+                    <td>{{done context.stories}}</td>
+                </tr>
+                <tr>
+                    <th>Tasks</th>
+                    <td>{{context.tasks.length}}</td>
+                    <td>{{done context.tasks}}</td>
                 </tr>
                 <tr>
                     <th>Bugs</th>
-                    <td>???</td>
-                    <td>???</td>
+                    <td>{{context.bugs.length}}</td>
+                    <td>{{done context.bugs}}</td>
                 </tr>
             </tbody>
         </table>
@@ -147,7 +178,7 @@
 
     <div class="ten columns">
         <ul>
-        {{#each context.issues}}
+        {{#each context.stories}}
             <li>
                 {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key fields.summary}}}
                 {{#if fields.issuelinks.length}}
@@ -173,5 +204,9 @@
             </li>
         {{/each}}
         </ul>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
     </div>
 </div>

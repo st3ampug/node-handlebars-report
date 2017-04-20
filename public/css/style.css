@@ -83,3 +83,12 @@
     background-color: rgba(0,0,0,0.5); /*dim the background*/
     visibility: visible;
 }
+
+#chart-table, #chart-passed {
+    margin-top: 50px;
+}
+
+.my-title {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
