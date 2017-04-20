@@ -1,5 +1,7 @@
 // Variables ===========================================================================
 
+const PAGETITLE = "Waracle - Test Report - Project selection";
+
 const JIRASELECTIONID = "jiraselection";
 const TESTRAILSELECTIONID = "testrailselection";
 const JIRAPROJECTTABLEID = "jiraprojecttable";
@@ -39,6 +41,8 @@ window.addEventListener('load', function(){
 
     // INIT =============================================
     
+    changePageTitle(PAGETITLE);
+
     initDataTableCustom(JIRAPROJECTTABLEID, 500);
     initDataTableCustom(TESTRAILROJECTTABLEID, 500);
 
@@ -92,7 +96,7 @@ function submitProjectInfo(jirakey, testrailid) {
     var urls = window.location.href.split('?');
 
     if(urls.length > 0 )
-        window.location.replace(urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid);
+        window.location.href = urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid;
 }
 
 function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectionarray) {

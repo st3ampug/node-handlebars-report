@@ -30,6 +30,10 @@ function basicAuth(u, p) {
     return encodedString;
 }
 
+function changePageTitle(title) {
+    document.title = title;
+}
+
 function elementVisibilityON(id) {
     $("#" + id).css('visibility', 'visible');
 }

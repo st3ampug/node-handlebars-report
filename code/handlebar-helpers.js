@@ -28,5 +28,35 @@ module.exports = {
         var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
         
         return sum;
+    },
+    add: (a, b)=>{
+        return parseInt(a) + parseInt(b);
+    },
+    num: (tonum)=>{
+        return parseInt(tonum);
+    },
+    count: (plans, runs, prop)=>{
+        var sumcounts = countPropInArr(plans, prop) + countPropInArr(runs, prop);
+
+        return sumcounts;
+    },
+    percent: (plans, runs, prop)=>{
+        var passc = countPropInArr(plans, "passed_count") + countPropInArr(runs, "passed_count");
+        var failedc = countPropInArr(plans, "failed_count") + countPropInArr(runs, "failed_count");
+        var blockedc = countPropInArr(plans, "blocked_count") + countPropInArr(runs, "blocked_count");
+        var retestc = countPropInArr(plans, "retest_count") + countPropInArr(runs, "retest_count");
+        var untestc = countPropInArr(plans, "untested_count") + countPropInArr(runs, "untested_count");
+        var myc = countPropInArr(plans, prop) + countPropInArr(runs, prop);
+
+        return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
     }
+}
+
+function countPropInArr(arr, prop) {
+    var count = 0;
+    for(var i = 0; i < arr.length; i++) {
+        count += arr[i][prop];
+    }
+    console.log("count of " + prop + ": " + count);
+    return count;
 }

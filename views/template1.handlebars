@@ -1,13 +1,13 @@
 <!-- =========================== HEADER ========================== -->
 
 <div class="row">
-
 </div>
 
 <!-- =========================== TITLE =========================== -->
 <div class="row">
     <div class="eleven columns">
-        <h1>Test Report: NET</h1>
+        <h1>Test Report: Placeholder title</h1>
+        <h6>a title field needs to be added the 2nd page</h6>
     </div>
 </div>
 
@@ -15,7 +15,38 @@
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
 
 <div class="row">
-    <canvas id="myChart" width="150" height="100"></canvas>
+    <div class="six columns">
+        <canvas id="myChart" width="300" height="325"></canvas>
+    </div>
+    <div class="three columns">
+        <table>
+            <tbody>
+                <tr>
+                    <td>{{count context.testplans context.testruns "passed_count"}} ({{percent context.testplans context.testruns "passed_count"}}%)</td>
+                    <th>Passed</th>
+                </tr>
+                <tr>
+                    <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
+                    <th>Failed</th>
+                </tr>
+                <tr>
+                    <td>{{count context.testplans context.testruns "blocked_count"}} ({{percent context.testplans context.testruns "blocked_count"}}%)</td>
+                    <th>Blocked</th>
+                </tr>
+                <tr>
+                    <td>{{count context.testplans context.testruns "retest_count"}} ({{percent context.testplans context.testruns "retest_count"}}%)</td>
+                    <th>Retest</th>
+                </tr>
+                <tr>
+                    <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
+                    <th>Untested</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="three columns">
+        aa
+    </div>
 </div>
 
 <script>
@@ -28,30 +59,34 @@
 
     var ctx = document.getElementById("myChart").getContext("2d");
     ctx.canvas.width = 300;
-    ctx.canvas.height = 300;
+    ctx.canvas.height = 325;
 
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["Passed", "Blocked", "Untested", "Retest", "Failed"],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [
+                    {{count context.testplans context.testruns "passed_count"}},
+                    {{count context.testplans context.testruns "blocked_count"}},
+                    {{count context.testplans context.testruns "untested_count"}},
+                    {{count context.testplans context.testruns "retest_count"}},
+                    {{count context.testplans context.testruns "failed_count"}},
+                    ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(3, 192, 60, 0.7)',
+                    'rgba(207, 207, 196, 0.7)',
+                    'rgba(179, 158, 181, 0.7)',
+                    'rgba(253, 253, 150, 0.7)',
+                    'rgba(255, 105, 97, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(3, 192, 60, 1)',
+                    'rgba(207, 207, 196, 1)',
+                    'rgba(179, 158, 181, 1)',
+                    'rgba(253, 253, 150, 1)',
+                    'rgba(255, 105, 97, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -86,7 +121,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <th>Stories and Tasks</th>
+                    <th>Stories</th>
                     <td>{{context.issues.length}}</td>
                     <td>???</td>
                 </tr>

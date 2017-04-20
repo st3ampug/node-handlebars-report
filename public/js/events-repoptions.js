@@ -1,5 +1,7 @@
 // Variables ===========================================================================
 
+const PAGETITLE = "Waracle - Test Report - Report builder";
+
 const STORIESTABLEID = "storiestable";
 const STORYROWCLASS = "storyrow";
 const SELECTEDSTORIESID = "selectedstories";
@@ -52,6 +54,9 @@ window.addEventListener('load', function(){
     console.log("onload");
 
     // INIT =============================================
+
+    changePageTitle(PAGETITLE);
+
     initDataTableCustom(STORIESTABLEID, 400);
     initDataTableCustom(TASKSTABLEID, 400);
     initDataTableCustom(BUGSTABLEID, 400);
@@ -166,7 +171,7 @@ function changeCollapseState(tocollapseID, toexpandID) {
 function submitSelectionInfo(nextpage, selections) {
     // using href so the user can navigate back
     var urls = window.location.href.split('?');
-    var rdyurl = urls[0] + nextpage + "/?";
+    var rdyurl = urls[0] + nextpage + "?";
 
     if(storiestable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("st[]", selections.storyselection) + "&";
@@ -182,6 +187,10 @@ function submitSelectionInfo(nextpage, selections) {
     }
     if(testrunstable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("tr[]", selections.testrunselection);
+    }
+
+    if(rdyurl.slice(-1) == "&") {
+        rdyurl = rdyurl.slice(0, -1);
     }
 
     if(urls.length > 0 )

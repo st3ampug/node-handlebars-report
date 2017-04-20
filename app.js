@@ -10,6 +10,7 @@ var queryString = require("query-string");
 const a = require('./code/secret/access.js');
 const globals = require('./code/globals.js'); // context from this really should come from api calls
 const handlebarHelpers = require('./code/handlebar-helpers.js');
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var app = express();
 
@@ -32,7 +33,7 @@ app.get('/', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
         // with (the right) params, the project options page loads
 
-        qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
+        var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         console.log(qparams);
 
         if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
@@ -41,7 +42,7 @@ app.get('/', function (req, res) {
 
         }
         else {
-            res.render("error");
+            res.render("errors/error-general");
         }
 
     } else {
@@ -52,31 +53,36 @@ app.get('/', function (req, res) {
     }
 });
 
-// HOW TO CONTINUE
-// the config (1st) page now displays projects from JIRA and projects from TestRail, based on the raw reponse from their API calls
-// NOW: the raw objects need to be massaged into a an object that contains JIRA name, JIRA key, TestRail id (name should be the same!!)
-// that object should be used to populate select elements with the projects, after selection 1 and clicking OK, other api calls should
-// be sent to populate elements that have not been added to the first page yet!
-
 app.get('/template1', function (req, res) {
-    res.render(
-        'template1', {
-            context: globals.context,
-            stringify: JSON.stringify(globals.context)
-        });
 
-    // this part will create an object out of the query string
     if (req.url.indexOf('?') >= 0) {
-        qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
-
-        // do stuff
+        var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
         console.log(qparams);
+
+        
+    }
+
+    if(isEmpty(qparams) || isEmpty(contextsave)) {
+        console.log(qparams);
+        console.log(contextsave);
+
+        res.render('errors/error-nocontext');
+
+    } else {
+
+        var context = constructReportContext(qparams, contextsave);
+
+        res.render(
+        'template1', {
+            context: context,
+            stringify: JSON.stringify(context)
+        });
     }
 });
 
-app.get('/spinner', function (req, res) {
+app.get('/test', function (req, res) {
     res.render(
-        'spinner');
+        'errors/error-nocontext');
 
     // this part will create an object out of the query string
     if (req.url.indexOf('?') >= 0) {
@@ -146,7 +152,7 @@ function initCalls(req, res, pagetorender) {
                 context: contextsave
             });
         } else {
-            res.render("error");
+            res.render("errors/error-general");
         }
   });
 }
@@ -279,7 +285,7 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
                 context: contextsave
             });
         } else {
-            res.render("error");
+            res.render("errors/error-general");
         }
   });
 }
@@ -299,6 +305,30 @@ function basicAuth(u, p) {
     var auth = "Basic " + new Buffer(u + ":" + p).toString("base64");
     //console.log(auth);
     return auth;
+}
+
+function isEmpty(obj) {
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
 }
 
 function mergeTwoObjects(o1, o2) {
@@ -330,5 +360,58 @@ function mergeFiveObjects(o1, o2, o3, o4, o5) {
         testruns: o5
     };
     
+    return retobj;
+}
+
+function pushToArrFromContextWithJiraKey(retobjarr, newarr, savedarr) {
+    for(var i = 0; i < newarr.length; i++) {
+        for(var j = 0; j < savedarr.length; j++) {
+            if(savedarr[j].key == newarr[i]){
+                retobjarr.push(savedarr[j]);
+            }
+        }
+    }
+}
+
+function pushToArrFromContextWithTestRailId(retobjarr, newarr, savedarr) {
+    for(var i = 0; i < newarr.length; i++) {
+        for(var j = 0; j < savedarr.length; j++) {
+            if(savedarr[j].id == newarr[i]){
+                retobjarr.push(savedarr[j]);
+            }
+        }
+    }
+}
+
+function constructReportContext(qparams, savedcontext) {
+    var retobj = {
+        stories: [],
+        tasks: [],
+        bugs: [],
+        testplans: [],
+        testruns: []
+    };
+
+    if("st" in qparams && "stories" in savedcontext) {
+        pushToArrFromContextWithJiraKey(retobj.stories, qparams.st, savedcontext.stories);
+        console.log("stories ok");
+    }
+    if("ta" in qparams && "tasks" in savedcontext) {
+        pushToArrFromContextWithJiraKey(retobj.tasks, qparams.ta, savedcontext.tasks);
+        console.log("tasks ok");
+    }
+    if("bu" in qparams && "bugs" in savedcontext) {
+        pushToArrFromContextWithJiraKey(retobj.bugs, qparams.bu, savedcontext.bugs);
+        console.log("bugs ok");
+    }
+    if("tp" in qparams && "testplans" in savedcontext) {
+        pushToArrFromContextWithTestRailId(retobj.testplans, qparams.tp, savedcontext.testplans);
+        console.log("testplans ok");
+    }
+    if("tr" in qparams && "testruns" in savedcontext) {
+        pushToArrFromContextWithTestRailId(retobj.testruns, qparams.tr, savedcontext.testruns);
+        console.log("testruns ok");
+    }
+
     return retobj;
 }
