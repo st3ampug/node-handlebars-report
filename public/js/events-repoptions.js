@@ -91,6 +91,7 @@ window.addEventListener('load', function(){
         elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
+        submitSelectionInfo(REPORTPAGE, selections);
     });
     
 });
@@ -162,12 +163,41 @@ function changeCollapseState(tocollapseID, toexpandID) {
     $("#" + tocollapseID).hide();
 }
 
-function submitSelectionInfo(selections) {
+function submitSelectionInfo(nextpage, selections) {
     // using href so the user can navigate back
     var urls = window.location.href.split('?');
+    var rdyurl = urls[0] + nextpage + "/?";
+
+    if(storiestable.getAttribute("rowscount") != "0") {
+        rdyurl += concatArrayElements("st[]", selections.storyselection) + "&";
+    }
+    if(taskstable.getAttribute("rowscount") != "0") {
+        rdyurl += concatArrayElements("ta[]", selections.taskselection) + "&";
+    }
+    if(bugstable.getAttribute("rowscount") != "0") {
+        rdyurl += concatArrayElements("bu[]", selections.bugselection) + "&";
+    }
+    if(testplanstable.getAttribute("rowscount") != "0") {
+        rdyurl += concatArrayElements("tp[]", selections.testplanselection) + "&";
+    }
+    if(testrunstable.getAttribute("rowscount") != "0") {
+        rdyurl += concatArrayElements("tr[]", selections.testrunselection);
+    }
 
     if(urls.length > 0 )
-        window.location.href(urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid);
+        window.location.href = rdyurl;
+}
+
+function concatArrayElements(pref, arr) {
+    var ret = "";
+    for(var i = 0; i < arr.length; i++) {
+        ret += pref + "=" + arr[i];
+        if( !(i+1 == arr.length) )
+            ret += "&";
+    }
+
+    console.log(ret);
+    return ret;
 }
 
 

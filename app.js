@@ -5,7 +5,7 @@ var express = require('express');
 var exphbs  = require('express-handlebars');
 var request = require('request');
 var async   = require('async');
-var queryString = require("querystring");
+var queryString = require("query-string");
 
 const a = require('./code/secret/access.js');
 const globals = require('./code/globals.js'); // context from this really should come from api calls
@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
 // that object should be used to populate select elements with the projects, after selection 1 and clicking OK, other api calls should
 // be sent to populate elements that have not been added to the first page yet!
 
-app.get('/test', function (req, res) {
+app.get('/template1', function (req, res) {
     res.render(
         'template1', {
             context: globals.context,
@@ -67,7 +67,7 @@ app.get('/test', function (req, res) {
 
     // this part will create an object out of the query string
     if (req.url.indexOf('?') >= 0) {
-        qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
+        qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
 
         // do stuff
         console.log(qparams);
@@ -145,6 +145,8 @@ function initCalls(req, res, pagetorender) {
             res.render(pagetorender, {
                 context: contextsave
             });
+        } else {
+            res.render("error");
         }
   });
 }
@@ -262,13 +264,7 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
             });
         }], function(err, results) {
         if(results.length == 5){
-            // construct the custom obj out of the 2 responses and set it as the context
-
-            // console.log("------------------------------------------------");
-            // console.log(results[0]);
-            // console.log("------------------------------------------------");
-            // console.log(results[1]);
-            // console.log("------------------------------------------------");
+            // construct the custom obj out of the multiple responses and set it as the context
 
             console.log("Attempting to render page");
             contextsave = mergeFiveObjects(
@@ -282,6 +278,8 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
             res.render(pagetorender, {
                 context: contextsave
             });
+        } else {
+            res.render("error");
         }
   });
 }
