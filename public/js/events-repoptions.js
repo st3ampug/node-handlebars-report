@@ -16,6 +16,8 @@ const TESTRUNSTABLEID = "testrunstable";
 const TESTRUNROWCLASS = "testrunrow";
 const SELECTEDTESTRUNSID = "selectedtestruns";
 const SELECTIONSUBMITID = "selecitonsubmit";
+const BUTTONROWID = "button-row";
+const BUTTONOVERLAYID = "button-overlay";
 
 const SELECTED          = "selected";
 const NOTSELECTED       = "no";
@@ -30,6 +32,8 @@ var testplanstable = document.getElementById(TESTPLANSTABLEID);
 var testplanrows = document.getElementsByClassName(TESTPLANROWCLASS);
 var testrunstable = document.getElementById(TESTRUNSTABLEID);
 var testrunrows = document.getElementsByClassName(TESTRUNROWCLASS);
+
+var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
 
 var selections = {
@@ -54,6 +58,7 @@ window.addEventListener('load', function(){
     initDataTableCustom(TESTPLANSTABLEID, 400);
     initDataTableCustom(TESTRUNSTABLEID, 400);
 
+    elementDisplayNone(BUTTONOVERLAYID);
     buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
@@ -72,10 +77,20 @@ window.addEventListener('load', function(){
         tableEventListener(ev, SELECTEDBUGSID, selections.bugselection);
     });
 
-    // plans missing
+    testplanstable.addEventListener("click", function(ev) {
+        tableEventListener(ev, SELECTEDTESTPLANSID, selections.testplanselection);
+    });
 
     testrunstable.addEventListener("click", function(ev) {
         tableEventListener(ev, SELECTEDTESTRUNSID, selections.testrunselection);
+    });
+
+    selectionsubmit.addEventListener("click", function(ev) {
+        buttonDisabledSkeleton(SELECTIONSUBMITID);
+        elementDisplayNone(BUTTONROWID);
+        elementDisplayBlock(BUTTONOVERLAYID);
+
+        // submit selection
     });
     
 });
@@ -145,6 +160,14 @@ function checkSelectionArrays() {
 function changeCollapseState(tocollapseID, toexpandID) {
     $("#" + toexpandID).show("slow");
     $("#" + tocollapseID).hide();
+}
+
+function submitSelectionInfo(selections) {
+    // using href so the user can navigate back
+    var urls = window.location.href.split('?');
+
+    if(urls.length > 0 )
+        window.location.href(urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid);
 }
 
 

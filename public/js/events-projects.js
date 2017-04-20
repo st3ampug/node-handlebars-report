@@ -7,6 +7,8 @@ const JIRAPROJECTROWCLASS = "j-projectrow";
 const TESTRAILROJECTTABLEID = "testrailprojecttable";
 const TESTRAILPROJECTROWCLASS = "tr-projectrow";
 const SELECTIONSUBMITID = "selecitonsubmit";
+const BUTTONROWID = "button-row";
+const BUTTONOVERLAYID = "button-overlay";
 
 const JIRAKEYATTR = "id";
 const JIRANAMEATTR = "jiraname";
@@ -36,8 +38,11 @@ window.addEventListener('load', function(){
     console.log("onload");
 
     // INIT =============================================
+    
     initDataTableCustom(JIRAPROJECTTABLEID, 500);
     initDataTableCustom(TESTRAILROJECTTABLEID, 500);
+
+    elementDisplayNone(BUTTONOVERLAYID);
     buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // LISTENERS =======================================
@@ -52,6 +57,8 @@ window.addEventListener('load', function(){
     selectionsubmit.addEventListener("click", function(ev) {
 
         buttonDisabledSkeleton(SELECTIONSUBMITID);
+        elementDisplayNone(BUTTONROWID);
+        elementDisplayBlock(BUTTONOVERLAYID);
         submitProjectInfo(selections.jiraselection[0], selections.testrailselection[0]);
         // length check was done when the button was enabled
         
@@ -81,6 +88,7 @@ function displaySelection(selectionID, trID, attr) {
 }
 
 function submitProjectInfo(jirakey, testrailid) {
+    // using replace so the user can't navigate back
     var urls = window.location.href.split('?');
 
     if(urls.length > 0 )
