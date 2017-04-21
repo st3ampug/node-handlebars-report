@@ -8,7 +8,7 @@ var async   = require('async');
 var queryString = require("query-string");
 
 const a = require('./code/secret/access.js');
-const globals = require('./code/globals.js'); // context from this really should come from api calls
+const globals = require('./code/globals.js');
 const handlebarHelpers = require('./code/handlebar-helpers.js');
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
