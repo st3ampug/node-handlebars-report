@@ -71,23 +71,23 @@ window.addEventListener('load', function(){
 
     // LISTENERS =======================================
     storiestable.addEventListener("click", function(ev) {
-        tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection);
+        tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection, STORYROWCLASS);
     });
 
     taskstable.addEventListener("click", function(ev) {
-        tableEventListener(ev, SELECTEDTASKSID, selections.taskselection);
+        tableEventListener(ev, SELECTEDTASKSID, selections.taskselection, TASKROWCLASS);
     });
 
     bugstable.addEventListener("click", function(ev) {
-        tableEventListener(ev, SELECTEDBUGSID, selections.bugselection);
+        tableEventListener(ev, SELECTEDBUGSID, selections.bugselection, BUGROWCLASS);
     });
 
     testplanstable.addEventListener("click", function(ev) {
-        tableEventListener(ev, SELECTEDTESTPLANSID, selections.testplanselection);
+        tableEventListener(ev, SELECTEDTESTPLANSID, selections.testplanselection, TESTPLANROWCLASS);
     });
 
     testrunstable.addEventListener("click", function(ev) {
-        tableEventListener(ev, SELECTEDTESTRUNSID, selections.testrunselection);
+        tableEventListener(ev, SELECTEDTESTRUNSID, selections.testrunselection, TESTRUNROWCLASS);
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
@@ -134,21 +134,52 @@ function displaySelection(id, container){
     $("#" + id).html(tmp);
 }
 
-function tableEventListener(ev, selectedcontainerid, selectionarray) {
+function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
     console.log(ev.currentTarget);
 
     if(ev.target.tagName.toLowerCase() == "td") {
         console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
 
-        highlightRow(ev.target.parentNode.id);
-        amendSelection(selectionarray, ev.target.parentNode.id);
+        if(ev.shiftKey && selectionarray.length > 0) {
+            shiftModifier(ev, selectionarray, rowclass);
+        } else {
+            highlightRow(ev.target.parentNode.id);
+            amendSelection(selectionarray, ev.target.parentNode.id);
+        }
+
         displaySelection(selectedcontainerid, selectionarray);
+
     }
     if(ev.target.tagName.toLowerCase() == "tr") {
         console.log(ev.target.id);
     }
 
     checkSelectionArrays();
+}
+
+function shiftModifier(ev, selectionarray, rowclass) {
+    var rows = document.getElementsByClassName(rowclass);
+    var lastselectedpassed = false;
+    var needtochangeids = [];
+
+    for(var i = 0; i < rows.length; i++) {
+        if(lastselectedpassed) {
+            needtochangeids.push(rows[i].getAttribute("id"));
+        }
+        if(rows[i].getAttribute("id") == selectionarray[selectionarray.length-1]) {
+            lastselectedpassed = true;
+        }
+        if(rows[i].getAttribute("id") == ev.target.parentNode.id) {
+            lastselectedpassed = false;
+        }
+    }
+
+    if(needtochangeids.length > 0) {
+        for(var j = 0; j < needtochangeids.length; j++) {
+            highlightRow(needtochangeids[j]);
+            amendSelection(selectionarray, needtochangeids[j]);
+        }
+    }
 }
 
 function checkSelectionArrays() {
