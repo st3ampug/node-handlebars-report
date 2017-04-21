@@ -31,7 +31,6 @@ var contextsave = {};
 
 app.get('/', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
-        // with (the right) params, the project options page loads
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         console.log(qparams);
@@ -59,24 +58,22 @@ app.get('/template1', function (req, res) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
         console.log(qparams);
 
-        
-    }
+        if(isEmpty(qparams) || isEmpty(contextsave)) {
 
-    if(isEmpty(qparams) || isEmpty(contextsave)) {
-        console.log(qparams);
-        console.log(contextsave);
+            res.render('errors/error-nocontext');
 
-        res.render('errors/error-nocontext');
+        } else {
 
+            var context = constructReportContext(qparams, contextsave);
+
+            res.render(
+            'template1', {
+                context: context,
+                stringify: JSON.stringify(context)
+            });
+        }
     } else {
-
-        var context = constructReportContext(qparams, contextsave);
-
-        res.render(
-        'template1', {
-            context: context,
-            stringify: JSON.stringify(context)
-        });
+        res.render("errors/error-general");
     }
 });
 
@@ -84,11 +81,8 @@ app.get('/test', function (req, res) {
     res.render(
         'errors/error-nocontext');
 
-    // this part will create an object out of the query string
     if (req.url.indexOf('?') >= 0) {
         qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-
-        // do stuff
         console.log(qparams);
     }
 });
