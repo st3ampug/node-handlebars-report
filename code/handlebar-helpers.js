@@ -39,6 +39,18 @@ module.exports = {
 
         return '<span title="' + summary + '">[' + iconimg + ' ' + key + ']</span>';
     },
+    versions: (arr)=>{
+        if(arr.length > 0) {
+            var tmp = '';
+            for(var i = 0; i < arr.length; i++) {
+                tmp += '<div>' + arr[i].name + '</div>';
+            }
+
+            return tmp;
+        } else {
+            return '-';
+        }
+    },
     done: (arr)=>{
         if(arr.length > 0) {
             var count = 0;
@@ -99,7 +111,7 @@ function countPropInArr(arr, prop) {
     for(var i = 0; i < arr.length; i++) {
         count += arr[i][prop];
     }
-    console.log("count of " + prop + ": " + count);
+    //console.log("count of " + prop + ": " + count);
     return count;
 }
 

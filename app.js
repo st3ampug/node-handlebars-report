@@ -158,7 +158,7 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
         function(next) {
             // JIRA Stories req ====================
 
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Story) order by key ASC&startAt=0&maxResults=1000&fields=issuetype,summary,status,description,issuelinks&fieldsByKeys=false';
+            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Story) ' + globals.jiraapiextension;
             console.log("JIRA request: " + jiraurl);
 
             request({
@@ -179,7 +179,7 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
         }, function(next) {
             // JIRA Tasks req ====================
 
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Task) order by key ASC&startAt=0&maxResults=1000&fields=issuetype,summary,status,description,issuelinks&fieldsByKeys=false';
+            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Task) ' + globals.jiraapiextension;
             console.log("JIRA request: " + jiraurl);
 
             request({
@@ -200,7 +200,7 @@ function projectCalls(req, res, pagetorender, jkey, tid) {
         },function(next) {
             // JIRA Bugs req ====================
 
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Bug) order by key ASC&startAt=0&maxResults=1000&fields=issuetype,summary,status,description,issuelinks&fieldsByKeys=false';
+            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Bug) ' + globals.jiraapiextension;
             console.log("JIRA request: " + jiraurl);
 
             request({

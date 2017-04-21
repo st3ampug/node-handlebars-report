@@ -38,7 +38,7 @@ var selections = {
 
 window.addEventListener('load', function(){
     console.log("onload");
-
+    
     // INIT =============================================
     
     changePageTitle(PAGETITLE);
@@ -66,9 +66,7 @@ window.addEventListener('load', function(){
         submitProjectInfo(selections.jiraselection[0], selections.testrailselection[0]);
         // length check was done when the button was enabled
         
-    });
-
-    
+    });    
 });
 
 // =====================================================================================

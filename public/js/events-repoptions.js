@@ -242,6 +242,18 @@ function concatArrayElements(pref, arr) {
     return ret;
 }
 
+function tableFilterTest(tableid) {
+    var table = $('#' + tableid).DataTable();
+    
+    var filteredData = table
+    .column( 3 )
+    .data()
+    .filter( function ( value, index ) {
+        console.log(value + " / " + index);
+        return value == '<div>1.0</div>' ? true : false;
+    } );
+}
+
 
 
 
