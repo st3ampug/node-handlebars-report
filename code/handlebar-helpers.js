@@ -10,7 +10,17 @@ module.exports = {
             console.log(optionalValue);
         }
     },
-    jiralabel: (icon, type, key, summary)=>{
+    // jira issue related helpers
+    jiralabel: (icon, type, key)=>{
+        var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
+        
+        var icondiv =   '<div id="myicon"><a href="#">' + 
+                        iconimg +
+                        '</a></div>';
+
+        return '<span title="' + type + '">[' + iconimg + ' ' + key + ']</span>';
+    },
+    jiralabel_summay: (icon, type, key, summary)=>{
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
         
         var icondiv =   '<div id="myicon"><a href="#">' + 
@@ -19,10 +29,15 @@ module.exports = {
 
         return '<span title="' + type + '">[' + iconimg + ' ' + key + ']: ' + summary + '</span>';
     },
-    buglabel: (icon, key, summary)=>{
+    buglabel: (icon, key)=>{
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
 
-        return '<span title="Bug">[' + iconimg + ' ' + key + ']: ' + summary + '</span>';
+        return '<span title="Bug">[' + iconimg + ' ' + key + ']</span>';
+    },
+    buglabel_summary: (icon, key, summary)=>{
+        var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
+
+        return '<span title="' + summary + '">[' + iconimg + ' ' + key + ']</span>';
     },
     done: (arr)=>{
         if(arr.length > 0) {
@@ -37,16 +52,14 @@ module.exports = {
             return "-";
         }
     },
+    sort_by_status: (array)=>{
+		return array.sort(compareStatus);
+    },
+    // test related helpers
     sumcounts: (passed, blocked, untested, retest, failed)=>{
         var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
         
         return sum;
-    },
-    add: (a, b)=>{
-        return parseInt(a) + parseInt(b);
-    },
-    num: (tonum)=>{
-        return parseInt(tonum);
     },
     count: (plans, runs, prop)=>{
         var sumcounts = countPropInArr(plans, prop) + countPropInArr(runs, prop);
@@ -71,6 +84,13 @@ module.exports = {
         var myc = countPropInArr(plans, prop) + countPropInArr(runs, prop);
 
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
+    },
+    // general helpers
+    add: (a, b)=>{
+        return parseInt(a) + parseInt(b);
+    },
+    num: (tonum)=>{
+        return parseInt(tonum);
     }
 }
 
@@ -81,4 +101,12 @@ function countPropInArr(arr, prop) {
     }
     console.log("count of " + prop + ": " + count);
     return count;
+}
+
+function compareStatus(a, b) {
+  if (a.fields.status.name < b.fields.status.name)
+    return -1;
+  if (a.fields.status.name > b.fields.status.name)
+    return 1;
+  return 0;
 }

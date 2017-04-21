@@ -2,6 +2,7 @@
 
 const PAGETITLE = "Waracle - Test Report - Report builder";
 
+const REPORTTITLEID = "reporttitle";
 const STORIESTABLEID = "storiestable";
 const STORYROWCLASS = "storyrow";
 const SELECTEDSTORIESID = "selectedstories";
@@ -24,6 +25,7 @@ const BUTTONOVERLAYID = "button-overlay";
 const SELECTED          = "selected";
 const NOTSELECTED       = "no";
 
+var reporttitle = document.getElementById(REPORTTITLEID);
 var storiestable = document.getElementById(STORIESTABLEID);
 var storyrows = document.getElementsByClassName(STORYROWCLASS);
 var taskstable = document.getElementById(TASKSTABLEID);
@@ -96,7 +98,7 @@ window.addEventListener('load', function(){
         elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
-        submitSelectionInfo(REPORTPAGE, selections);
+        submitSelectionInfo(REPORTPAGE, selections, reporttitle.value);
     });
     
 });
@@ -199,10 +201,10 @@ function changeCollapseState(tocollapseID, toexpandID) {
     $("#" + tocollapseID).hide();
 }
 
-function submitSelectionInfo(nextpage, selections) {
+function submitSelectionInfo(nextpage, selections, title) {
     // using href so the user can navigate back
     var urls = window.location.href.split('?');
-    var rdyurl = urls[0] + nextpage + "?";
+    var rdyurl = urls[0] + nextpage + "?" + "title=" + removeSpecials(title) + "&";
 
     if(storiestable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("st[]", selections.storyselection) + "&";
@@ -256,6 +258,18 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
+}
+
+function removeSpecials(str) {
+    var lower = str.toLowerCase();
+    var upper = str.toUpperCase();
+
+    var res = "";
+    for(var i=0; i<lower.length; ++i) {
+        if(lower[i] != upper[i] || lower[i].trim() === '')
+            res += str[i];
+    }
+    return res;
 }
 
 

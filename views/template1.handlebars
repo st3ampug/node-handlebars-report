@@ -6,8 +6,7 @@
 <!-- =========================== TITLE =========================== -->
 <div class="row">
     <div class="twelve columns">
-        <h1>Test Report: Placeholder title</h1>
-        <h6>a title field needs to be added the 2nd page</h6>
+        <h1>Test Report: {{context.title}}</h1>
     </div>
 </div>
 
@@ -172,38 +171,218 @@
 <!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
 
 <div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Stories</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="one column">
         &nbsp;
     </div>
 
     <div class="ten columns">
-        <ul>
-        {{#each context.stories}}
-            <li>
-                {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key fields.summary}}}
-                {{#if fields.issuelinks.length}}
-                    <ul>
-                        {{#each fields.issuelinks}}
-                            {{#if this.outwardIssue}}
-                                <li>
-                                    {{this.type.outward}} {{{buglabel this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
-                                </li>
-                            {{/if}}
-                            {{#if this.inwardIssue}}
-                                <li>
-                                    {{this.type.inward}} {{{buglabel this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
-                                </li>
-                            {{/if}}
-                        {{/each}}
-                    </ul>
-                {{else}}
-                    <ul>
-                        <li>no related issues</li>
-                    </ul>
-                {{/if}}
-            </li>
-        {{/each}}
-        </ul>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.stories}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Tasks</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.tasks}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 5 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Bugs</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each (sort_by_status context.bugs)}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     
     <div class="one column">

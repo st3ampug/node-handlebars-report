@@ -385,12 +385,15 @@ function pushToArrFromContextWithTestRailId(retobjarr, newarr, savedarr) {
 
 function constructReportContext(qparams, savedcontext) {
     var retobj = {
+        title: "",
         stories: [],
         tasks: [],
         bugs: [],
         testplans: [],
         testruns: []
     };
+
+    retobj.title = qparams.title;
 
     if("st" in qparams && "stories" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.stories, qparams.st, savedcontext.stories);
