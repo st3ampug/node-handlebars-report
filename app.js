@@ -35,10 +35,11 @@ app.get('/', function (req, res) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         console.log(qparams);
 
+        if(typeof qparams.templateid != 'undefined') {
+            initCalls(req, res, 'projects');
+        }
         if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-            
-            projectCalls(req, res, 'repoptions', qparams.jkey, qparams.tid);
-
+            allTheCalls(req, res, 'repoptions', qparams.jkey, qparams.tid);
         }
         else {
             res.render("errors/error-general");
@@ -46,28 +47,80 @@ app.get('/', function (req, res) {
 
     } else {
         // without params, the project selection loads
-        
-        initCalls(req, res, 'projects');
+        //initCalls(req, res, 'projects');
 
+        // testing routing without params
+        var mycontext = globals.templates;
+        console.log(mycontext);
+
+        res.render(
+            'templselect', {
+            context: mycontext
+        });
     }
 });
 
-app.get('/template1', function (req, res) {
+app.get("/projects", function (req, res) {
+    if (req.url.indexOf('?') >= 0) {
+        var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
+        console.log(qparams);
+
+        if(typeof qparams.templateid != 'undefined') {
+            //initCalls(req, res, 'projects');
+
+            switch (qparams.templateid) {
+                case "0":
+                    res.render("errors/error-general");
+                case "1":
+                    testCalls(req, res, 'projects', qparams.templateid);
+                    break;
+                case "2": 
+                    projectCalls(req, res, 'projects', qparams.templateid);
+                    break;
+                case "3": 
+                    projectAndTestCalls(req, res, 'projects', qparams.templateid);
+                    break;
+
+                default: 
+                    res.render("errors/error-noparams");
+            }
+        }
+    } else {
+        res.render("errors/error-general");
+    }
+});
+
+app.get('/repoptions', function (req, res) {
+    if (req.url.indexOf('?') >= 0) {
+
+        var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
+        console.log(qparams);
+
+        if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
+            allTheCalls(req, res, 'repoptions', qparams.jkey, qparams.tid);
+        }
+        else {
+            res.render("errors/error-noparams");
+        }
+
+    } else {
+        res.render("errors/error-general");
+    }
+});
+
+app.get('/report', function (req, res) {
 
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
         console.log(qparams);
 
         if(isEmpty(qparams) || isEmpty(contextsave)) {
-
             res.render('errors/error-nocontext');
-
         } else {
-
             var context = constructReportContext(qparams, contextsave);
 
             res.render(
-            'template1', {
+            'template' + qparams.templateid, {
                 context: context,
                 stringify: JSON.stringify(context)
             });
@@ -78,13 +131,17 @@ app.get('/template1', function (req, res) {
 });
 
 app.get('/test', function (req, res) {
-    res.render(
-        'errors/error-nocontext');
+    res.render('errors/error-nocontext');
+});
 
-    if (req.url.indexOf('?') >= 0) {
-        qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-        console.log(qparams);
-    }
+app.get('/test2', function (req, res) {
+    var mycontext = globals.templates;
+    console.log(mycontext);
+
+    res.render(
+        'templselect', {
+        context: mycontext
+    });
 });
 
 app.listen(3000);
@@ -92,8 +149,76 @@ app.listen(3000);
 // Functions
 // ==============================================================================
 
-function initCalls(req, res, pagetorender) {
+function projectCalls(req, res, pagetorender, templateid) {
+    console.log("Sending initial request");
+
+    const jiraurl = globals.jiraurl + '/project';
+    console.log("JIRA request: " + jiraurl);
+
+    const selectedtemplate = globals.templates[templateid];
+    console.log("template selection: " + JSON.stringify(selectedtemplate));
+
+    request({
+        url: jiraurl,
+        headers: {
+            "Authorization": basicAuth(a.jirauser, a.jirapass)
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("JIRA projects request: 200");
+            console.log("Attempting to render page");
+            contextsave = passJiraObject(JSON.parse(response.body));
+
+            res.render(pagetorender, {
+                context: contextsave,
+                reptemplate: selectedtemplate
+            });
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            console.log("JIRA projects request: " + response.statusCode);
+            res.render("errors/error-general");
+        }
+    });
+}
+
+function testCalls(req, res, pagetorender, templateid) {
+    console.log("Sending initial request");
+
+    const testrailurl = globals.testrailurl + '/get_projects';
+    console.log("TestRail request: " + testrailurl);
+
+    const selectedtemplate = globals.templates[templateid];
+    console.log("template selection: " + JSON.stringify(selectedtemplate));
+    
+    request({
+        url: testrailurl,
+        headers: {
+            "Authorization": basicAuth(a.testrailuser, a.testrailpass),
+            "Content-Type": "application/json"
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("TestRail projects request: 200");
+            console.log("Attempting to render page");
+            contextsave = passTestRailObject(JSON.parse(response.body));
+
+            res.render(pagetorender, {
+                context: contextsave,
+                reptemplate: selectedtemplate
+            });
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            console.log("TestRail projects request: " + response.statusCode);
+            res.render("errors/error-general");
+        }
+    });
+}
+
+function projectAndTestCalls(req, res, pagetorender, templateid) {
     console.log("Sending initial requests");
+
+    const selectedtemplate = globals.templates[templateid];
+    console.log("template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
@@ -115,7 +240,8 @@ function initCalls(req, res, pagetorender) {
                     next(null, body);
                 }
             });
-        }, function(next) {
+        },
+        function(next) {
             const testrailurl = globals.testrailurl + '/get_projects';
             console.log("TestRail request: " + testrailurl);
             
@@ -143,7 +269,8 @@ function initCalls(req, res, pagetorender) {
             contextsave = mergeTwoObjects(JSON.parse(results[0]), JSON.parse(results[1]))
 
             res.render(pagetorender, {
-                context: contextsave
+                context: contextsave,
+                reptemplate: selectedtemplate
             });
         } else {
             res.render("errors/error-general");
@@ -151,7 +278,7 @@ function initCalls(req, res, pagetorender) {
   });
 }
 
-function projectCalls(req, res, pagetorender, jkey, tid) {
+function allTheCalls(req, res, pagetorender, jkey, tid) {
     console.log("Sending project requests");
 
     async.parallel([
@@ -323,6 +450,29 @@ function isEmpty(obj) {
     }
 
     return true;
+}
+
+function passJiraObject(o) {
+    var retobj = {
+        jiraprojects: o,
+        testrailprojects: []
+    };
+    
+    return retobj;
+}
+
+function passTestRailObject(o) {
+    var retobj = {
+        jiraprojects: {},
+        testrailprojects: []
+    };
+
+    for(var i = 0; i < o.length; i++) {
+        if(o[i].is_completed != true)
+            retobj.testrailprojects.push(o[i])
+    }
+    
+    return retobj;
 }
 
 function mergeTwoObjects(o1, o2) {

@@ -98,7 +98,7 @@ window.addEventListener('load', function(){
         elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
-        submitSelectionInfo(REPORTPAGE, selections, reporttitle.value);
+        submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
     });
     
 });

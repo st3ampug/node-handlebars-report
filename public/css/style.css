@@ -25,10 +25,6 @@
     margin-top: -50px; /* move up to show the over portion of the image */
 }
 
-#projectselect {
-  height: 180px;
-}
-
 /* Has to be more specific than the DataTable's css! */
 #jiraprojecttable tr[selected='selected'],
 #testrailprojecttable tr[selected='selected'],

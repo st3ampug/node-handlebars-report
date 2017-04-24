@@ -1,4 +1,8 @@
-const REPORTPAGE = "template1";
+const GLOBALS = {
+    PROJECTSELECTIONPAGE: "projects",
+    REPORTOPTIONSPAGE: "repoptions",
+    REPORTPAGE_NEEDSID: "template"
+};
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();

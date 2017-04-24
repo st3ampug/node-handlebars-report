@@ -1,0 +1,81 @@
+<!-- =========================== HEADER ========================== -->
+
+<div class="row">
+
+</div>
+
+<!-- =========================== TITLE =========================== -->
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h1>Report template selection</h1>
+        </div>
+    </div>
+</div>
+
+<!-- =========================== BODY  =========================== -->
+<!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="my-title">
+        <div class="three columns">
+            <h3>Templates:</h3>
+        </div>
+        <div class="four columns">
+            <select id="templateselect" class="u-full-width">
+                {{debug}}
+                {{#each context}}
+                    <option class="template-options" {{#unless this.enabled}}disabled="disabled" selected{{/unless}} id="{{this.id}}" description="{{this.description}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="five columns">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 2 ++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="three columns">
+        &nbsp;
+    </div>
+    <div class="four columns">
+        <h4 id="template-title">n/a</h4>
+    </div>
+    <div class="five columns">
+        <p id="template-description">n/a</p>
+    </div>
+</div>
+
+<!-- ++++++++++++++++++++++++ ROWS LAST ++++++++++++++++++++++++++ -->
+
+<div class="row last-row" id="button-row">
+    <div class="three columns">
+        &nbsp;
+    </div>
+    <div class="six columns textalign-middle">
+        <button class="button-primary" id="selecitonsubmit">Submit Selection</button>
+    </div>
+    <div class="three columns">
+        &nbsp;
+    </div>
+</div>
+
+<div class="row last-row" id="button-overlay">
+    <div class="three columns">
+        &nbsp;
+    </div>
+    <div class="six columns textalign-middle">
+        <img src="pics/dashinfinity.gif" />
+    </div>
+    <div class="three columns">
+        &nbsp;
+    </div>
+</div>
+
+<!-- ++++++++++++++++++++++++++ SCRIPTS ++++++++++++++++++++++++++ -->
+
+<script src="js/events-globals.js"></script>
+<script src="js/events-templselect.js"></script>
