@@ -34,7 +34,38 @@ var globals =  globals || {
       name: "Generic test report",
       description: "A report with a tests related pie chart and JIRA stories, tasks and bug list."
     }
-  ]
+  ],
+  f: {
+    log(type, str) {
+      var retstr = currentDate();
+      switch(type) {
+        case "set":
+          retstr += " [setting ]: ";
+          break;
+        case "err":
+          retstr += " [error   ]: ";
+          break;
+        case "inf":
+        default: 
+          retstr += " [info    ]: ";
+          break;
+      }
+
+      if(typeof str === 'object')
+        retstr += JSON.stringify(str);
+      else
+        retstr += str;
+
+      console.log(retstr);
+    }
+  }
 };
 
 module.exports = globals;
+
+function currentDate() {
+    var dateFormat = require('dateformat');
+    var now = new Date();
+    //dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    return dateFormat(now, "yyyy-mm-dd HH:MM:ss");
+}

@@ -35,7 +35,7 @@ app.get('/', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-        console.log(qparams);
+        globals.f.log("inf", "qparams: " + qparams);
 
         if(typeof qparams.templateid != 'undefined') {
             initCalls(req, res, 'projects');
@@ -53,7 +53,7 @@ app.get('/', function (req, res) {
 
         // testing routing without params
         var mycontext = globals.templates;
-        console.log(mycontext);
+        globals.f.log("set", "mycontext: " + JSON.stringify(mycontext));
 
         res.render(
             globals.pages[1], {
@@ -66,7 +66,7 @@ app.get('/', function (req, res) {
 app.get("/projects", function (req, res) {
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
-        console.log(qparams);
+        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(typeof qparams.templateid != 'undefined') {
             //initCalls(req, res, 'projects');
@@ -98,7 +98,7 @@ app.get('/issues', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-        console.log(qparams);
+        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
             allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
@@ -117,7 +117,7 @@ app.get('/report', function (req, res) {
 
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
-        console.log(qparams);
+        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(isEmpty(qparams) || isEmpty(contextsave)) {
             res.render('errors/error-nocontext');
@@ -144,13 +144,13 @@ app.listen(3000);
 // ==============================================================================
 
 function projectCalls(req, res, pagetorender, templateid) {
-    console.log("Sending initial request");
+    globals.f.log("inf", "Sending initial request");
 
     const jiraurl = globals.jiraurl + '/project';
-    console.log("JIRA request: " + jiraurl);
+    globals.f.log("inf", "JIRA request: " + jiraurl);
 
     const selectedtemplate = globals.templates[templateid];
-    console.log("template selection: " + JSON.stringify(selectedtemplate));
+    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     request({
         url: jiraurl,
@@ -159,8 +159,8 @@ function projectCalls(req, res, pagetorender, templateid) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("JIRA projects request: 200");
-            console.log("Attempting to render page");
+            globals.f.log("inf", "JIRA projects request: 200");
+            globals.f.log("inf", "Attempting to render page");
             contextsave = passJiraObject(JSON.parse(response.body));
 
             res.render(pagetorender, {
@@ -169,20 +169,20 @@ function projectCalls(req, res, pagetorender, templateid) {
             });
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            console.log("JIRA projects request: " + response.statusCode);
+            globals.f.log("err", "JIRA projects request: " + response.statusCode);
             res.render("errors/error-general");
         }
     });
 }
 
 function testCalls(req, res, pagetorender, templateid) {
-    console.log("Sending initial request");
+    globals.f.log("inf", "Sending initial request");
 
     const testrailurl = globals.testrailurl + '/get_projects';
-    console.log("TestRail request: " + testrailurl);
+    globals.f.log("inf", "TestRail request: " + testrailurl);
 
     const selectedtemplate = globals.templates[templateid];
-    console.log("template selection: " + JSON.stringify(selectedtemplate));
+    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
     
     request({
         url: testrailurl,
@@ -192,8 +192,8 @@ function testCalls(req, res, pagetorender, templateid) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("TestRail projects request: 200");
-            console.log("Attempting to render page");
+            globals.f.log("inf", "TestRail projects request: 200");
+            globals.f.log("inf", "Attempting to render page");
             contextsave = passTestRailObject(JSON.parse(response.body));
 
             res.render(pagetorender, {
@@ -202,7 +202,7 @@ function testCalls(req, res, pagetorender, templateid) {
             });
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            console.log("TestRail projects request: " + response.statusCode);
+            globals.f.log("err", "TestRail projects request: " + response.statusCode);
             res.render("errors/error-general");
         }
     });
@@ -211,10 +211,10 @@ function testCalls(req, res, pagetorender, templateid) {
 
 
 function projectAndTestCalls(req, res, pagetorender, templateid) {
-    console.log("Sending initial requests");
+    globals.f.log("inf", "Sending initial requests");
 
     const selectedtemplate = globals.templates[templateid];
-    console.log("template selection: " + JSON.stringify(selectedtemplate));
+    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
@@ -226,7 +226,7 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
         if(results.length == 2){
             // construct the custom obj out of the 2 responses and set it as the context
 
-            console.log("Attempting to render page");
+            globals.f.log("inf", "Attempting to render page");
             contextsave = mergeTwoObjects(JSON.parse(results[0]), JSON.parse(results[1]))
 
             res.render(pagetorender, {
@@ -240,124 +240,32 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
 }
 
 function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
-    console.log("Sending project requests");
+    globals.f.log("inf", "Sending project requests");
 
     const selectedtemplate = globals.templates[templateid];
-    console.log("template selection: " + JSON.stringify(selectedtemplate));
+    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
-            // JIRA Stories req ====================
-
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Story) ' + globals.jiraapiextension;
-            console.log("JIRA request: " + jiraurl);
-
-            request({
-                url: jiraurl,
-                headers: {
-                    "Authorization": basicAuth(a.jirauser, a.jirapass)
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("JIRA stories request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("JIRA stories request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            // JIRA Story req ====================
+            jiraIssueTypeAPICallWithCallback('Story', jkey, next);
         }, function(next) {
             // JIRA Tasks req ====================
-
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Task) ' + globals.jiraapiextension;
-            console.log("JIRA request: " + jiraurl);
-
-            request({
-                url: jiraurl,
-                headers: {
-                    "Authorization": basicAuth(a.jirauser, a.jirapass)
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("JIRA tasks request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("JIRA tasks request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            jiraIssueTypeAPICallWithCallback('Task', jkey, next);
         },function(next) {
             // JIRA Bugs req ====================
-
-            const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (Bug) ' + globals.jiraapiextension;
-            console.log("JIRA request: " + jiraurl);
-
-            request({
-                url: jiraurl,
-                headers: {
-                    "Authorization": basicAuth(a.jirauser, a.jirapass)
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("JIRA bugs request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("JIRA bugs request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            jiraIssueTypeAPICallWithCallback('Bug', jkey, next);
         },function(next) {
             // TestRail Plans req ====================
-
-            const testrailurl = globals.testrailurl + '/get_plans/' + tid;
-            console.log("TestRail request: " + testrailurl);
-            
-            request({
-                url: testrailurl,
-                headers: {
-                    "Authorization": basicAuth(a.testrailuser, a.testrailpass),
-                    "Content-Type": "application/json"
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("TestRail plans request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("TestRail plans request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            testRailGetTestAPICallWithCallback('/get_plans/', tid, next);
         },function(next) {
             // TestRail Runs req ====================
-
-            const testrailurl = globals.testrailurl + '/get_runs/' + tid;
-            console.log("TestRail request: " + testrailurl);
-            
-            request({
-                url: testrailurl,
-                headers: {
-                    "Authorization": basicAuth(a.testrailuser, a.testrailpass),
-                    "Content-Type": "application/json"
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("TestRail runs request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("TestRail runs request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            testRailGetTestAPICallWithCallback('/get_runs/', tid, next);
         }], function(err, results) {
         if(results.length == 5){
             // construct the custom obj out of the multiple responses and set it as the context
 
-            console.log("Attempting to render page");
+            globals.f.log("inf", "Attempting to render page");
             contextsave = mergeFiveObjects(
                         JSON.parse(results[0]),
                         JSON.parse(results[1]),
@@ -389,7 +297,7 @@ function currentDate() {
 
 function basicAuth(u, p) {
     var auth = "Basic " + new Buffer(u + ":" + p).toString("base64");
-    //console.log(auth);
+    globals.f.log("set", "Generating auth");
     return auth;
 }
 
@@ -455,11 +363,11 @@ function mergeTwoObjects(o1, o2) {
 }
 
 function mergeFiveObjects(o1, o2, o3, o4, o5) {
-    console.log("stories " + o1.total);
-    console.log("tasks " + o2.total);
-    console.log("bugs " + o3.total);
-    console.log("plans " + o4.length);
-    console.log("runs " + o5.length);
+    globals.f.log("set", "stories " + o1.total);
+    globals.f.log("set", "tasks " + o2.total);
+    globals.f.log("set", "bugs " + o3.total);
+    globals.f.log("set", "plans " + o4.length);
+    globals.f.log("set", "runs " + o5.length);
 
     var retobj = {
         stories: o1.issues,
@@ -506,23 +414,23 @@ function constructReportContext(qparams, savedcontext) {
 
     if("st" in qparams && "stories" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.stories, qparams.st, savedcontext.stories);
-        console.log("stories ok");
+        globals.f.log("set", "stories ok");
     }
     if("ta" in qparams && "tasks" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.tasks, qparams.ta, savedcontext.tasks);
-        console.log("tasks ok");
+        globals.f.log("set", "tasks ok");
     }
     if("bu" in qparams && "bugs" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.bugs, qparams.bu, savedcontext.bugs);
-        console.log("bugs ok");
+        globals.f.log("set", "bugs ok");
     }
     if("tp" in qparams && "testplans" in savedcontext) {
         pushToArrFromContextWithTestRailId(retobj.testplans, qparams.tp, savedcontext.testplans);
-        console.log("testplans ok");
+        globals.f.log("set", "testplans ok");
     }
     if("tr" in qparams && "testruns" in savedcontext) {
         pushToArrFromContextWithTestRailId(retobj.testruns, qparams.tr, savedcontext.testruns);
-        console.log("testruns ok");
+        globals.f.log("set", "testruns ok");
     }
 
     return retobj;
@@ -530,7 +438,7 @@ function constructReportContext(qparams, savedcontext) {
 
 function jiraProjectAPIWithCallback(callback) {
     const jiraurl = globals.jiraurl + '/project';
-    console.log("JIRA request: " + jiraurl);
+    globals.f.log("inf", "JIRA request: " + jiraurl);
 
     request({
         url: jiraurl,
@@ -539,11 +447,11 @@ function jiraProjectAPIWithCallback(callback) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("JIRA projects request: 200");
+            globals.f.log("inf", "JIRA projects request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            console.log("JIRA projects request: " + response.statusCode);
+            globals.f.log("err", "JIRA projects request: " + response.statusCode);
             callback(null, body);
         }
     });
@@ -551,7 +459,7 @@ function jiraProjectAPIWithCallback(callback) {
 
 function testRailProjectAPIWithCallback(callback){
     const testrailurl = globals.testrailurl + '/get_projects';
-    console.log("TestRail request: " + testrailurl);
+    globals.f.log("inf", "TestRail request: " + testrailurl);
     
     request({
         url: testrailurl,
@@ -561,11 +469,54 @@ function testRailProjectAPIWithCallback(callback){
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("TestRail projects request: 200");
+            globals.f.log("inf", "TestRail projects request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            console.log("TestRail projects request: " + response.statusCode);
+            globals.f.log("err", "TestRail projects request: " + response.statusCode);
+            callback(null, body);
+        }
+    });
+}
+
+function jiraIssueTypeAPICallWithCallback(issuetype, jkey, callback) {
+    const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (' + issuetype + ') ' + globals.jiraapiextension;
+    globals.f.log("inf", "JIRA request: " + jiraurl);
+
+    request({
+        url: jiraurl,
+        headers: {
+            "Authorization": basicAuth(a.jirauser, a.jirapass)
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            globals.f.log("inf", "JIRA (" + issuetype + ") request: 200");
+            callback(null, body);
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            globals.f.log("err", "JIRA (" + issuetype + ") request: " + response.statusCode);
+            callback(null, body);
+        }
+    });
+}
+
+function testRailGetTestAPICallWithCallback(getstr, tid, callback) {
+    const testrailurl = globals.testrailurl + getstr + tid;
+    globals.f.log("inf", "TestRail request: " + testrailurl);
+    
+    request({
+        url: testrailurl,
+        headers: {
+            "Authorization": basicAuth(a.testrailuser, a.testrailpass),
+            "Content-Type": "application/json"
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            globals.f.log("inf", "TestRail (" + getstr + ") request: 200");
+            callback(null, body);
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            globals.f.log("err", "TestRail (" + getstr + ") request: " + response.statusCode);
             callback(null, body);
         }
     });

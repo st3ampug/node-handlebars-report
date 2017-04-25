@@ -23,7 +23,6 @@
         </div>
         <div class="four columns">
             <select id="templateselect" class="u-full-width">
-                {{debug}}
                 {{#each context}}
                     <option class="template-options" {{#unless this.enabled}}disabled="disabled" selected{{/unless}} id="{{this.id}}" description="{{this.description}}">{{this.name}}</option>
                 {{/each}}
