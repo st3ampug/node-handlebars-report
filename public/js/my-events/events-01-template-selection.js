@@ -1,6 +1,6 @@
 // Variables ===========================================================================
 
-const PAGETITLE = "Waracle - Test Report - Report builder";
+const PAGETITLE = "Waracle - Test Report - Template selection";
 
 const BUTTONROWID = "button-row";
 const BUTTONOVERLAYID = "button-overlay";
@@ -55,7 +55,7 @@ window.addEventListener('load', function(){
         elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
-        submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection, GLOBALS.PROJECTSELECTIONPAGE);
+        submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection);
     });
     
 });
@@ -91,13 +91,13 @@ function getSelectedInformation(str) {
     return retobj;
 }
 
-function submitSelectionInfo(nextpage, selection, nextpage) {
+function submitSelectionInfo(nextpage, selection) {
     // using href so the user can navigate back
-    var urls = window.location.href.split('?');
-    var rdyurl = urls[0] + nextpage + "?" + "templateid=" + selection.templateid;
+    var loc = window.location;
+    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
+                + nextpage + "?" + "templateid=" + selection.templateid;
 
-    if(urls.length > 0 )
-        window.location.href = rdyurl;
+    window.location.href = rdyurl;
 }
 
 

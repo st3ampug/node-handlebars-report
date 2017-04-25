@@ -28,6 +28,7 @@ var testrailprojectrows = document.getElementsByClassName(TESTRAILPROJECTROWCLAS
 var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
 var selections = {
+    templateid: "",
     jiraselection: [],
     testrailselection: []
 }
@@ -42,6 +43,7 @@ window.addEventListener('load', function(){
     // INIT =============================================
     
     changePageTitle(PAGETITLE);
+    setTemplateId();
 
     initDataTableCustom(JIRAPROJECTTABLEID, 500);
     initDataTableCustom(TESTRAILROJECTTABLEID, 500);
@@ -63,7 +65,7 @@ window.addEventListener('load', function(){
         buttonDisabledSkeleton(SELECTIONSUBMITID);
         elementDisplayNone(BUTTONROWID);
         elementDisplayBlock(BUTTONOVERLAYID);
-        submitProjectInfo(selections.jiraselection[0], selections.testrailselection[0]);
+        submitSelectionInfo(GLOBALS.ISSUESSELECTIONPAGE, selections.templateid, selections.jiraselection[0], selections.testrailselection[0]);
         // length check was done when the button was enabled
         
     });    
@@ -72,6 +74,10 @@ window.addEventListener('load', function(){
 // =====================================================================================
 
 // Helpers =============================================================================
+
+function setTemplateId() {
+    selections.templateid = getUrlParameter("templateid");
+}
 
 function highlightRow(id, projectrows) {
     var row = document.getElementById(id);
@@ -89,12 +95,13 @@ function displaySelection(selectionID, trID, attr) {
     $("#" + selectionID).text( PROJECTSELECTTEXT + $("#" + trID).attr(attr) );
 }
 
-function submitProjectInfo(jirakey, testrailid) {
+function submitSelectionInfo(nextpage, templateid, jirakey, testrailid) {
     // using replace so the user can't navigate back
-    var urls = window.location.href.split('?');
+    var loc = window.location;
+    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
+                + nextpage + "?" + "templateid=" + templateid + "&jkey=" + jirakey + "&tid=" + testrailid;
 
-    if(urls.length > 0 )
-        window.location.href = urls[0] + "?jkey=" + jirakey + "&tid=" + testrailid;
+    window.location.href = rdyurl;
 }
 
 function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectionarray) {
@@ -131,10 +138,6 @@ function checkSelectionStrings() {
 }
 
 
-
-
-
-
 // old code stuff!!
 
 function changeCollapseState(tocollapseID, toexpandID) {
@@ -142,20 +145,7 @@ function changeCollapseState(tocollapseID, toexpandID) {
     $("#" + tocollapseID).hide();
 }
 
-function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-}
 
 // very old
 

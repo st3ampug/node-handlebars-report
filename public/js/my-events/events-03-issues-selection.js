@@ -1,6 +1,6 @@
 // Variables ===========================================================================
 
-const PAGETITLE = "Waracle - Test Report - Report builder";
+const PAGETITLE = "Waracle - Test Report - Issues selection";
 
 const REPORTTITLEID = "reporttitle";
 const STORIESTABLEID = "storiestable";
@@ -41,6 +41,7 @@ var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
 
 var selections = {
+    templateid: "",
     storyselection: [],
     taskselection: [],
     bugselection: [],
@@ -58,6 +59,7 @@ window.addEventListener('load', function(){
     // INIT =============================================
 
     changePageTitle(PAGETITLE);
+    setTemplateId();
 
     initDataTableCustom(STORIESTABLEID, 400);
     initDataTableCustom(TASKSTABLEID, 400);
@@ -106,6 +108,10 @@ window.addEventListener('load', function(){
 // =====================================================================================
 
 // Helpers =============================================================================
+
+function setTemplateId() {
+    selections.templateid = getUrlParameter("templateid");
+}
 
 function highlightRow(id) {
     var row = document.getElementById(id);
@@ -203,8 +209,9 @@ function changeCollapseState(tocollapseID, toexpandID) {
 
 function submitSelectionInfo(nextpage, selections, title) {
     // using href so the user can navigate back
-    var urls = window.location.href.split('?');
-    var rdyurl = urls[0] + nextpage + "?" + "title=" + removeSpecials(title) + "&";
+    var loc = window.location;
+    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
+                + nextpage + "?" + "templateid=" + selections.templateid + "&title=" + title + "&";
 
     if(storiestable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("st[]", selections.storyselection) + "&";
@@ -226,8 +233,7 @@ function submitSelectionInfo(nextpage, selections, title) {
         rdyurl = rdyurl.slice(0, -1);
     }
 
-    if(urls.length > 0 )
-        window.location.href = rdyurl;
+    window.location.href = rdyurl;
 }
 
 function concatArrayElements(pref, arr) {
@@ -252,24 +258,6 @@ function tableFilterTest(tableid) {
         console.log(value + " / " + index);
         return value == '<div>1.0</div>' ? true : false;
     } );
-}
-
-
-
-
-function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
 }
 
 function removeSpecials(str) {

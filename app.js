@@ -5,6 +5,7 @@ var express = require('express');
 var exphbs  = require('express-handlebars');
 var request = require('request');
 var async   = require('async');
+var fs      = require('fs');
 var queryString = require("query-string");
 
 const a = require('./code/secret/access.js');
@@ -29,6 +30,7 @@ var contextsave = {};
 // Routing
 // ==============================================================================
 
+// First page: Report template selection
 app.get('/', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
 
@@ -54,12 +56,13 @@ app.get('/', function (req, res) {
         console.log(mycontext);
 
         res.render(
-            'templselect', {
+            globals.pages[1], {
             context: mycontext
         });
     }
 });
 
+// Second page: Project selection (JIRA and TestRail api calls to pop. tables)
 app.get("/projects", function (req, res) {
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
@@ -72,13 +75,13 @@ app.get("/projects", function (req, res) {
                 case "0":
                     res.render("errors/error-general");
                 case "1":
-                    testCalls(req, res, 'projects', qparams.templateid);
+                    testCalls(req, res, globals.pages[2], qparams.templateid);
                     break;
                 case "2": 
-                    projectCalls(req, res, 'projects', qparams.templateid);
+                    projectCalls(req, res, globals.pages[2], qparams.templateid);
                     break;
                 case "3": 
-                    projectAndTestCalls(req, res, 'projects', qparams.templateid);
+                    projectAndTestCalls(req, res, globals.pages[2], qparams.templateid);
                     break;
 
                 default: 
@@ -86,18 +89,24 @@ app.get("/projects", function (req, res) {
             }
         }
     } else {
-        res.render("errors/error-general");
+        res.render();
     }
 });
 
-app.get('/repoptions', function (req, res) {
+// Third page: Issues selection (JIRA and TestRail api calls to pop. tables)
+app.get('/issues', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         console.log(qparams);
+        console.log("file exists (" + 'report-templates/template' + qparams.templateid + globals.templateextension + "): " + fs.existsSync('report-templates/template' + qparams.templateid + globals.templateextension));
+        console.log("file exists: " + fs.existsSync('./report-templates/template' + qparams.templateid + globals.templateextension));
+        console.log("file exists: " + fs.existsSync('../report-templates/template' + qparams.templateid + globals.templateextension));
+        console.log("file exists: " + fs.existsSync('/report-templates/template' + qparams.templateid + globals.templateextension));
+        console.log("file exists: " + fs.existsSync('./views/report-templates/template' + qparams.templateid + globals.templateextension));
 
         if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-            allTheCalls(req, res, 'repoptions', qparams.jkey, qparams.tid);
+            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid);
         }
         else {
             res.render("errors/error-noparams");
@@ -108,6 +117,7 @@ app.get('/repoptions', function (req, res) {
     }
 });
 
+// Fourth page: report generation based on the selected template
 app.get('/report', function (req, res) {
 
     if (req.url.indexOf('?') >= 0) {
@@ -116,32 +126,21 @@ app.get('/report', function (req, res) {
 
         if(isEmpty(qparams) || isEmpty(contextsave)) {
             res.render('errors/error-nocontext');
-        } else {
+
+        } else if(fs.existsSync('./views/report-templates/template' + qparams.templateid + globals.templateextension)) {
             var context = constructReportContext(qparams, contextsave);
 
             res.render(
-            'template' + qparams.templateid, {
+            'report-templates/template' + qparams.templateid, {
                 context: context,
                 stringify: JSON.stringify(context)
             });
+        } else {
+            res.render("errors/error-notemplate");
         }
     } else {
         res.render("errors/error-general");
     }
-});
-
-app.get('/test', function (req, res) {
-    res.render('errors/error-nocontext');
-});
-
-app.get('/test2', function (req, res) {
-    var mycontext = globals.templates;
-    console.log(mycontext);
-
-    res.render(
-        'templselect', {
-        context: mycontext
-    });
 });
 
 app.listen(3000);
