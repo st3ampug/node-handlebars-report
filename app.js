@@ -208,6 +208,8 @@ function testCalls(req, res, pagetorender, templateid) {
     });
 }
 
+
+
 function projectAndTestCalls(req, res, pagetorender, templateid) {
     console.log("Sending initial requests");
 
@@ -216,45 +218,10 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
 
     async.parallel([
         function(next) {
-            const jiraurl = globals.jiraurl + '/project';
-            console.log("JIRA request: " + jiraurl);
-
-            request({
-                url: jiraurl,
-                headers: {
-                    "Authorization": basicAuth(a.jirauser, a.jirapass)
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("JIRA projects request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("JIRA projects request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            jiraProjectAPIWithCallback(next);
         },
         function(next) {
-            const testrailurl = globals.testrailurl + '/get_projects';
-            console.log("TestRail request: " + testrailurl);
-            
-            request({
-                url: testrailurl,
-                headers: {
-                    "Authorization": basicAuth(a.testrailuser, a.testrailpass),
-                    "Content-Type": "application/json"
-                }
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log("TestRail projects request: 200");
-                    next(null, body);
-                }
-                if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-                    console.log("TestRail projects request: " + response.statusCode);
-                    next(null, body);
-                }
-            });
+            testRailProjectAPIWithCallback(next);
     }], function(err, results) {
         if(results.length == 2){
             // construct the custom obj out of the 2 responses and set it as the context
@@ -559,4 +526,47 @@ function constructReportContext(qparams, savedcontext) {
     }
 
     return retobj;
+}
+
+function jiraProjectAPIWithCallback(callback) {
+    const jiraurl = globals.jiraurl + '/project';
+    console.log("JIRA request: " + jiraurl);
+
+    request({
+        url: jiraurl,
+        headers: {
+            "Authorization": basicAuth(a.jirauser, a.jirapass)
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("JIRA projects request: 200");
+            callback(null, body);
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            console.log("JIRA projects request: " + response.statusCode);
+            callback(null, body);
+        }
+    });
+}
+
+function testRailProjectAPIWithCallback(callback){
+    const testrailurl = globals.testrailurl + '/get_projects';
+    console.log("TestRail request: " + testrailurl);
+    
+    request({
+        url: testrailurl,
+        headers: {
+            "Authorization": basicAuth(a.testrailuser, a.testrailpass),
+            "Content-Type": "application/json"
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("TestRail projects request: 200");
+            callback(null, body);
+        }
+        if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
+            console.log("TestRail projects request: " + response.statusCode);
+            callback(null, body);
+        }
+    });
 }
