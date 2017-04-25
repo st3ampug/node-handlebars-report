@@ -47,7 +47,7 @@
         <table id="storiestable" rowscount="{{context.stories.length}}">
             <thead>
                 <tr>
-                    <th>ISSUETYPE</th>
+                    <th>TYPE</th>
                     <th>KEY</th>
                     <th>SUMMARY</th>
                     <th>FIXVERSION</th>
@@ -91,9 +91,10 @@
         <table id="taskstable" rowscount="{{context.tasks.length}}">
             <thead>
                 <tr>
-                    <th>ISSUETYPE</th>
+                    <th>TYPE</th>
                     <th>KEY</th>
                     <th>SUMMARY</th>
+                    <th>FIXVERSION</th>
                     <th>STATUS</th>
                 </tr>
             </thead>
@@ -103,6 +104,7 @@
                     <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                     <td>{{this.key}}</td>
                     <td>{{this.fields.summary}}</td>
+                    <td>{{{versions this.fields.fixVersions}}}</td>
                     <td>{{this.fields.status.name}}</td>
                 </tr>
                 {{/each}}
@@ -133,9 +135,10 @@
         <table id="bugstable" rowscount="{{context.bugs.length}}">
             <thead>
                 <tr>
-                    <th>ISSUETYPE</th>
+                    <th>TYPE</th>
                     <th>KEY</th>
                     <th>SUMMARY</th>
+                    <th>FIXVERSION</th>
                     <th>STATUS</th>
                 </tr>
             </thead>
@@ -145,6 +148,7 @@
                     <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                     <td>{{this.key}}</td>
                     <td>{{this.fields.summary}}</td>
+                    <td>{{{versions this.fields.fixVersions}}}</td>
                     <td>{{this.fields.status.name}}</td>
                 </tr>
                 {{/each}}

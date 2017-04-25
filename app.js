@@ -99,14 +99,9 @@ app.get('/issues', function (req, res) {
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         console.log(qparams);
-        console.log("file exists (" + 'report-templates/template' + qparams.templateid + globals.templateextension + "): " + fs.existsSync('report-templates/template' + qparams.templateid + globals.templateextension));
-        console.log("file exists: " + fs.existsSync('./report-templates/template' + qparams.templateid + globals.templateextension));
-        console.log("file exists: " + fs.existsSync('../report-templates/template' + qparams.templateid + globals.templateextension));
-        console.log("file exists: " + fs.existsSync('/report-templates/template' + qparams.templateid + globals.templateextension));
-        console.log("file exists: " + fs.existsSync('./views/report-templates/template' + qparams.templateid + globals.templateextension));
 
         if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid);
+            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
         }
         else {
             res.render("errors/error-noparams");
@@ -277,8 +272,11 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
   });
 }
 
-function allTheCalls(req, res, pagetorender, jkey, tid) {
+function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
     console.log("Sending project requests");
+
+    const selectedtemplate = globals.templates[templateid];
+    console.log("template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
@@ -402,7 +400,8 @@ function allTheCalls(req, res, pagetorender, jkey, tid) {
                     );
 
             res.render(pagetorender, {
-                context: contextsave
+                context: contextsave,
+                reptemplate: selectedtemplate
             });
         } else {
             res.render("errors/error-general");
