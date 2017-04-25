@@ -98,3 +98,7 @@
 .td-summary {
     width: 45%;
 }
+
+.td-key {
+    white-space: nowrap;
+}

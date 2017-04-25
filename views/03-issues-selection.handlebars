@@ -58,7 +58,7 @@
                 {{#each context.stories}}
                 <tr class="storyrow" id="{{this.key}}">
                     <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
-                    <td>{{this.key}}</td>
+                    <td class="td-key">{{this.key}}</td>
                     <td>{{this.fields.summary}}</td>
                     <td>{{{versions this.fields.fixVersions}}}</td>
                     <td>{{this.fields.status.name}}</td>
@@ -102,7 +102,7 @@
                 {{#each context.tasks}}
                 <tr class="taskrow" id="{{this.key}}">
                     <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
-                    <td>{{this.key}}</td>
+                    <td class="td-key">{{this.key}}</td>
                     <td>{{this.fields.summary}}</td>
                     <td>{{{versions this.fields.fixVersions}}}</td>
                     <td>{{this.fields.status.name}}</td>
@@ -146,7 +146,7 @@
                 {{#each context.bugs}}
                 <tr class="bugrow" id="{{this.key}}">
                     <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
-                    <td>{{this.key}}</td>
+                    <td class="td-key">{{this.key}}</td>
                     <td>{{this.fields.summary}}</td>
                     <td>{{{versions this.fields.fixVersions}}}</td>
                     <td>{{this.fields.status.name}}</td>
