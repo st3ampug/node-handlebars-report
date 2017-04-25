@@ -211,27 +211,27 @@ function submitSelectionInfo(nextpage, selections, title) {
     // using href so the user can navigate back
     var loc = window.location;
     var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
-                + nextpage + "?" + "templateid=" + selections.templateid + "&title=" + title + "&";
+                + nextpage + "?" + "templateid=" + selections.templateid + "&title=" + title;
 
     if(storiestable.getAttribute("rowscount") != "0") {
-        rdyurl += concatArrayElements("st[]", selections.storyselection) + "&";
+        rdyurl += concatArrayElements("&st[]", selections.storyselection);
     }
     if(taskstable.getAttribute("rowscount") != "0") {
-        rdyurl += concatArrayElements("ta[]", selections.taskselection) + "&";
+        rdyurl += concatArrayElements("&ta[]", selections.taskselection);
     }
     if(bugstable.getAttribute("rowscount") != "0") {
-        rdyurl += concatArrayElements("bu[]", selections.bugselection) + "&";
+        rdyurl += concatArrayElements("&bu[]", selections.bugselection);
     }
     if(testplanstable.getAttribute("rowscount") != "0") {
-        rdyurl += concatArrayElements("tp[]", selections.testplanselection) + "&";
+        rdyurl += concatArrayElements("&tp[]", selections.testplanselection);
     }
     if(testrunstable.getAttribute("rowscount") != "0") {
-        rdyurl += concatArrayElements("tr[]", selections.testrunselection);
+        rdyurl += concatArrayElements("&tr[]", selections.testrunselection);
     }
 
-    if(rdyurl.slice(-1) == "&") {
-        rdyurl = rdyurl.slice(0, -1);
-    }
+    // if(rdyurl.slice(-1) == "&") {
+    //     rdyurl = rdyurl.slice(0, -1);
+    // }
 
     window.location.href = rdyurl;
 }

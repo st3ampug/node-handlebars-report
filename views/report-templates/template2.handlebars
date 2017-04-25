@@ -1,0 +1,391 @@
+<!-- =========================== HEADER ========================== -->
+
+<div class="row">
+</div>
+
+<!-- =========================== TITLE =========================== -->
+<div class="row">
+    <div class="twelve columns">
+        <h1>Test Report: {{context.title}}</h1>
+    </div>
+</div>
+
+<!-- =========================== BODY  =========================== -->
+<!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h2>Test Runs</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+    <div class="five columns">
+        <div id="chart-canvas">
+            <canvas id="myChart" width="300" height="325"></canvas>
+        </div>
+    </div>
+    <div class="three columns">
+        <div id="chart-table">
+            <table class="u-full-width">
+                <tbody>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "passed_count"}} ({{percent context.testplans context.testruns "passed_count"}}%)</td>
+                        <th>Passed</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
+                        <th>Failed</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "blocked_count"}} ({{percent context.testplans context.testruns "blocked_count"}}%)</td>
+                        <th>Blocked</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "retest_count"}} ({{percent context.testplans context.testruns "retest_count"}}%)</td>
+                        <th>Retest</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
+                        <th>Untested</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="two columns">
+        <div id="chart-passed">
+            <h3>{{percent context.testplans context.testruns "passed_count"}}%<br />passed</h3>
+            <h6>{{count context.testplans context.testruns "untested_count"}} / {{countall context.testplans context.testruns}} untested</h6>
+        </div>
+    </div>
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<script>
+    {{!--
+    var data = JSON.parse({{{stringify}}});
+    console.log(data);
+    --}}
+    {{!-- This is how you get your object from the server side to the client --}}
+    {{!-- You will need to construct you object so it can be safely parse, e.g. numbers, no quotes --}}
+
+    var ctx = document.getElementById("myChart").getContext("2d");
+    ctx.canvas.width = 300;
+    ctx.canvas.height = 325;
+
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Passed", "Blocked", "Untested", "Retest", "Failed"],
+            datasets: [{
+                label: '# of Votes',
+                data: [
+                    {{count context.testplans context.testruns "passed_count"}},
+                    {{count context.testplans context.testruns "blocked_count"}},
+                    {{count context.testplans context.testruns "untested_count"}},
+                    {{count context.testplans context.testruns "retest_count"}},
+                    {{count context.testplans context.testruns "failed_count"}},
+                    ],
+                backgroundColor: [
+                    'rgba(3, 192, 60, 0.9)',
+                    'rgba(207, 207, 196, 0.7)',
+                    'rgba(179, 158, 181, 0.7)',
+                    'rgba(253, 253, 150, 0.7)',
+                    'rgba(255, 105, 97, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(3, 192, 60, 1)',
+                    'rgba(207, 207, 196, 1)',
+                    'rgba(179, 158, 181, 1)',
+                    'rgba(253, 253, 150, 1)',
+                    'rgba(255, 105, 97, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            responsive: false
+        }
+    });
+</script>
+
+<!-- +++++++++++++++++++++++++++ ROW 2 +++++++++++++++++++++++++++ -->
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h2>Stories, Tasks, Bugs</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Stories</th>
+                    <td>{{context.stories.length}}</td>
+                    <td>{{done context.stories}}</td>
+                </tr>
+                <tr>
+                    <th>Tasks</th>
+                    <td>{{context.tasks.length}}</td>
+                    <td>{{done context.tasks}}</td>
+                </tr>
+                <tr>
+                    <th>Bugs</th>
+                    <td>{{context.bugs.length}}</td>
+                    <td>{{done context.bugs}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Stories</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.stories}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 4 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Tasks</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each context.tasks}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>
+
+<!-- +++++++++++++++++++++++++++ ROW 5 +++++++++++++++++++++++++++ -->
+
+<div class="row">
+    <div class="twelve columns">
+        <div class="my-title">
+            <h3>Bugs</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="one column">
+        &nbsp;
+    </div>
+
+    <div class="ten columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        KEY
+                    </th>
+                    <th>
+                        SUMMARY
+                    </th>
+                    <th>
+                        RELATED
+                    </th>
+                    <th>
+                        STATUS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each (sort_by_status context.bugs)}}
+                <tr>
+                    <td>
+                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
+                    </td>
+                    <td class="td-summary">
+                        {{{fields.summary}}}
+                    </td>
+                    <td>
+                        {{#if fields.issuelinks.length}}
+                            {{#each fields.issuelinks}}
+                                {{#if this.outwardIssue}}
+                                    <div>
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                                {{#if this.inwardIssue}}
+                                    <div>
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </td>
+                    <th>
+                        {{fields.status.name}}
+                    </th>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="one column">
+        &nbsp;
+    </div>
+</div>

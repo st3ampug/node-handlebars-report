@@ -20,25 +20,64 @@ var globals =  globals || {
       enabled: true,
       id: 1,
       name: "Purely test report",
-      description: "This report only shows test related data, using a pie chart to display the status of the selected test runs and plans and a list of tests and test plans that have been ran"
+      description: "This report only shows test related data, using a pie chart to display the status of the selected test runs and plans and a list of tests and test plans that have been ran",
+      calls: {
+        jira: {
+          init: false,
+          story: false,
+          task: false,
+          bug: false
+        },
+        testrail: {
+          plans: true,
+          runs: true,
+        }
+      }
     },
     {
       enabled: true,
       id: 2,
       name: "Outstanding bugs",
-      description: "This report show outstanding bugs and their related JIRA issues"
+      description: "This report show outstanding bugs and their related JIRA issues",
+      calls: {
+        jira: {
+          init: true,
+          story: false,
+          task: false,
+          bug: true
+        },
+        testrail: {
+          plans: false,
+          runs: false,
+        }
+      }
     },
     {
       enabled: true,
       id: 3,
       name: "Generic test report",
-      description: "A report with a tests related pie chart and JIRA stories, tasks and bug list."
+      description: "A report with a tests related pie chart and JIRA stories, tasks and bug list.",
+      calls: {
+        jira: {
+          init: true,
+          story: true,
+          task: true,
+          bug: true
+        },
+        testrail: {
+          plans: true,
+          runs: true,
+        }
+      }
     }
   ],
   f: {
     log(type, str) {
       var retstr = currentDate();
       switch(type) {
+        case "deb":
+          retstr += " [ DEBUG  ]: ";
+          break;
         case "set":
           retstr += " [setting ]: ";
           break;

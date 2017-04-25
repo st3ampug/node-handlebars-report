@@ -32,26 +32,7 @@ var contextsave = {};
 
 // First page: Report template selection
 app.get('/', function (req, res) {
-    if (req.url.indexOf('?') >= 0) {
-
-        var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-        globals.f.log("inf", "qparams: " + qparams);
-
-        if(typeof qparams.templateid != 'undefined') {
-            initCalls(req, res, 'projects');
-        }
-        if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-            allTheCalls(req, res, 'repoptions', qparams.jkey, qparams.tid);
-        }
-        else {
-            res.render("errors/error-general");
-        }
-
-    } else {
-        // without params, the project selection loads
-        //initCalls(req, res, 'projects');
-
-        // testing routing without params
+    
         var mycontext = globals.templates;
         globals.f.log("set", "mycontext: " + JSON.stringify(mycontext));
 
@@ -59,7 +40,7 @@ app.get('/', function (req, res) {
             globals.pages[1], {
             context: mycontext
         });
-    }
+    
 });
 
 // Second page: Project selection (JIRA and TestRail api calls to pop. tables)
@@ -104,7 +85,8 @@ app.get('/issues', function (req, res) {
             allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
         }
         else {
-            res.render("errors/error-noparams");
+            //res.render("errors/error-noparams"); //test
+            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
         }
 
     } else {
@@ -248,19 +230,44 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
     async.parallel([
         function(next) {
             // JIRA Story req ====================
-            jiraIssueTypeAPICallWithCallback('Story', jkey, next);
+            globals.f.log("inf", "jira story call needed: " + selectedtemplate.calls.jira.story);
+            if(selectedtemplate.calls.jira.story)
+                jiraIssueTypeAPICallWithCallback('Story', jkey, next);
+            else
+                next(null, "[]");
+
         }, function(next) {
             // JIRA Tasks req ====================
-            jiraIssueTypeAPICallWithCallback('Task', jkey, next);
+            globals.f.log("inf", "jira task call needed: " + selectedtemplate.calls.jira.task);
+            if(selectedtemplate.calls.jira.task)
+                jiraIssueTypeAPICallWithCallback('Task', jkey, next);
+            else
+                next(null, "[]");
+
         },function(next) {
             // JIRA Bugs req ====================
-            jiraIssueTypeAPICallWithCallback('Bug', jkey, next);
+            globals.f.log("inf", "jira bug call needed: " + selectedtemplate.calls.jira.bug);
+            if(selectedtemplate.calls.jira.bug)
+                jiraIssueTypeAPICallWithCallback('Bug', jkey, next);
+            else
+                next(null, "[]");
+
         },function(next) {
             // TestRail Plans req ====================
-            testRailGetTestAPICallWithCallback('/get_plans/', tid, next);
+            globals.f.log("inf", "testrail plan call needed: " + selectedtemplate.calls.testrail.plans);
+            if(selectedtemplate.calls.testrail.plans)
+                testRailGetTestAPICallWithCallback('/get_plans/', tid, next);
+            else
+                next(null, "[]");
+
         },function(next) {
             // TestRail Runs req ====================
-            testRailGetTestAPICallWithCallback('/get_runs/', tid, next);
+            globals.f.log("inf", "testrail run call needed: " + selectedtemplate.calls.testrail.runs);
+            if(selectedtemplate.calls.testrail.runs)
+                testRailGetTestAPICallWithCallback('/get_runs/', tid, next);
+            else
+                next(null, "[]");
+
         }], function(err, results) {
         if(results.length == 5){
             // construct the custom obj out of the multiple responses and set it as the context
@@ -326,17 +333,19 @@ function isEmpty(obj) {
 }
 
 function passJiraObject(o) {
+    globals.f.log("deb", "orig jira obj: " + JSON.stringify(o));
     var retobj = {
         jiraprojects: o,
         testrailprojects: []
     };
     
+    globals.f.log("deb", "merged jira obj: " + JSON.stringify(retobj));
     return retobj;
 }
 
 function passTestRailObject(o) {
     var retobj = {
-        jiraprojects: {},
+        jiraprojects: [],
         testrailprojects: []
     };
 
@@ -370,12 +379,27 @@ function mergeFiveObjects(o1, o2, o3, o4, o5) {
     globals.f.log("set", "runs " + o5.length);
 
     var retobj = {
-        stories: o1.issues,
-        tasks: o2.issues,
-        bugs: o3.issues,
-        testplans: o4,
-        testruns: o5
+        stories: [],
+        tasks: [],
+        bugs: [],
+        testplans: [],
+        testruns: []
     };
+
+    if(!isEmpty(o1))
+        retobj.stories = o1.issues;
+
+    if(!isEmpty(o2))
+        retobj.tasks = o2.issues;
+
+    if(!isEmpty(o3))
+        retobj.bugs = o3.issues;
+
+    if(!isEmpty(o4))
+        retobj.testplans = o4;
+
+    if(!isEmpty(o5))
+        retobj.testruns = o5;
     
     return retobj;
 }

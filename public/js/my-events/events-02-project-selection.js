@@ -65,7 +65,7 @@ window.addEventListener('load', function(){
         buttonDisabledSkeleton(SELECTIONSUBMITID);
         elementDisplayNone(BUTTONROWID);
         elementDisplayBlock(BUTTONOVERLAYID);
-        submitSelectionInfo(GLOBALS.ISSUESSELECTIONPAGE, selections.templateid, selections.jiraselection[0], selections.testrailselection[0]);
+        submitSelectionInfo(GLOBALS.ISSUESSELECTIONPAGE, selections);
         // length check was done when the button was enabled
         
     });    
@@ -95,11 +95,16 @@ function displaySelection(selectionID, trID, attr) {
     $("#" + selectionID).text( PROJECTSELECTTEXT + $("#" + trID).attr(attr) );
 }
 
-function submitSelectionInfo(nextpage, templateid, jirakey, testrailid) {
+function submitSelectionInfo(nextpage, selections) {
     // using replace so the user can't navigate back
     var loc = window.location;
     var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
-                + nextpage + "?" + "templateid=" + templateid + "&jkey=" + jirakey + "&tid=" + testrailid;
+                + nextpage + "?" + "templateid=" + selections.templateid;
+
+    if(selections.jiraselection.length != 0)
+        rdyurl += "&jkey=" + selections.jiraselection[0];
+    if(selections.testrailselection.length != 0)
+        rdyurl += "&tid=" + selections.testrailselection[0];
 
     window.location.href = rdyurl;
 }
@@ -130,8 +135,8 @@ function amendSelection(container, selectionid) {
 
 function checkSelectionStrings() {
     if(
-        selections.jiraselection.length > 0 &&
-        selections.testrailselection.length > 0
+        ( jiraprojecttable.getAttribute("rowscount") == "0" || selections.jiraselection.length > 0 ) &&
+        ( testrailprojecttable.getAttribute("rowscount") == "0" || selections.testrailselection.length > 0 )
     ) {
         buttonEnabledSkeleton(SELECTIONSUBMITID);
     }
