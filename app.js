@@ -10,6 +10,7 @@ var queryString = require("query-string");
 
 const a = require('./code/secret/access.js');
 const globals = require('./code/globals.js');
+const logger = require('./code/logger.js');
 const handlebarHelpers = require('./code/handlebar-helpers.js');
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -34,7 +35,7 @@ var contextsave = {};
 app.get('/', function (req, res) {
     
         var mycontext = globals.templates;
-        globals.f.log("set", "mycontext: " + JSON.stringify(mycontext));
+        logger.log("set", "mycontext: " + JSON.stringify(mycontext));
 
         res.render(
             globals.pages[1], {
@@ -47,7 +48,7 @@ app.get('/', function (req, res) {
 app.get("/projects", function (req, res) {
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
-        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
+        logger.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(typeof qparams.templateid != 'undefined') {
 
@@ -78,7 +79,7 @@ app.get('/issues', function (req, res) {
     if (req.url.indexOf('?') >= 0) {
 
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
-        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
+        logger.log("set", "qparams: " + JSON.stringify(qparams));
 
         allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
 
@@ -100,7 +101,7 @@ app.get('/report', function (req, res) {
 
     if (req.url.indexOf('?') >= 0) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''), {arrayFormat: 'bracket'});
-        globals.f.log("set", "qparams: " + JSON.stringify(qparams));
+        logger.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(isEmpty(qparams) || isEmpty(contextsave)) {
             res.render('errors/error-nocontext');
@@ -127,13 +128,13 @@ app.listen(3000);
 // ==============================================================================
 
 function projectCalls(req, res, pagetorender, templateid) {
-    globals.f.log("inf", "Sending initial request");
+    logger.log("inf", "Sending initial request");
 
     const jiraurl = globals.jiraurl + '/project';
-    globals.f.log("inf", "JIRA request: " + jiraurl);
+    logger.log("inf", "JIRA request: " + jiraurl);
 
     const selectedtemplate = globals.templates[templateid];
-    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
+    logger.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     request({
         url: jiraurl,
@@ -142,8 +143,8 @@ function projectCalls(req, res, pagetorender, templateid) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "JIRA projects request: 200");
-            globals.f.log("inf", "Attempting to render page");
+            logger.log("inf", "JIRA projects request: 200");
+            logger.log("inf", "Attempting to render page");
             contextsave = passJiraObject(JSON.parse(response.body));
 
             res.render(pagetorender, {
@@ -152,20 +153,20 @@ function projectCalls(req, res, pagetorender, templateid) {
             });
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "JIRA projects request: " + response.statusCode);
+            logger.log("err", "JIRA projects request: " + response.statusCode);
             res.render("errors/error-general");
         }
     });
 }
 
 function testCalls(req, res, pagetorender, templateid) {
-    globals.f.log("inf", "Sending initial request");
+    logger.log("inf", "Sending initial request");
 
     const testrailurl = globals.testrailurl + '/get_projects';
-    globals.f.log("inf", "TestRail request: " + testrailurl);
+    logger.log("inf", "TestRail request: " + testrailurl);
 
     const selectedtemplate = globals.templates[templateid];
-    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
+    logger.log("set", "template selection: " + JSON.stringify(selectedtemplate));
     
     request({
         url: testrailurl,
@@ -175,8 +176,8 @@ function testCalls(req, res, pagetorender, templateid) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "TestRail projects request: 200");
-            globals.f.log("inf", "Attempting to render page");
+            logger.log("inf", "TestRail projects request: 200");
+            logger.log("inf", "Attempting to render page");
             contextsave = passTestRailObject(JSON.parse(response.body));
 
             res.render(pagetorender, {
@@ -185,7 +186,7 @@ function testCalls(req, res, pagetorender, templateid) {
             });
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "TestRail projects request: " + response.statusCode);
+            logger.log("err", "TestRail projects request: " + response.statusCode);
             res.render("errors/error-general");
         }
     });
@@ -194,10 +195,10 @@ function testCalls(req, res, pagetorender, templateid) {
 
 
 function projectAndTestCalls(req, res, pagetorender, templateid) {
-    globals.f.log("inf", "Sending initial requests");
+    logger.log("inf", "Sending initial requests");
 
     const selectedtemplate = globals.templates[templateid];
-    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
+    logger.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
@@ -209,7 +210,7 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
         if(results.length == 2){
             // construct the custom obj out of the 2 responses and set it as the context
 
-            globals.f.log("inf", "Attempting to render page");
+            logger.log("inf", "Attempting to render page");
             contextsave = mergeTwoObjects(JSON.parse(results[0]), JSON.parse(results[1]))
 
             res.render(pagetorender, {
@@ -223,15 +224,15 @@ function projectAndTestCalls(req, res, pagetorender, templateid) {
 }
 
 function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
-    globals.f.log("inf", "Sending project requests");
+    logger.log("inf", "Sending project requests");
 
     const selectedtemplate = globals.templates[templateid];
-    globals.f.log("set", "template selection: " + JSON.stringify(selectedtemplate));
+    logger.log("set", "template selection: " + JSON.stringify(selectedtemplate));
 
     async.parallel([
         function(next) {
             // JIRA Story req ====================
-            globals.f.log("inf", "jira story call needed: " + selectedtemplate.calls.jira.story);
+            logger.log("inf", "jira story call needed: " + selectedtemplate.calls.jira.story);
             if(selectedtemplate.calls.jira.story)
                 jiraIssueTypeAPICallWithCallback('Story', jkey, next);
             else
@@ -239,7 +240,7 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
 
         }, function(next) {
             // JIRA Tasks req ====================
-            globals.f.log("inf", "jira task call needed: " + selectedtemplate.calls.jira.task);
+            logger.log("inf", "jira task call needed: " + selectedtemplate.calls.jira.task);
             if(selectedtemplate.calls.jira.task)
                 jiraIssueTypeAPICallWithCallback('Task', jkey, next);
             else
@@ -247,7 +248,7 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
 
         },function(next) {
             // JIRA Bugs req ====================
-            globals.f.log("inf", "jira bug call needed: " + selectedtemplate.calls.jira.bug);
+            logger.log("inf", "jira bug call needed: " + selectedtemplate.calls.jira.bug);
             if(selectedtemplate.calls.jira.bug)
                 jiraIssueTypeAPICallWithCallback('Bug', jkey, next);
             else
@@ -255,7 +256,7 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
 
         },function(next) {
             // TestRail Plans req ====================
-            globals.f.log("inf", "testrail plan call needed: " + selectedtemplate.calls.testrail.plans);
+            logger.log("inf", "testrail plan call needed: " + selectedtemplate.calls.testrail.plans);
             if(selectedtemplate.calls.testrail.plans)
                 testRailGetTestAPICallWithCallback('/get_plans/', tid, next);
             else
@@ -263,7 +264,7 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
 
         },function(next) {
             // TestRail Runs req ====================
-            globals.f.log("inf", "testrail run call needed: " + selectedtemplate.calls.testrail.runs);
+            logger.log("inf", "testrail run call needed: " + selectedtemplate.calls.testrail.runs);
             if(selectedtemplate.calls.testrail.runs)
                 testRailGetTestAPICallWithCallback('/get_runs/', tid, next);
             else
@@ -273,7 +274,7 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
         if(results.length == 5){
             // construct the custom obj out of the multiple responses and set it as the context
 
-            globals.f.log("inf", "Attempting to render page");
+            logger.log("inf", "Attempting to render page");
             contextsave = mergeFiveObjects(
                         JSON.parse(results[0]),
                         JSON.parse(results[1]),
@@ -305,7 +306,7 @@ function currentDate() {
 
 function basicAuth(u, p) {
     var auth = "Basic " + new Buffer(u + ":" + p).toString("base64");
-    globals.f.log("set", "Generating auth");
+    logger.log("set", "Generating auth");
     return auth;
 }
 
@@ -334,13 +335,13 @@ function isEmpty(obj) {
 }
 
 function passJiraObject(o) {
-    globals.f.log("deb", "orig jira obj: " + JSON.stringify(o));
+    //logger.log("deb", "orig jira obj: " + JSON.stringify(o));
     var retobj = {
         jiraprojects: o,
         testrailprojects: []
     };
     
-    globals.f.log("deb", "merged jira obj: " + JSON.stringify(retobj));
+    //logger.log("deb", "merged jira obj: " + JSON.stringify(retobj));
     return retobj;
 }
 
@@ -373,11 +374,11 @@ function mergeTwoObjects(o1, o2) {
 }
 
 function mergeFiveObjects(o1, o2, o3, o4, o5) {
-    globals.f.log("set", "stories " + o1.total);
-    globals.f.log("set", "tasks " + o2.total);
-    globals.f.log("set", "bugs " + o3.total);
-    globals.f.log("set", "plans " + o4.length);
-    globals.f.log("set", "runs " + o5.length);
+    logger.log("set", "stories " + o1.total);
+    logger.log("set", "tasks " + o2.total);
+    logger.log("set", "bugs " + o3.total);
+    logger.log("set", "plans " + o4.length);
+    logger.log("set", "runs " + o5.length);
 
     var retobj = {
         stories: [],
@@ -439,23 +440,23 @@ function constructReportContext(qparams, savedcontext) {
 
     if("st" in qparams && "stories" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.stories, qparams.st, savedcontext.stories);
-        globals.f.log("set", "stories ok");
+        logger.log("set", "stories ok");
     }
     if("ta" in qparams && "tasks" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.tasks, qparams.ta, savedcontext.tasks);
-        globals.f.log("set", "tasks ok");
+        logger.log("set", "tasks ok");
     }
     if("bu" in qparams && "bugs" in savedcontext) {
         pushToArrFromContextWithJiraKey(retobj.bugs, qparams.bu, savedcontext.bugs);
-        globals.f.log("set", "bugs ok");
+        logger.log("set", "bugs ok");
     }
     if("tp" in qparams && "testplans" in savedcontext) {
         pushToArrFromContextWithTestRailId(retobj.testplans, qparams.tp, savedcontext.testplans);
-        globals.f.log("set", "testplans ok");
+        logger.log("set", "testplans ok");
     }
     if("tr" in qparams && "testruns" in savedcontext) {
         pushToArrFromContextWithTestRailId(retobj.testruns, qparams.tr, savedcontext.testruns);
-        globals.f.log("set", "testruns ok");
+        logger.log("set", "testruns ok");
     }
 
     return retobj;
@@ -463,7 +464,7 @@ function constructReportContext(qparams, savedcontext) {
 
 function jiraProjectAPIWithCallback(callback) {
     const jiraurl = globals.jiraurl + '/project';
-    globals.f.log("inf", "JIRA request: " + jiraurl);
+    logger.log("inf", "JIRA request: " + jiraurl);
 
     request({
         url: jiraurl,
@@ -472,11 +473,11 @@ function jiraProjectAPIWithCallback(callback) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "JIRA projects request: 200");
+            logger.log("inf", "JIRA projects request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "JIRA projects request: " + response.statusCode);
+            logger.log("err", "JIRA projects request: " + response.statusCode);
             callback(null, body);
         }
     });
@@ -484,7 +485,7 @@ function jiraProjectAPIWithCallback(callback) {
 
 function testRailProjectAPIWithCallback(callback){
     const testrailurl = globals.testrailurl + '/get_projects';
-    globals.f.log("inf", "TestRail request: " + testrailurl);
+    logger.log("inf", "TestRail request: " + testrailurl);
     
     request({
         url: testrailurl,
@@ -494,11 +495,11 @@ function testRailProjectAPIWithCallback(callback){
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "TestRail projects request: 200");
+            logger.log("inf", "TestRail projects request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "TestRail projects request: " + response.statusCode);
+            logger.log("err", "TestRail projects request: " + response.statusCode);
             callback(null, body);
         }
     });
@@ -506,7 +507,7 @@ function testRailProjectAPIWithCallback(callback){
 
 function jiraIssueTypeAPICallWithCallback(issuetype, jkey, callback) {
     const jiraurl = globals.jiraurl + '/search?jql=project = ' + jkey + ' AND issuetype in (' + issuetype + ') ' + globals.jiraapiextension;
-    globals.f.log("inf", "JIRA request: " + jiraurl);
+    logger.log("inf", "JIRA request: " + jiraurl);
 
     request({
         url: jiraurl,
@@ -515,11 +516,11 @@ function jiraIssueTypeAPICallWithCallback(issuetype, jkey, callback) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "JIRA (" + issuetype + ") request: 200");
+            logger.log("inf", "JIRA (" + issuetype + ") request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "JIRA (" + issuetype + ") request: " + response.statusCode);
+            logger.log("err", "JIRA (" + issuetype + ") request: " + response.statusCode);
             callback(null, body);
         }
     });
@@ -527,7 +528,7 @@ function jiraIssueTypeAPICallWithCallback(issuetype, jkey, callback) {
 
 function testRailGetTestAPICallWithCallback(getstr, tid, callback) {
     const testrailurl = globals.testrailurl + getstr + tid;
-    globals.f.log("inf", "TestRail request: " + testrailurl);
+    logger.log("inf", "TestRail request: " + testrailurl);
     
     request({
         url: testrailurl,
@@ -537,11 +538,11 @@ function testRailGetTestAPICallWithCallback(getstr, tid, callback) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            globals.f.log("inf", "TestRail (" + getstr + ") request: 200");
+            logger.log("inf", "TestRail (" + getstr + ") request: 200");
             callback(null, body);
         }
         if (!error && ( response.statusCode == 400 || response.statusCode == 401 )) {
-            globals.f.log("err", "TestRail (" + getstr + ") request: " + response.statusCode);
+            logger.log("err", "TestRail (" + getstr + ") request: " + response.statusCode);
             callback(null, body);
         }
     });

@@ -258,6 +258,7 @@ function concatArrayElements(pref, arr) {
     return ret;
 }
 
+// testing filtering
 function tableFilterTest(tableid) {
     var table = $('#' + tableid).DataTable();
     
@@ -276,7 +277,15 @@ function removeSpecials(str) {
 
     var res = "";
     for(var i=0; i<lower.length; ++i) {
-        if(lower[i] != upper[i] || lower[i].trim() === '')
+        if(lower[i] != upper[i] ||
+                lower[i].trim() === '' ||
+                lower[i] == ":" ||
+                lower[i] == "-" ||
+                lower[i] == "." ||
+                lower[i] == "/" ||
+                lower[i] == "(" ||
+                lower[i] == ")"
+            )
             res += str[i];
     }
     return res;
