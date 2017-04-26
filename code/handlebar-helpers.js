@@ -10,7 +10,9 @@ module.exports = {
             console.log(optionalValue);
         }
     },
+
     // jira issue related helpers
+
     jiralabel: (icon, type, key)=>{
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
         
@@ -67,7 +69,44 @@ module.exports = {
     sort_by_status: (array)=>{
 		return array.sort(compareStatus);
     },
+    count_status: (arr, status)=>{
+        var count = countStatus(arr, status);
+
+        return count;
+    },
+    nonDoneStatusCountsArray: (arr)=>{
+        var statuses = countAllStatuses(arr);
+
+        return "[" +
+                statuses.new + ", " +
+                statuses.todo + ", " +
+                statuses.reop + ", " +
+                statuses.blocked + ", " +
+                statuses.failed + ", " +
+                statuses.progr + ", " +
+                statuses.rfqa + ", " +
+                statuses.inqa +
+                "]";
+    },
+    status_percent: (arr, status)=>{
+        var count = countStatus(arr, status);
+
+        return ((count / arr.length) * 100).toFixed(1);
+    },
+    nonDoneStatusCount: (arr)=>{
+        var statuses = countAllStatuses(arr);
+
+        return statuses.new + statuses.todo + statuses.reop + statuses.blocked + statuses.failed + statuses.progr + statuses.rfqa + statuses.inqa;
+    },
+    notDonePercent: (arr)=>{
+        var statuses = countAllStatuses(arr);
+        var sum = statuses.new + statuses.todo + statuses.reop + statuses.blocked + statuses.failed + statuses.progr + statuses.rfqa + statuses.inqa;
+
+        return ((sum / arr.length) * 100).toFixed(1);
+    },
+
     // test related helpers
+
     sumcounts: (passed, blocked, untested, retest, failed)=>{
         var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
         
@@ -97,7 +136,9 @@ module.exports = {
 
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
     },
+
     // general helpers
+
     add: (a, b)=>{
         return parseInt(a) + parseInt(b);
     },
@@ -112,6 +153,11 @@ module.exports = {
     }
 }
 
+
+
+
+
+
 function countPropInArr(arr, prop) {
     var count = 0;
     for(var i = 0; i < arr.length; i++) {
@@ -121,10 +167,69 @@ function countPropInArr(arr, prop) {
     return count;
 }
 
+function countStatus(arr, status) {
+    var counter = 0;
+    for(var i = 0; i < arr.length; i++) {
+        if(getStatus(arr[i]) == status)
+            counter++;
+    }
+    return counter;
+}
+
+function countAllStatuses(arr) {
+    var statuses = {
+        new: 0,
+        todo: 0,
+        reop: 0,
+        blocked: 0,
+        failed: 0,
+        progr: 0,
+        rfqa: 0,
+        inqa: 0
+    };
+
+    for(var i = 0; i < arr.length; i++) {
+        switch(getStatus(arr[i])){
+            case "new":
+                statuses.new++;
+                break;
+            case "to do":
+                statuses.todo++;
+                break;
+            case "reopened":
+                statuses.reop++;
+                break;
+            case "blocked":
+                statuses.blocked++;
+                break;
+            case "failed qa":
+                statuses.failed++;
+                break;
+            case "in progress":
+                statuses.progr++;
+                break;
+            case "ready for qa":
+                statuses.rfqa++;
+                break;
+            case "in qa":
+                statuses.inqa++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    return statuses;
+}
+
 function compareStatus(a, b) {
   if (a.fields.status.name < b.fields.status.name)
     return -1;
   if (a.fields.status.name > b.fields.status.name)
     return 1;
   return 0;
+}
+
+function getStatus(obj) {
+    return obj.fields.status.name.toLowerCase();
 }

@@ -1,14 +1,17 @@
 var globals =  globals || {
   templateextension: ".handlebars",
+
   jiraurl: "https://waracle.atlassian.net/rest/api/2",
   testrailurl: "https://waracle.testrail.com/index.php?/api/v2",
   jiraapiextension: "order by key ASC&startAt=0&maxResults=1000&fields=issuetype,summary,status,description,issuelinks,fixVersions&fieldsByKeys=false",
+
   pages: [
     "",
     "01-template-selection",
     "02-project-selection",
     "03-issues-selection"
   ],
+
   templates: [
     {
       enabled: false,
@@ -74,6 +77,7 @@ var globals =  globals || {
       }
     }
   ],
+  
   f: {
     // global helper functions?
   }

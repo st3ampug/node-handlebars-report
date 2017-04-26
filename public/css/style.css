@@ -84,6 +84,10 @@
     margin-top: 50px;
 }
 
+#chart-table-outstanding-bugs {
+    margin-top: 0px;
+}
+
 .my-title {
     margin-top: 15px;
     margin-bottom: 10px;

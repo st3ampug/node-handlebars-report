@@ -6,61 +6,75 @@
 <!-- =========================== TITLE =========================== -->
 <div class="row">
     <div class="twelve columns">
-        <h1>Test Report: {{context.title}}</h1>
+        <h1>{{context.title}}</h1>
     </div>
 </div>
 
 <!-- =========================== BODY  =========================== -->
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
-
-<div class="row">
-    <div class="twelve columns">
-        <div class="my-title">
-            <h2>Test Runs</h2>
+<div class="my-title">
+    <div class="row">
+        <div class="twelve columns">
+            <h2>Outstanding bugs</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <h6>
+                Included statuses: New, To Do, Reopened, Blocked, Failed QA, In Progress, Ready for QA, In QA<br />
+                Excluded statuses: Rejected, Done
+            </h6>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="one column">
         &nbsp;
     </div>
-    <div class="five columns">
+    <div class="six columns">
         <div id="chart-canvas">
             <canvas id="myChart" width="300" height="325"></canvas>
         </div>
     </div>
-    <div class="three columns">
-        <div id="chart-table">
+    <div class="four columns">
+        <div id="chart-table-outstanding-bugs">
             <table class="u-full-width">
                 <tbody>
                     <tr>
-                        <td>{{count context.testplans context.testruns "passed_count"}} ({{percent context.testplans context.testruns "passed_count"}}%)</td>
-                        <th>Passed</th>
+                        <td>{{count_status context.bugs "new"}} ({{status_percent context.bugs "new"}}%)</td>
+                        <th>New</th>
                     </tr>
                     <tr>
-                        <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
-                        <th>Failed</th>
+                        <td>{{count_status context.bugs "to do"}} ({{status_percent context.bugs "to do"}}%)</td>
+                        <th>To Do</th>
                     </tr>
                     <tr>
-                        <td>{{count context.testplans context.testruns "blocked_count"}} ({{percent context.testplans context.testruns "blocked_count"}}%)</td>
+                        <td>{{count_status context.bugs "reopened"}} ({{status_percent context.bugs "reopened"}}%)</td>
+                        <th>Reopened</th>
+                    </tr>
+                    <tr>
+                        <td>{{count_status context.bugs "blocked"}} ({{status_percent context.bugs "blocked"}}%)</td>
                         <th>Blocked</th>
                     </tr>
                     <tr>
-                        <td>{{count context.testplans context.testruns "retest_count"}} ({{percent context.testplans context.testruns "retest_count"}}%)</td>
-                        <th>Retest</th>
+                        <td>{{count_status context.bugs "failed qa"}} ({{status_percent context.bugs "failed qa"}}%)</td>
+                        <th>Failed QA</th>
                     </tr>
                     <tr>
-                        <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
-                        <th>Untested</th>
+                        <td>{{count_status context.bugs "in progress"}} ({{status_percent context.bugs "in progress"}}%)</td>
+                        <th>In Progress</th>
+                    </tr>
+                    <tr>
+                        <td>{{count_status context.bugs "ready for qa"}} ({{status_percent context.bugs "ready for qa"}}%)</td>
+                        <th>Ready for QA</th>
+                    </tr>
+                    <tr>
+                        <td>{{count_status context.bugs "in qa"}} ({{status_percent context.bugs "in qa"}}%)</td>
+                        <th>In QA</th>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="two columns">
-        <div id="chart-passed">
-            <h3>{{percent context.testplans context.testruns "passed_count"}}%<br />passed</h3>
-            <h6>{{count context.testplans context.testruns "untested_count"}} / {{countall context.testplans context.testruns}} untested</h6>
         </div>
     </div>
     <div class="one column">
@@ -81,31 +95,32 @@
     ctx.canvas.height = 325;
 
     var myChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
-            labels: ["Passed", "Blocked", "Untested", "Retest", "Failed"],
+            // use the non-Done states from JIRA, so Done and Rejected are omitted!
+            labels: ["New", "Todo", "Reopened", "Blocked", "Failed QA", "In Progress", "Ready for QA", "In QA"],
             datasets: [{
                 label: '# of Votes',
-                data: [
-                    {{count context.testplans context.testruns "passed_count"}},
-                    {{count context.testplans context.testruns "blocked_count"}},
-                    {{count context.testplans context.testruns "untested_count"}},
-                    {{count context.testplans context.testruns "retest_count"}},
-                    {{count context.testplans context.testruns "failed_count"}},
-                    ],
+                data: {{nonDoneStatusCountsArray context.bugs}},
                 backgroundColor: [
-                    'rgba(3, 192, 60, 0.9)',
-                    'rgba(207, 207, 196, 0.7)',
-                    'rgba(179, 158, 181, 0.7)',
-                    'rgba(253, 253, 150, 0.7)',
-                    'rgba(255, 105, 97, 0.9)'
+                    'rgba(4, 29, 55, 0.7)',     // new
+                    'rgba(19, 50, 83, 0.7)',    // todo
+                    'rgba(43, 75, 111, 0.7)',   // reopened
+                    'rgba(190, 95, 124, 0.7)',  // blocked
+                    'rgba(114, 19, 48, 0.7)',   // failed qa
+                    'rgba(244, 193, 91, 0.7)',  // in progress
+                    'rgba(207, 162, 73, 0.7)',  // ready for qa
+                    'rgba(170, 132, 57, 0.7)'   // in qa
                 ],
                 borderColor: [
-                    'rgba(3, 192, 60, 1)',
-                    'rgba(207, 207, 196, 1)',
-                    'rgba(179, 158, 181, 1)',
-                    'rgba(253, 253, 150, 1)',
-                    'rgba(255, 105, 97, 1)'
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)',
+                    'rgba(60, 52, 38, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -123,6 +138,7 @@
     });
 </script>
 
+{{!-- Not needed for this template
 <!-- +++++++++++++++++++++++++++ ROW 2 +++++++++++++++++++++++++++ -->
 <div class="row">
     <div class="twelve columns">
@@ -315,6 +331,7 @@
         &nbsp;
     </div>
 </div>
+--}}
 
 <!-- +++++++++++++++++++++++++++ ROW 5 +++++++++++++++++++++++++++ -->
 
