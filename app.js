@@ -83,14 +83,6 @@ app.get('/issues', function (req, res) {
 
         allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
 
-        // if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-        //     allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
-        // }
-        // else {
-        //     //res.render("errors/error-noparams"); //test
-        //     allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
-        // }
-
     } else {
         res.render("errors/error-general");
     }
@@ -285,7 +277,8 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
 
             res.render(pagetorender, {
                 context: contextsave,
-                reptemplate: selectedtemplate
+                reptemplate: selectedtemplate,
+                projectkey: {key: jkey}
             });
         } else {
             res.render("errors/error-general");

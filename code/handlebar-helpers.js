@@ -104,6 +104,20 @@ module.exports = {
 
         return ((sum / arr.length) * 100).toFixed(1);
     },
+    resolve_sprint: (sprintarray, jkey)=>{
+        if(sprintarray != null) {
+            var tmp = '';
+            for(var i = 0; i < sprintarray.length; i++) {
+                tmp += '<div>' + getSprintValue(sprintarray[i], jkey) + '</div>';
+            }
+
+            return tmp;
+        } else {
+            return '-';
+        }
+    },
+    // RETURNING THE DIVS MIGHT NEED TO BE CHANGED SO THE TEMPLATE SUPPLIES THE TAGS
+    // THE STRING WITHOUT THE TAGS MIGHT NEED TO BE USED FOR FILTERING!!!!
 
     // test related helpers
 
@@ -232,4 +246,15 @@ function compareStatus(a, b) {
 
 function getStatus(obj) {
     return obj.fields.status.name.toLowerCase();
+}
+
+function getSprintValue(str, jkey) {
+    var strarr = str.split(",");
+    var keystr = "name=" + jkey + " ";
+
+    for(var i = 0; i < strarr.length; i++) {
+        if(strarr[i].startsWith(keystr)){
+            return strarr[i].slice(keystr.length);
+        }
+    }
 }
