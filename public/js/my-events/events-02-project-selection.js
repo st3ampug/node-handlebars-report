@@ -2,6 +2,8 @@
 
 const PAGETITLE = "Waracle - Test Report - Project selection";
 
+const JIRAROWID = "jirarow";
+const TESTRAILROW = "testrailrow";
 const JIRASELECTIONID = "jiraselection";
 const TESTRAILSELECTIONID = "testrailselection";
 const JIRAPROJECTTABLEID = "jiraprojecttable";
@@ -44,6 +46,8 @@ window.addEventListener('load', function(){
     
     changePageTitle(PAGETITLE);
     setTemplateId();
+    setDisplayForRow(JIRAROWID);
+    setDisplayForRow(TESTRAILROW);
 
     initDataTableCustom(JIRAPROJECTTABLEID, 500);
     initDataTableCustom(TESTRAILROJECTTABLEID, 500);

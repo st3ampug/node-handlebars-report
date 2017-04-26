@@ -11,7 +11,7 @@
             <h1>Config</h1>
         </div>
         <div class="eight columns">
-            <h3 id={{reptemplate.id}}>Selected template: {{reptemplate.name}}</h3>
+            <h3>Selected template: {{reptemplate.name}}</h3>
         </div>
     </div>
 </div>
@@ -19,73 +19,72 @@
 <!-- =========================== BODY  =========================== -->
 <!-- +++++++++++++++++++++++++++ ROW 1 +++++++++++++++++++++++++++ -->
 
-<div class="row" id="j-projectheader">
-    <div class="my-title">
-        <div class="five columns">
-            <h3>JIRA projects</h3>
+<div class="row" id="jirarow" {{{display reptemplate.calls.jira.init}}}>
+    <div class="row" id="j-projectheader">
+        <div class="my-title">
+            <div class="five columns">
+                <h3>JIRA projects</h3>
+            </div>
+            <div class="seven columns">
+                <h4 id="jiraselection">Selected: n/a</h4>
+            </div>
         </div>
-        <div class="seven columns">
-            <h4 id="jiraselection">Selected: n/a</h4>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table id="jiraprojecttable" class="u-full-width" rowscount="{{context.jiraprojects.length}}">
+                <thead>
+                    <tr>
+                        <th>JIRAKEY</th>
+                        <th>NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each context.jiraprojects}}
+                    <tr class="j-projectrow" id="{{this.key}}" jiraname="{{this.name}}">
+                        <td>{{this.key}}</td>
+                        <td>{{this.name}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
 <!-- +++++++++++++++++++++++++++ ROW 2 ++++++++++++++++++++++++++ -->
 
-<div class="row">
-    <div class="twelve columns">
-        <table id="jiraprojecttable" class="u-full-width" rowscount="{{context.jiraprojects.length}}">
-            <thead>
-                <tr>
-                    <th>JIRAKEY</th>
-                    <th>NAME</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each context.jiraprojects}}
-                <tr class="j-projectrow" id="{{this.key}}" jiraname="{{this.name}}">
-                    <td>{{this.key}}</td>
-                    <td>{{this.name}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- +++++++++++++++++++++++++++ ROW 3 ++++++++++++++++++++++++++ -->
-
-<div class="row" id="tr-projectheader">
-    <div class="my-title">
-        <div class="five columns">
-            <h3>TestRail projects</h3>
-        </div>
-        <div class="seven columns">
-            <h4 id="testrailselection">Selected: n/a</h4>
+<div class="row" id="testrailrow" {{{display reptemplate.calls.testrail.init}}}>
+    <div class="row" id="tr-projectheader">
+        <div class="my-title">
+            <div class="five columns">
+                <h3>TestRail projects</h3>
+            </div>
+            <div class="seven columns">
+                <h4 id="testrailselection">Selected: n/a</h4>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- +++++++++++++++++++++++++++ ROW 4 ++++++++++++++++++++++++++ -->
-
-<div class="row">
-    <div class="twelve columns">
-        <table id="testrailprojecttable" class="u-full-width" rowscount="{{context.testrailprojects.length}}">
-            <thead>
-                <tr>
-                    <th>TESTRAILID</th>
-                    <th>NAME</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each context.testrailprojects}}
-                <tr class="tr-projectrow" id="{{this.id}}" testrailname="{{this.name}}">
-                    <td>{{this.id}}</td>
-                    <td>{{this.name}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="twelve columns">
+            <table id="testrailprojecttable" class="u-full-width" rowscount="{{context.testrailprojects.length}}">
+                <thead>
+                    <tr>
+                        <th>TESTRAILID</th>
+                        <th>NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each context.testrailprojects}}
+                    <tr class="tr-projectrow" id="{{this.id}}" testrailname="{{this.name}}">
+                        <td>{{this.id}}</td>
+                        <td>{{this.name}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

@@ -2,6 +2,11 @@
 
 const PAGETITLE = "Waracle - Test Report - Issues selection";
 
+const JIRASTORIESID = "jirastories";
+const JIRATASKSID = "jiratasks";
+const JIRABUGSID = "jirabugs";
+const TESTRAILPLANSID = "testrailplans";
+const TESTRAILRUNSID = "testrailruns";
 const REPORTTITLEID = "reporttitle";
 const STORIESTABLEID = "storiestable";
 const STORYROWCLASS = "storyrow";
@@ -60,6 +65,11 @@ window.addEventListener('load', function(){
 
     changePageTitle(PAGETITLE);
     setTemplateId();
+    setDisplayForRow(JIRASTORIESID);
+    setDisplayForRow(JIRATASKSID);
+    setDisplayForRow(JIRABUGSID);
+    setDisplayForRow(TESTRAILPLANSID);
+    setDisplayForRow(TESTRAILRUNSID);
 
     initDataTableCustom(STORIESTABLEID, 400);
     initDataTableCustom(TASKSTABLEID, 400);

@@ -49,6 +49,15 @@ function getUrlParameter(sParam) {
     }
 }
 
+function setDisplayForRow(rowid) {
+    var row = document.getElementById(rowid);
+    
+    if(row.getAttribute("display") == "n")
+        elementDisplayNone(rowid);
+    else
+        elementDisplayBlock(rowid);
+}
+
 function changePageTitle(title) {
     document.title = title;
 }

@@ -103,6 +103,12 @@ module.exports = {
     },
     num: (tonum)=>{
         return parseInt(tonum);
+    },
+    display: (d)=>{
+        if(d)
+            return 'display="y"';
+        else
+            return 'display="n"';
     }
 }
 

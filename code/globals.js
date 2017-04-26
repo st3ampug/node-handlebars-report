@@ -29,6 +29,7 @@ var globals =  globals || {
           bug: false
         },
         testrail: {
+          init: true,
           plans: true,
           runs: true,
         }
@@ -47,6 +48,7 @@ var globals =  globals || {
           bug: true
         },
         testrail: {
+          init: false,
           plans: false,
           runs: false,
         }
@@ -65,6 +67,7 @@ var globals =  globals || {
           bug: true
         },
         testrail: {
+          init: true,
           plans: true,
           runs: true,
         }

@@ -50,7 +50,6 @@ app.get("/projects", function (req, res) {
         globals.f.log("set", "qparams: " + JSON.stringify(qparams));
 
         if(typeof qparams.templateid != 'undefined') {
-            //initCalls(req, res, 'projects');
 
             switch (qparams.templateid) {
                 case "0":
@@ -81,13 +80,15 @@ app.get('/issues', function (req, res) {
         var qparams = queryString.parse(req.url.replace(/^.*\?/, ''));
         globals.f.log("set", "qparams: " + JSON.stringify(qparams));
 
-        if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
-            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
-        }
-        else {
-            //res.render("errors/error-noparams"); //test
-            allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
-        }
+        allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
+
+        // if(typeof qparams.jkey != 'undefined' && typeof qparams.tid != 'undefined') {
+        //     allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
+        // }
+        // else {
+        //     //res.render("errors/error-noparams"); //test
+        //     allTheCalls(req, res, globals.pages[3], qparams.jkey, qparams.tid, qparams.templateid);
+        // }
 
     } else {
         res.render("errors/error-general");
