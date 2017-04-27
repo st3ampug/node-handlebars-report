@@ -250,7 +250,7 @@ function getStatus(obj) {
 
 function getSprintValue(str, jkey) {
     var strarr = str.split(",");
-    var keystr = "name=" + jkey + " ";
+    var keystr = "name=";
 
     for(var i = 0; i < strarr.length; i++) {
         if(strarr[i].startsWith(keystr)){
