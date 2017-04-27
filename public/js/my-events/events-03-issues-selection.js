@@ -250,8 +250,8 @@ function concatArrayElements(pref, arr) {
     var ret = "";
     for(var i = 0; i < arr.length; i++) {
         ret += pref + "=" + arr[i];
-        if( !(i+1 == arr.length) )
-            ret += "&";
+        // if( !(i+1 == arr.length) )
+        //     ret += "&";
     }
 
     console.log(ret);
