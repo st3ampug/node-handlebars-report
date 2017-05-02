@@ -8,13 +8,10 @@ const JIRABUGSID = "jirabugs";
 const TESTRAILPLANSID = "testrailplans";
 const TESTRAILRUNSID = "testrailruns";
 const REPORTTITLEID = "reporttitle";
-const STORIESTABLEID = "storiestable";
 const STORYROWCLASS = "storyrow";
 const SELECTEDSTORIESID = "selectedstories";
-const TASKSTABLEID = "taskstable";
 const TASKROWCLASS = "taskrow";
 const SELECTEDTASKSID = "selectedtasks";
-const BUGSTABLEID = "bugstable";
 const BUGROWCLASS = "bugrow";
 const SELECTEDBUGSID = "selectedbugs";
 const TESTPLANSTABLEID = "testplanstable";
@@ -31,11 +28,11 @@ const SELECTED          = "selected";
 const NOTSELECTED       = "no";
 
 var reporttitle = document.getElementById(REPORTTITLEID);
-var storiestable = document.getElementById(STORIESTABLEID);
+var storiestable = document.getElementById(GLOBALS.tableIDs.storiesTableID);
 var storyrows = document.getElementsByClassName(STORYROWCLASS);
-var taskstable = document.getElementById(TASKSTABLEID);
+var taskstable = document.getElementById(GLOBALS.tableIDs.tasksTableID);
 var taskrows = document.getElementsByClassName(TASKROWCLASS);
-var bugstable = document.getElementById(BUGSTABLEID);
+var bugstable = document.getElementById(GLOBALS.tableIDs.bugsTableID);
 var bugrows = document.getElementsByClassName(BUGROWCLASS);
 var testplanstable = document.getElementById(TESTPLANSTABLEID);
 var testplanrows = document.getElementsByClassName(TESTPLANROWCLASS);
@@ -81,9 +78,9 @@ window.addEventListener('load', function(){
     setDisplayForRow(TESTRAILPLANSID);
     setDisplayForRow(TESTRAILRUNSID);
 
-    initDataTableCustom(STORIESTABLEID, 550);
-    initDataTableCustom(TASKSTABLEID, 550);
-    initDataTableCustom(BUGSTABLEID, 550);
+    initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
+    initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
+    initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
     initDataTableCustom(TESTPLANSTABLEID, 350);
     initDataTableCustom(TESTRUNSTABLEID, 350);
 
