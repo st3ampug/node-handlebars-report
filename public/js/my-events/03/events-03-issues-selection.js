@@ -44,6 +44,16 @@ var testrunrows = document.getElementsByClassName(TESTRUNROWCLASS);
 
 var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
+var storyversionfilter = document.getElementById(GLOBALS.filterIDs.storyVersion);
+var storystatusfilter = document.getElementById(GLOBALS.filterIDs.storyStatus);
+var storysprintfilter = document.getElementById(GLOBALS.filterIDs.storySprint);
+var taskversionfilter = document.getElementById(GLOBALS.filterIDs.taskVersion);
+var taskstatusfilter = document.getElementById(GLOBALS.filterIDs.taskStatus);
+var tasksprintfilter = document.getElementById(GLOBALS.filterIDs.taskSprint);
+var bugversionfilter = document.getElementById(GLOBALS.filterIDs.bugVersion);
+var bugstatusfilter = document.getElementById(GLOBALS.filterIDs.bugStatus);
+var bugsprintfilter = document.getElementById(GLOBALS.filterIDs.bugSprint);
+
 
 var selections = {
     templateid: "",
@@ -71,11 +81,11 @@ window.addEventListener('load', function(){
     setDisplayForRow(TESTRAILPLANSID);
     setDisplayForRow(TESTRAILRUNSID);
 
-    initDataTableCustom(STORIESTABLEID, 400);
-    initDataTableCustom(TASKSTABLEID, 400);
-    initDataTableCustom(BUGSTABLEID, 400);
-    initDataTableCustom(TESTPLANSTABLEID, 400);
-    initDataTableCustom(TESTRUNSTABLEID, 400);
+    initDataTableCustom(STORIESTABLEID, 550);
+    initDataTableCustom(TASKSTABLEID, 550);
+    initDataTableCustom(BUGSTABLEID, 550);
+    initDataTableCustom(TESTPLANSTABLEID, 350);
+    initDataTableCustom(TESTRUNSTABLEID, 350);
 
     elementDisplayNone(BUTTONOVERLAYID);
     buttonDisabledSkeleton(SELECTIONSUBMITID);
@@ -113,6 +123,35 @@ window.addEventListener('load', function(){
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
     });
     
+    storysprintfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.storySprint, GLOBALS.tableIDs.storiesTableID, 3);
+    });
+    storyversionfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.storyVersion, GLOBALS.tableIDs.storiesTableID, 4);
+    });
+    storystatusfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.storyStatus, GLOBALS.tableIDs.storiesTableID, 5);
+    });
+    
+    tasksprintfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.taskSprint, GLOBALS.tableIDs.tasksTableID, 3);
+    });
+    taskversionfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.taskVersion, GLOBALS.tableIDs.tasksTableID, 4);
+    });
+    taskstatusfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.taskStatus, GLOBALS.tableIDs.tasksTableID, 5);
+    });
+
+    bugsprintfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.bugSprint, GLOBALS.tableIDs.bugsTableID, 3);
+    });
+    bugversionfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.bugVersion, GLOBALS.tableIDs.bugsTableID, 4);
+    });
+    bugstatusfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.bugStatus, GLOBALS.tableIDs.bugsTableID, 5);
+    });
 });
 
 // =====================================================================================
