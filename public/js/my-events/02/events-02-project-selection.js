@@ -44,16 +44,16 @@ window.addEventListener('load', function(){
     
     // INIT =============================================
     
-    changePageTitle(PAGETITLE);
+    SharedFunctions.changePageTitle(PAGETITLE);
     setTemplateId();
-    setDisplayForRow(JIRAROWID);
-    setDisplayForRow(TESTRAILROW);
+    SharedFunctions.setDisplayForRow(JIRAROWID);
+    SharedFunctions.setDisplayForRow(TESTRAILROW);
 
-    initDataTableCustom(JIRAPROJECTTABLEID, 500);
-    initDataTableCustom(TESTRAILROJECTTABLEID, 500);
+    SharedFunctions.initDataTableCustom(JIRAPROJECTTABLEID, 500);
+    SharedFunctions.initDataTableCustom(TESTRAILROJECTTABLEID, 500);
 
-    elementDisplayNone(BUTTONOVERLAYID);
-    buttonDisabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
+    SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // LISTENERS =======================================
     jiraprojecttable.addEventListener("click", function(ev) {
@@ -66,9 +66,9 @@ window.addEventListener('load', function(){
 
     selectionsubmit.addEventListener("click", function(ev) {
 
-        buttonDisabledSkeleton(SELECTIONSUBMITID);
-        elementDisplayNone(BUTTONROWID);
-        elementDisplayBlock(BUTTONOVERLAYID);
+        SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.elementDisplayNone(BUTTONROWID);
+        SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
         submitSelectionInfo(GLOBALS.ISSUESSELECTIONPAGE, selections);
         // length check was done when the button was enabled
         
@@ -80,7 +80,7 @@ window.addEventListener('load', function(){
 // Helpers =============================================================================
 
 function setTemplateId() {
-    selections.templateid = getUrlParameter("templateid");
+    selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
 
 function highlightRow(id, projectrows) {
@@ -142,7 +142,7 @@ function checkSelectionStrings() {
         ( jiraprojecttable.getAttribute("rowscount") == "0" || selections.jiraselection.length > 0 ) &&
         ( testrailprojecttable.getAttribute("rowscount") == "0" || selections.testrailselection.length > 0 )
     ) {
-        buttonEnabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
     }
 }
 

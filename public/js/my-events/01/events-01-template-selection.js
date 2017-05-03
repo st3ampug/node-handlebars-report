@@ -29,10 +29,10 @@ window.addEventListener('load', function(){
 
     // INIT =============================================
 
-    changePageTitle(PAGETITLE);
+    SharedFunctions.changePageTitle(PAGETITLE);
 
-    elementDisplayNone(BUTTONOVERLAYID);
-    buttonDisabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
+    SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
     
@@ -46,13 +46,13 @@ window.addEventListener('load', function(){
 
         selection.templateid = info.id;
 
-        buttonEnabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
-        buttonDisabledSkeleton(SELECTIONSUBMITID);
-        elementDisplayNone(BUTTONROWID);
-        elementDisplayBlock(BUTTONOVERLAYID);
+        SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.elementDisplayNone(BUTTONROWID);
+        SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
         submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection);

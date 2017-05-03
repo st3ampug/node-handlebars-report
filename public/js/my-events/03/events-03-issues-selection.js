@@ -70,22 +70,22 @@ window.addEventListener('load', function(){
 
     // INIT =============================================
 
-    changePageTitle(PAGETITLE);
+    SharedFunctions.changePageTitle(PAGETITLE);
     setTemplateId();
-    setDisplayForRow(JIRASTORIESID);
-    setDisplayForRow(JIRATASKSID);
-    setDisplayForRow(JIRABUGSID);
-    setDisplayForRow(TESTRAILPLANSID);
-    setDisplayForRow(TESTRAILRUNSID);
+    SharedFunctions.setDisplayForRow(JIRASTORIESID);
+    SharedFunctions.setDisplayForRow(JIRATASKSID);
+    SharedFunctions.setDisplayForRow(JIRABUGSID);
+    SharedFunctions.setDisplayForRow(TESTRAILPLANSID);
+    SharedFunctions.setDisplayForRow(TESTRAILRUNSID);
 
-    initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
-    initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
-    initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
-    initDataTableCustom(TESTPLANSTABLEID, 350);
-    initDataTableCustom(TESTRUNSTABLEID, 350);
+    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
+    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
+    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
+    SharedFunctions.initDataTableCustom(TESTPLANSTABLEID, 350);
+    SharedFunctions.initDataTableCustom(TESTRUNSTABLEID, 350);
 
-    elementDisplayNone(BUTTONOVERLAYID);
-    buttonDisabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
+    SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
     
@@ -112,9 +112,9 @@ window.addEventListener('load', function(){
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
-        buttonDisabledSkeleton(SELECTIONSUBMITID);
-        elementDisplayNone(BUTTONROWID);
-        elementDisplayBlock(BUTTONOVERLAYID);
+        SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.elementDisplayNone(BUTTONROWID);
+        SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
@@ -156,7 +156,7 @@ window.addEventListener('load', function(){
 // Helpers =============================================================================
 
 function setTemplateId() {
-    selections.templateid = getUrlParameter("templateid");
+    selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
 
 function highlightRow(id) {
@@ -244,7 +244,7 @@ function checkSelectionArrays() {
         ( testplanstable.getAttribute("rowscount") == "0" || selections.testplanselection.length > 0 ) &&
         ( testrunstable.getAttribute("rowscount") == "0" || selections.testrunselection.length > 0 )
     ) {
-        buttonEnabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
     }
 }
 
@@ -279,7 +279,8 @@ function submitSelectionInfo(nextpage, selections, title) {
     //     rdyurl = rdyurl.slice(0, -1);
     // }
 
-    window.location.href = rdyurl;
+    //window.location.href = rdyurl;
+    SharedFunctions.openPageInNewTab(rdyurl);
 }
 
 function concatArrayElements(pref, arr) {
