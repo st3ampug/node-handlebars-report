@@ -17,5 +17,10 @@ const GLOBALS = {
         storiesTableID: "storiestable",
         tasksTableID: "taskstable",
         bugsTableID: "bugstable"
+    },
+    navIDs: {
+        templateSelection: "nav-01",
+        projectSelection: "nav-02",
+        issueSelection: "nav-03"
     }
 };

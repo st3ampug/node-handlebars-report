@@ -46,6 +46,13 @@ window.addEventListener('load', function(){
     
     SharedFunctions.changePageTitle(PAGETITLE);
     setTemplateId();
+
+    SharedFunctions.setNavBarElements(
+        SharedFunctions.currentUrlWithPort(),
+        window.location,
+        "#"
+    );
+
     SharedFunctions.setDisplayForRow(JIRAROWID);
     SharedFunctions.setDisplayForRow(TESTRAILROW);
 
@@ -56,6 +63,14 @@ window.addEventListener('load', function(){
     SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // LISTENERS =======================================
+
+    $("#" + GLOBALS.navIDs.templateSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+    $("#" + GLOBALS.navIDs.projectSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+
     jiraprojecttable.addEventListener("click", function(ev) {
         tableEventListener(ev, JIRASELECTIONID, jiraprojectrows, "jiraname", selections.jiraselection);
     });
@@ -101,9 +116,7 @@ function displaySelection(selectionID, trID, attr) {
 
 function submitSelectionInfo(nextpage, selections) {
     // using replace so the user can't navigate back
-    var loc = window.location;
-    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
-                + nextpage + "?" + "templateid=" + selections.templateid;
+    var rdyurl = SharedFunctions.currentUrlWithPort() + nextpage + "?" + "templateid=" + selections.templateid;
 
     if(selections.jiraselection.length != 0)
         rdyurl += "&jkey=" + selections.jiraselection[0];

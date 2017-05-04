@@ -31,6 +31,12 @@ window.addEventListener('load', function(){
 
     SharedFunctions.changePageTitle(PAGETITLE);
 
+    SharedFunctions.setNavBarElements(
+        SharedFunctions.currentUrlWithPort(),
+        "#",
+        "#"
+    );
+
     SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
     SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
@@ -38,6 +44,11 @@ window.addEventListener('load', function(){
     
 
     // LISTENERS =======================================
+
+    $("#" + GLOBALS.navIDs.templateSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+
     templateselect.addEventListener("change", function(ev){
         var info = getSelectedInformation($("#" + TEMPLATESELECTID).val());
         
@@ -56,8 +67,7 @@ window.addEventListener('load', function(){
 
         // submit selection
         submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection);
-    });
-    
+    });    
 });
 
 // =====================================================================================
@@ -94,8 +104,7 @@ function getSelectedInformation(str) {
 function submitSelectionInfo(nextpage, selection) {
     // using href so the user can navigate back
     var loc = window.location;
-    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
-                + nextpage + "?" + "templateid=" + selection.templateid;
+    var rdyurl = SharedFunctions.currentUrlWithPort() + nextpage + "?" + "templateid=" + selection.templateid;
 
     window.location.href = rdyurl;
 }

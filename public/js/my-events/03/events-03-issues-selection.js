@@ -72,6 +72,13 @@ window.addEventListener('load', function(){
 
     SharedFunctions.changePageTitle(PAGETITLE);
     setTemplateId();
+
+    SharedFunctions.setNavBarElements(
+        SharedFunctions.currentUrlWithPort(),
+        SharedFunctions.currentUrlWithPort() + GLOBALS.PROJECTSELECTIONPAGE + "?" + "templateid=" + SharedFunctions.getUrlParameter("templateid"),
+        window.location
+    );
+
     SharedFunctions.setDisplayForRow(JIRASTORIESID);
     SharedFunctions.setDisplayForRow(JIRATASKSID);
     SharedFunctions.setDisplayForRow(JIRABUGSID);
@@ -91,6 +98,17 @@ window.addEventListener('load', function(){
     
 
     // LISTENERS =======================================
+
+    $("#" + GLOBALS.navIDs.templateSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+    $("#" + GLOBALS.navIDs.projectSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+    $("#" + GLOBALS.navIDs.issueSelection).click(function(ev) {
+        SharedFunctions.takeToHrefLink(ev.target.id)
+    });
+
     storiestable.addEventListener("click", function(ev) {
         tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection, STORYROWCLASS);
     });
