@@ -150,6 +150,16 @@ module.exports = {
 
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
     },
+    individualPercent: (arr, prop)=>{
+        var passc = countPropInArr(arr, "passed_count");
+        var failedc = countPropInArr(arr, "failed_count");
+        var blockedc = countPropInArr(arr, "blocked_count");
+        var retestc = countPropInArr(arr, "retest_count");
+        var untestc = countPropInArr(arr, "untested_count");
+        var myc = countPropInArr(arr, prop);
+
+        return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
+    },
 
     // general helpers
 

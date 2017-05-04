@@ -34,9 +34,9 @@ var taskstable = document.getElementById(GLOBALS.tableIDs.tasksTableID);
 var taskrows = document.getElementsByClassName(TASKROWCLASS);
 var bugstable = document.getElementById(GLOBALS.tableIDs.bugsTableID);
 var bugrows = document.getElementsByClassName(BUGROWCLASS);
-var testplanstable = document.getElementById(TESTPLANSTABLEID);
+var testplanstable = document.getElementById(GLOBALS.tableIDs.testplansTableID);
 var testplanrows = document.getElementsByClassName(TESTPLANROWCLASS);
-var testrunstable = document.getElementById(TESTRUNSTABLEID);
+var testrunstable = document.getElementById(GLOBALS.tableIDs.testrunsTableID);
 var testrunrows = document.getElementsByClassName(TESTRUNROWCLASS);
 
 var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
@@ -50,6 +50,8 @@ var tasksprintfilter = document.getElementById(GLOBALS.filterIDs.taskSprint);
 var bugversionfilter = document.getElementById(GLOBALS.filterIDs.bugVersion);
 var bugstatusfilter = document.getElementById(GLOBALS.filterIDs.bugStatus);
 var bugsprintfilter = document.getElementById(GLOBALS.filterIDs.bugSprint);
+var testplansfilter = document.getElementById(GLOBALS.filterIDs.tplanSearch);
+var testrunsfilter = document.getElementById(GLOBALS.filterIDs.trunSearch);
 
 
 var selections = {
@@ -88,8 +90,8 @@ window.addEventListener('load', function(){
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
-    SharedFunctions.initDataTableCustom(TESTPLANSTABLEID, 350);
-    SharedFunctions.initDataTableCustom(TESTRUNSTABLEID, 350);
+    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testplansTableID, 350);
+    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testrunsTableID, 350);
 
     SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
     SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
@@ -108,6 +110,7 @@ window.addEventListener('load', function(){
     $("#" + GLOBALS.navIDs.issueSelection).click(function(ev) {
         SharedFunctions.takeToHrefLink(ev.target.id)
     });
+    
 
     storiestable.addEventListener("click", function(ev) {
         tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection, STORYROWCLASS);
@@ -168,6 +171,12 @@ window.addEventListener('load', function(){
     });
     bugstatusfilter.addEventListener("keyup", function(ev) {
         DataFiltering.filterVersion(GLOBALS.filterIDs.bugStatus, GLOBALS.tableIDs.bugsTableID, 5);
+    });
+    testplansfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.tplanSearch, GLOBALS.tableIDs.testplansTableID, 1);
+    });
+    testrunsfilter.addEventListener("keyup", function(ev) {
+        DataFiltering.filterVersion(GLOBALS.filterIDs.trunSearch, GLOBALS.tableIDs.testrunsTableID, 1);
     });
 });
 

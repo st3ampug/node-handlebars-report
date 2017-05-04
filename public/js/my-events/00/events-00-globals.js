@@ -12,11 +12,15 @@ const GLOBALS = {
         bugVersion: "bug-versionfilter",
         bugStatus: "bug-statusfilter",
         bugSprint: "bug-sprintfilter",
+        tplanSearch: "tplan-searchfilter",
+        trunSearch: "trun-searchfilter"
     },
     tableIDs: {
         storiesTableID: "storiestable",
         tasksTableID: "taskstable",
-        bugsTableID: "bugstable"
+        bugsTableID: "bugstable",
+        testplansTableID: "testplanstable",
+        testrunsTableID: "testrunstable"
     },
     navIDs: {
         templateSelection: "nav-01",
