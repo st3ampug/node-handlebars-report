@@ -89,6 +89,16 @@ var SharedFunctions = {
         $("#" + id).removeClass('button-primary');
     },
 
+    buttonDisabledSkeletonDelay: function (id, delay) {
+        $("#" + id).attr('disabled', '');
+        $("#" + id).removeClass('button-primary');
+
+        setTimeout(function() {
+            $("#" + id).removeAttr('disabled');
+            $("#" + id).addClass('button-primary');
+        }, delay);
+    },
+
     initDataTableDefault: function (id) {
         $("#" + id).DataTable();
     },

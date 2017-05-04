@@ -130,9 +130,11 @@ window.addEventListener('load', function(){
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
-        SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
-        SharedFunctions.elementDisplayNone(BUTTONROWID);
-        SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
+        // SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        // SharedFunctions.elementDisplayNone(BUTTONROWID);
+        // SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
+
+        SharedFunctions.buttonDisabledSkeletonDelay(SELECTIONSUBMITID, 5000);
 
         // submit selection
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
@@ -255,15 +257,18 @@ function shiftModifier(ev, selectionarray, rowclass) {
 }
 
 function checkSelectionArrays() {
-    if(
-        ( storiestable.getAttribute("rowscount") == "0" || selections.storyselection.length > 0 ) &&
-        ( taskstable.getAttribute("rowscount") == "0" || selections.taskselection.length > 0 ) &&
-        ( bugstable.getAttribute("rowscount") == "0" || selections.bugselection.length > 0 ) &&
-        ( testplanstable.getAttribute("rowscount") == "0" || selections.testplanselection.length > 0 ) &&
-        ( testrunstable.getAttribute("rowscount") == "0" || selections.testrunselection.length > 0 )
-    ) {
-        SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
-    }
+    // if(
+    //     ( storiestable.getAttribute("rowscount") == "0" || selections.storyselection.length > 0 ) &&
+    //     ( taskstable.getAttribute("rowscount") == "0" || selections.taskselection.length > 0 ) &&
+    //     ( bugstable.getAttribute("rowscount") == "0" || selections.bugselection.length > 0 ) &&
+    //     ( testplanstable.getAttribute("rowscount") == "0" || selections.testplanselection.length > 0 ) &&
+    //     ( testrunstable.getAttribute("rowscount") == "0" || selections.testrunselection.length > 0 )
+    // ) {
+    //     SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
+    // }
+
+    // It is not necessary to restrict the user from generating the report when stuff is not selected
+    SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
 }
 
 function changeCollapseState(tocollapseID, toexpandID) {
