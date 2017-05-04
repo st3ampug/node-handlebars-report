@@ -103,7 +103,7 @@
     width: 45%;
 }
 
-.td-key {
+.td-key, .td-sprint, .td-version {
     white-space: nowrap;
 }
 
