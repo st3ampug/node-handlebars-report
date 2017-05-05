@@ -174,6 +174,13 @@ module.exports = {
             return 'display="y"';
         else
             return 'display="n"';
+    },
+
+    date: (d)=>{
+        var dateFormat = require('dateformat');
+        //var mydate = new Date(d);
+        //dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+        return dateFormat(d, "yyyy-mm-dd HH:MM");
     }
 }
 

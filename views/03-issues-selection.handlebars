@@ -90,6 +90,7 @@
                         <th>TYPE</th>
                         <th>KEY</th>
                         <th>SUMMARY</th>
+                        <th>CREATED</th>
                         <th>SPRINT</th>
                         <th>FIXVERSION</th>
                         <th>STATUS</th>
@@ -101,6 +102,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
+                        <td>{{date this.fields.created}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
