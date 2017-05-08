@@ -75,7 +75,7 @@ window.addEventListener('load', function(){
     SharedFunctions.changePageTitle(PAGETITLE);
     setTemplateId();
 
-    SharedFunctions.setNavBarElements(
+    SharedFunctions.NavBar.setNavBarElements(
         SharedFunctions.currentUrlWithPort(),
         SharedFunctions.currentUrlWithPort() + GLOBALS.PROJECTSELECTIONPAGE + "?" + "templateid=" + SharedFunctions.getUrlParameter("templateid"),
         window.location

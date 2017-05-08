@@ -31,7 +31,7 @@ window.addEventListener('load', function(){
 
     SharedFunctions.changePageTitle(PAGETITLE);
 
-    SharedFunctions.setNavBarElements(
+    SharedFunctions.NavBar.setNavBarElements(
         SharedFunctions.currentUrlWithPort(),
         "#",
         "#"

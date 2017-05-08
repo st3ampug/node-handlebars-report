@@ -139,38 +139,6 @@ var SharedFunctions = {
         });
     },
 
-    setNavBarElements: function(link01, link02, link03) {
-        $("#" + GLOBALS.navIDs.templateSelection).attr("href", link01);
-        $("#" + GLOBALS.navIDs.projectSelection).attr("href", link02);
-        $("#" + GLOBALS.navIDs.issueSelection).attr("href", link03);
-
-        if(link01 != "#") {
-            SharedFunctions.changeNavItemState(GLOBALS.navIDs.templateSelection);
-            $("#" + GLOBALS.navIDs.templateSelection).attr("title", link01);
-        }
-        if(link02 != "#") {
-            SharedFunctions.changeNavItemState(GLOBALS.navIDs.projectSelection);
-            $("#" + GLOBALS.navIDs.projectSelection).attr("title", link02);
-        }
-        if(link03 != "#") {
-            SharedFunctions.changeNavItemState(GLOBALS.navIDs.issueSelection);
-            $("#" + GLOBALS.navIDs.issueSelection).attr("title", link03);
-        }
-    },
-
-    changeNavItemState: function(id) {
-        var item = document.getElementById(id);
-        
-        if(item.getAttribute("class") == "navitem") {
-            item.setAttribute("class", "navitem-enabled");
-            item.setAttribute("style", "cursor:pointer");
-        }
-        else {
-            item.setAttribute("class", "navitem");
-            item.removeAttribute("style");
-        }
-    },
-
     currentUrlWithPort: function() {
         var loc = window.location;
         return loc.protocol + "//" + loc.hostname + ":" + loc.port + "/";
@@ -178,5 +146,40 @@ var SharedFunctions = {
 
     takeToHrefLink: function(id) {
         window.location.href = $("#" + id).attr("href");
+    },
+
+    NavBar: {
+
+        setNavBarElements: function(link01, link02, link03) {
+            $("#" + GLOBALS.navIDs.templateSelection).attr("href", link01);
+            $("#" + GLOBALS.navIDs.projectSelection).attr("href", link02);
+            $("#" + GLOBALS.navIDs.issueSelection).attr("href", link03);
+
+            if(link01 != "#") {
+                SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.templateSelection);
+                $("#" + GLOBALS.navIDs.templateSelection).attr("title", link01);
+            }
+            if(link02 != "#") {
+                SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.projectSelection);
+                $("#" + GLOBALS.navIDs.projectSelection).attr("title", link02);
+            }
+            if(link03 != "#") {
+                SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.issueSelection);
+                $("#" + GLOBALS.navIDs.issueSelection).attr("title", link03);
+            }
+        },
+
+        changeNavItemState: function(id) {
+            var item = document.getElementById(id);
+            
+            if(item.getAttribute("class") == "navitem") {
+                item.setAttribute("class", "navitem-enabled");
+                item.setAttribute("style", "cursor:pointer");
+            }
+            else {
+                item.setAttribute("class", "navitem");
+                item.removeAttribute("style");
+            }
+        }
     }
 }
