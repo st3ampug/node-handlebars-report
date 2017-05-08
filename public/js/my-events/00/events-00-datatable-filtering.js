@@ -16,7 +16,7 @@ var DataFiltering = {
                 if(!first) {
                     regex += "|"
                 }
-                regex += ".*" + arr[i].text + "\D*";
+                regex += ".*" + arr[i].text + "\\D*";
                 first = false;
             }
 
