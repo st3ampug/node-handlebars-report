@@ -110,7 +110,51 @@ window.addEventListener('load', function(){
     $("#" + GLOBALS.navIDs.issueSelection).click(function(ev) {
         SharedFunctions.takeToHrefLink(ev.target.id)
     });
-    
+
+    $("#" + GLOBALS.filterIDs.Story.storyCollapse).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Story.storyExpanded);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Story.storyCollapsed);
+    });
+      $("#" + GLOBALS.filterIDs.Story.storyExpand).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Story.storyCollapsed);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Story.storyExpanded);
+    });
+
+    $("#" + GLOBALS.filterIDs.Task.taskCollapse).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Task.taskExpanded);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Task.taskCollapsed);
+    });
+      $("#" + GLOBALS.filterIDs.Task.taskExpand).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Task.taskCollapsed);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Task.taskExpanded);
+    });
+
+    $("#" + GLOBALS.filterIDs.Bug.bugCollapse).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Bug.bugExpanded);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Bug.bugCollapsed);
+    });
+      $("#" + GLOBALS.filterIDs.Bug.bugExpand).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Bug.bugCollapsed);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Bug.bugExpanded);
+    });
+
+    $("#" + GLOBALS.filterIDs.TPlan.tplanCollapse).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TPlan.tplanExpanded);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TPlan.tplanCollapsed);
+    });
+      $("#" + GLOBALS.filterIDs.TPlan.tplanExpand).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TPlan.tplanCollapsed);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TPlan.tplanExpanded);
+    });
+
+    $("#" + GLOBALS.filterIDs.TRun.trunCollapse).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TRun.trunExpanded);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TRun.trunCollapsed);
+    });
+      $("#" + GLOBALS.filterIDs.TRun.trunExpand).click(function (ev) {
+        SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TRun.trunCollapsed);
+        SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TRun.trunExpanded);
+    });
 
     storiestable.addEventListener("click", function(ev) {
         tableEventListener(ev, SELECTEDSTORIESID, selections.storyselection, STORYROWCLASS);

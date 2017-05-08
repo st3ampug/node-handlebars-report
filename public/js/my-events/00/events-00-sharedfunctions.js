@@ -148,6 +148,16 @@ var SharedFunctions = {
         window.location.href = $("#" + id).attr("href");
     },
 
+    Display: {
+        jqueryHide: function(id) {
+            $("#" + id).hide();
+        },
+
+        jqueryShow: function(id) {
+            $("#" + id).show("slide", {direction: "down"}, 350);
+        }
+    },
+
     NavBar: {
 
         setNavBarElements: function(link01, link02, link03) {

@@ -4,6 +4,41 @@ const GLOBALS = {
     REPORTPAGE: "report",
 
     filterIDs: {
+        Story: {
+            storyCollapse: "collapse-icon-story",
+            storyExpand: "expand-icon-story",
+            storyExpanded: "filter-expanded-story",
+            storyCollapsed: "filter-collapsed-story"
+        }, 
+
+        Task: {
+            taskCollapse: "collapse-icon-task",
+            taskExpand: "expand-icon-task",
+            taskExpanded: "filter-expanded-task",
+            taskCollapsed: "filter-collapsed-task"
+        },
+
+        Bug: {
+            bugCollapse: "collapse-icon-bug",
+            bugExpand: "expand-icon-bug",
+            bugExpanded: "filter-expanded-bug",
+            bugCollapsed: "filter-collapsed-bug"
+        },
+
+        TPlan: {
+            tplanCollapse: "collapse-icon-tplan",
+            tplanExpand: "expand-icon-tplan",
+            tplanExpanded: "filter-expanded-tplan",
+            tplanCollapsed: "filter-collapsed-tplan"
+        },
+
+        TRun: {
+            trunCollapse: "collapse-icon-trun",
+            trunExpand: "expand-icon-trun",
+            trunExpanded: "filter-expanded-trun",
+            trunCollapsed: "filter-collapsed-trun"
+        },
+
         storyVersion: "story-versionfilter",
         storyStatus: "story-statusfilter",
         storySprint: "story-sprintfilter",
