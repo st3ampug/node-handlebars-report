@@ -103,7 +103,7 @@
     width: 45%;
 }
 
-.td-key, .td-sprint, .td-version {
+.td-key, .td-sprint, .td-version, .td-created {
     white-space: nowrap;
 }
 
@@ -146,4 +146,15 @@
 
 .collapsed {
     display: block;
+}
+
+.filter-select {
+    display: block;
+    height: 150px;
+    width: 100%;
+}
+
+.filter-title {
+    text-align: center;
+    font-weight: normal;
 }

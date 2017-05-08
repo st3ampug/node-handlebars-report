@@ -154,7 +154,7 @@ var SharedFunctions = {
         },
 
         jqueryShow: function(id) {
-            $("#" + id).show("slide", {direction: "down"}, 350);
+            $("#" + id).show("slide", {direction: "up"}, 350);
         }
     },
 

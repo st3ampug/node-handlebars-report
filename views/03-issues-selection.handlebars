@@ -76,13 +76,31 @@
             &nbsp;
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="story-sprintfilter" placeholder="Sprint">
+            {{!--<input type="text" class="column_filter" id="story-sprintfilter" placeholder="Sprint">--}}
+            <div class="filter-title">Sprints</div>
+            <select class="filter-select" id="story-sprintfilter-select" multiple>
+                {{#each sprints.story}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="story-versionfilter" placeholder="Version">
+            {{!--<input type="text" class="column_filter" id="story-versionfilter" placeholder="Version">--}}
+            <div class="filter-title">Versions</div>
+            <select class="filter-select" id="story-versionfilter-select" multiple>
+                {{#each versions.story}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="story-statusfilter" placeholder="Status">
+            {{!--<input type="text" class="column_filter" id="story-statusfilter" placeholder="Status">--}}
+            <div class="filter-title">Statuses</div>
+            <select class="filter-select" id="story-statusfilter-select" multiple>
+                {{#each statuses.story}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
     </div>
     <div class="row collapsed" id="filter-collapsed-story">
@@ -116,7 +134,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td>{{date this.fields.created}}</td>
+                        <td class="td-created">{{date this.fields.created}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
@@ -159,13 +177,31 @@
             &nbsp;
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="task-sprintfilter" placeholder="Sprint">
+            {{!--<input type="text" class="column_filter" id="task-sprintfilter" placeholder="Sprint">--}}
+            <div class="filter-title">Sprints</div>
+            <select class="filter-select" id="task-sprintfilter-select" multiple>
+                {{#each sprints.task}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="task-versionfilter" placeholder="Version">
+            {{!--<input type="text" class="column_filter" id="task-versionfilter" placeholder="Version">--}}
+            <div class="filter-title">Versions</div>
+            <select class="filter-select" id="task-versionfilter-select" multiple>
+                {{#each versions.task}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="task-statusfilter" placeholder="Status">
+            {{!--<input type="text" class="column_filter" id="task-statusfilter" placeholder="Status">--}}
+            <div class="filter-title">Statuses</div>
+            <select class="filter-select" id="task-statusfilter-select" multiple>
+                {{#each statuses.task}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
     </div>
     <div class="row collapsed" id="filter-collapsed-task">
@@ -199,7 +235,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td>{{date this.fields.created}}</td>
+                        <td class="td-created">{{date this.fields.created}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
@@ -242,13 +278,31 @@
             &nbsp;
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="bug-sprintfilter" placeholder="Sprint">
+            {{!--<input type="text" class="column_filter" id="bug-sprintfilter" placeholder="Sprint">--}}
+            <div class="filter-title">Sprints</div>
+            <select class="filter-select" id="bug-sprintfilter-select" multiple>
+                {{#each sprints.bug}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="bug-versionfilter" placeholder="Version">
+            {{!--<input type="text" class="column_filter" id="bug-versionfilter" placeholder="Version">--}}
+            <div class="filter-title">Versions</div>
+            <select class="filter-select" id="bug-versionfilter-select" multiple>
+                {{#each versions.bug}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="two columns">
-            <input type="text" class="column_filter" id="bug-statusfilter" placeholder="Status">
+            {{!--<input type="text" class="column_filter" id="bug-statusfilter" placeholder="Status">--}}
+            <div class="filter-title">Statuses</div>
+            <select class="filter-select" id="bug-statusfilter-select" multiple>
+                {{#each statuses.bug}}
+                    <option selected="selected">{{this}}</option>
+                {{/each}}
+            </select>
         </div>
     </div>
     <div class="row collapsed" id="filter-collapsed-bug">
@@ -282,7 +336,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td>{{date this.fields.created}}</td>
+                        <td class="td-created">{{date this.fields.created}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>

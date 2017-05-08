@@ -278,7 +278,22 @@ function allTheCalls(req, res, pagetorender, jkey, tid, templateid) {
             res.render(pagetorender, {
                 context: contextsave,
                 reptemplate: selectedtemplate,
-                projectkey: {key: jkey}
+                projectkey: {key: jkey},
+                sprints: {
+                    story: uniqueSprints(contextsave.stories).sort(),
+                    task: uniqueSprints(contextsave.tasks).sort(),
+                    bug: uniqueSprints(contextsave.bugs).sort()
+                },
+                versions: {
+                    story: uniqueVersions(contextsave.stories).sort(),
+                    task: uniqueVersions(contextsave.tasks).sort(),
+                    bug: uniqueVersions(contextsave.bugs).sort()
+                },
+                statuses: {
+                    story: uniqueStatuses(contextsave.stories).sort(),
+                    task: uniqueStatuses(contextsave.tasks).sort(),
+                    bug: uniqueStatuses(contextsave.bugs).sort()
+                }
             });
         } else {
             res.render("errors/error-general");
@@ -539,4 +554,58 @@ function testRailGetTestAPICallWithCallback(getstr, tid, callback) {
             callback(null, body);
         }
     });
+}
+
+function getSprintValue(str, jkey) {
+    var strarr = str.split(",");
+    var keystr = "name=";
+
+    for(var i = 0; i < strarr.length; i++) {
+        if(strarr[i].startsWith(keystr)){
+            return strarr[i].slice(keystr.length);
+        }
+    }
+}
+
+function uniques(arr) {
+    var a = [];
+    for (var i=0, l=arr.length; i<l; i++)
+        if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
+            a.push(arr[i]);
+    return a;
+}
+
+function uniqueSprints(arr, jkey) {
+    var tmp = [];
+
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].fields.customfield_10019 != null) {
+            for(var j = 0; j < arr[i].fields.customfield_10019.length; j++) {
+                tmp.push(getSprintValue(arr[i].fields.customfield_10019[j], jkey));
+            }
+        }
+    }
+    return uniques(tmp);
+}
+
+function uniqueVersions(arr, jkey) {
+    var tmp = [];
+
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].fields.fixVersions != null) {
+            for(var j = 0; j < arr[i].fields.fixVersions.length; j++) {
+                tmp.push(arr[i].fields.fixVersions[j].name);
+            }
+        }
+    }
+    return uniques(tmp);
+}
+
+function uniqueStatuses(arr, jkey) {
+    var tmp = [];
+
+    for(var i = 0; i < arr.length; i++) {
+        tmp.push(arr[i].fields.status.name);
+    }
+    return uniques(tmp);
 }

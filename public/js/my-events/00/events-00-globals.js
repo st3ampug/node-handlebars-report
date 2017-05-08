@@ -8,21 +8,30 @@ const GLOBALS = {
             storyCollapse: "collapse-icon-story",
             storyExpand: "expand-icon-story",
             storyExpanded: "filter-expanded-story",
-            storyCollapsed: "filter-collapsed-story"
+            storyCollapsed: "filter-collapsed-story",
+            storyVersion: "story-versionfilter-select",
+            storyStatus: "story-statusfilter-select",
+            storySprint: "story-sprintfilter-select"
         }, 
 
         Task: {
             taskCollapse: "collapse-icon-task",
             taskExpand: "expand-icon-task",
             taskExpanded: "filter-expanded-task",
-            taskCollapsed: "filter-collapsed-task"
+            taskCollapsed: "filter-collapsed-task",
+            taskVersion: "task-versionfilter-select",
+            taskStatus: "task-statusfilter-select",
+            taskSprint: "task-sprintfilter-select"
         },
 
         Bug: {
             bugCollapse: "collapse-icon-bug",
             bugExpand: "expand-icon-bug",
             bugExpanded: "filter-expanded-bug",
-            bugCollapsed: "filter-collapsed-bug"
+            bugCollapsed: "filter-collapsed-bug",
+            bugVersion: "bug-versionfilter-select",
+            bugStatus: "bug-statusfilter-select",
+            bugSprint: "bug-sprintfilter-select"
         },
 
         TPlan: {

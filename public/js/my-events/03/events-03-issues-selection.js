@@ -187,35 +187,75 @@ window.addEventListener('load', function(){
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
     });
     
-    storysprintfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.storySprint, GLOBALS.tableIDs.storiesTableID, 3);
+    // storysprintfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storySprint, GLOBALS.tableIDs.storiesTableID, 4);
+    // });
+    // storyversionfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storyVersion, GLOBALS.tableIDs.storiesTableID, 5);
+    // });
+    // storystatusfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storyStatus, GLOBALS.tableIDs.storiesTableID, 6);
+    // });
+
+    // tasksprintfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskSprint, GLOBALS.tableIDs.tasksTableID, 4);
+    // });
+    // taskversionfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskVersion, GLOBALS.tableIDs.tasksTableID, 5);
+    // });
+    // taskstatusfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskStatus, GLOBALS.tableIDs.tasksTableID, 6);
+    // });
+
+    // bugsprintfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugSprint, GLOBALS.tableIDs.bugsTableID, 4);
+    // });
+    // bugversionfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugVersion, GLOBALS.tableIDs.bugsTableID, 5);
+    // });
+    // bugstatusfilter.addEventListener("keyup", function(ev) {
+    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugStatus, GLOBALS.tableIDs.bugsTableID, 6);
+    // });
+
+    $("#" + GLOBALS.filterIDs.Story.storySprint).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.storiesTableID, 4);
     });
-    storyversionfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.storyVersion, GLOBALS.tableIDs.storiesTableID, 4);
+    $("#" + GLOBALS.filterIDs.Story.storyVersion).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.storiesTableID, 5);
     });
-    storystatusfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.storyStatus, GLOBALS.tableIDs.storiesTableID, 5);
-    });
-    
-    tasksprintfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.taskSprint, GLOBALS.tableIDs.tasksTableID, 3);
-    });
-    taskversionfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.taskVersion, GLOBALS.tableIDs.tasksTableID, 4);
-    });
-    taskstatusfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.taskStatus, GLOBALS.tableIDs.tasksTableID, 5);
+    $("#" + GLOBALS.filterIDs.Story.storyStatus).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.storiesTableID, 6);
     });
 
-    bugsprintfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.bugSprint, GLOBALS.tableIDs.bugsTableID, 3);
+    $("#" + GLOBALS.filterIDs.Task.taskSprint).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.tasksTableID, 4);
     });
-    bugversionfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.bugVersion, GLOBALS.tableIDs.bugsTableID, 4);
+    $("#" + GLOBALS.filterIDs.Task.taskVersion).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.tasksTableID, 5);
     });
-    bugstatusfilter.addEventListener("keyup", function(ev) {
-        DataFiltering.filterVersion(GLOBALS.filterIDs.bugStatus, GLOBALS.tableIDs.bugsTableID, 5);
+    $("#" + GLOBALS.filterIDs.Task.taskStatus).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.tasksTableID, 6);
     });
+
+    $("#" + GLOBALS.filterIDs.Bug.bugSprint).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.bugsTableID, 4);
+    });
+    $("#" + GLOBALS.filterIDs.Bug.bugVersion).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.bugsTableID, 5);
+    });
+    $("#" + GLOBALS.filterIDs.Bug.bugStatus).change(function(ev) {
+        var selected = $(ev.target).children().filter(":selected");
+        DataFiltering.selectFilter(selected, GLOBALS.tableIDs.bugsTableID, 6);
+    });
+
     testplansfilter.addEventListener("keyup", function(ev) {
         DataFiltering.filterVersion(GLOBALS.filterIDs.tplanSearch, GLOBALS.tableIDs.testplansTableID, 1);
     });
