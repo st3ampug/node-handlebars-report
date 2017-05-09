@@ -62,6 +62,7 @@
             <h4>JIRA Stories</h4>
         </div>
     </div>
+
     <div class="row expanded" id="filter-expanded-story">
         <div class="one column">
             <img id="collapse-icon-story" src="pics/collapse.png" />
@@ -75,17 +76,17 @@
         <div class="two columns">
             <div class="filter-title">Start Date</div>
             <div class="u-full-width">
-                <input type="text" placeholder="Nov 5, 1955" id="story-datefilter-start">
+                <input class="u-full-width" type="text" placeholder="Nov 5, 1955" id="story-datefilter-start">
             </div>
             <div class="filter-title">End Date</div>
             <div class="u-full-width">
-                <input type="text" placeholder="Oct 2, 2015" id="story-datefilter-end">
+                <input class="u-full-width" type="text" placeholder="Oct 2, 2015" id="story-datefilter-end">
             </div>
         </div>
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="story-sprintfilter" placeholder="Sprint">--}}
             <div class="filter-title">Sprints</div>
-            <select class="filter-select" id="story-sprintfilter-select" multiple>
+            <select class="filter-select u-full-width" id="story-sprintfilter-select" multiple>
                 {{#each sprints.story}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -94,7 +95,7 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="story-versionfilter" placeholder="Version">--}}
             <div class="filter-title">Versions</div>
-            <select class="filter-select" id="story-versionfilter-select" multiple>
+            <select class="filter-select u-full-width" id="story-versionfilter-select" multiple>
                 {{#each versions.story}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -103,13 +104,14 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="story-statusfilter" placeholder="Status">--}}
             <div class="filter-title">Statuses</div>
-            <select class="filter-select" id="story-statusfilter-select" multiple>
+            <select class="filter-select u-full-width" id="story-statusfilter-select" multiple>
                 {{#each statuses.story}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
             </select>
         </div>
     </div>
+
     <div class="row collapsed" id="filter-collapsed-story">
         <div class="one column">
             <img id="expand-icon-story" src="pics/expand.png" />
@@ -121,6 +123,7 @@
             &nbsp;
         </div>
     </div>
+
     <div class="row">
         <div class="twelve columns">
             <table id="storiestable" rowscount="{{context.stories.length}}">
@@ -151,6 +154,7 @@
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="myselection">
             <div class="two columns">
@@ -170,6 +174,7 @@
             <h4>JIRA Tasks</h4>
         </div>
     </div>
+
     <div class="row expanded" id="filter-expanded-task">
         <div class="one column">
             <img id="collapse-icon-task" src="pics/collapse.png" />
@@ -181,12 +186,19 @@
             &nbsp;
         </div>
         <div class="two columns">
-            &nbsp;
+            <div class="filter-title">Start Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Nov 5, 1955" id="task-datefilter-start">
+            </div>
+            <div class="filter-title">End Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Oct 2, 2015" id="task-datefilter-end">
+            </div>
         </div>
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="task-sprintfilter" placeholder="Sprint">--}}
             <div class="filter-title">Sprints</div>
-            <select class="filter-select" id="task-sprintfilter-select" multiple>
+            <select class="filter-select u-full-width" id="task-sprintfilter-select" multiple>
                 {{#each sprints.task}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -195,7 +207,7 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="task-versionfilter" placeholder="Version">--}}
             <div class="filter-title">Versions</div>
-            <select class="filter-select" id="task-versionfilter-select" multiple>
+            <select class="filter-select u-full-width" id="task-versionfilter-select" multiple>
                 {{#each versions.task}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -204,13 +216,14 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="task-statusfilter" placeholder="Status">--}}
             <div class="filter-title">Statuses</div>
-            <select class="filter-select" id="task-statusfilter-select" multiple>
+            <select class="filter-select u-full-width" id="task-statusfilter-select" multiple>
                 {{#each statuses.task}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
             </select>
         </div>
     </div>
+
     <div class="row collapsed" id="filter-collapsed-task">
         <div class="one column">
             <img id="expand-icon-task" src="pics/expand.png" />
@@ -252,6 +265,7 @@
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="myselection">
             <div class="two columns">
@@ -271,6 +285,7 @@
             <h4>JIRA Bugs</h4>
         </div>
     </div>
+
     <div class="row expanded" id="filter-expanded-bug">
         <div class="one column">
             <img id="collapse-icon-bug" src="pics/collapse.png" />
@@ -282,12 +297,19 @@
             &nbsp;
         </div>
         <div class="two columns">
-            &nbsp;
+            <div class="filter-title">Start Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Nov 5, 1955" id="bug-datefilter-start">
+            </div>
+            <div class="filter-title">End Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Oct 2, 2015" id="bug-datefilter-end">
+            </div>
         </div>
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="bug-sprintfilter" placeholder="Sprint">--}}
             <div class="filter-title">Sprints</div>
-            <select class="filter-select" id="bug-sprintfilter-select" multiple>
+            <select class="filter-select u-full-width" id="bug-sprintfilter-select" multiple>
                 {{#each sprints.bug}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -296,7 +318,7 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="bug-versionfilter" placeholder="Version">--}}
             <div class="filter-title">Versions</div>
-            <select class="filter-select" id="bug-versionfilter-select" multiple>
+            <select class="filter-select u-full-width" id="bug-versionfilter-select" multiple>
                 {{#each versions.bug}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
@@ -305,13 +327,14 @@
         <div class="two columns">
             {{!--<input type="text" class="column_filter" id="bug-statusfilter" placeholder="Status">--}}
             <div class="filter-title">Statuses</div>
-            <select class="filter-select" id="bug-statusfilter-select" multiple>
+            <select class="filter-select u-full-width" id="bug-statusfilter-select" multiple>
                 {{#each statuses.bug}}
                     <option selected="selected">{{this}}</option>
                 {{/each}}
             </select>
         </div>
     </div>
+
     <div class="row collapsed" id="filter-collapsed-bug">
         <div class="one column">
             <img id="expand-icon-bug" src="pics/expand.png" />
@@ -323,6 +346,7 @@
             &nbsp;
         </div>
     </div>
+
     <div class="row">
         <div class="twelve columns">
             <table id="bugstable" rowscount="{{context.bugs.length}}">
@@ -353,6 +377,7 @@
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="myselection">
             <div class="two columns">
@@ -373,6 +398,7 @@
             <h4>TestRail Plans</h4>
         </div>
     </div>
+
     <div class="row expanded" id="filter-expanded-tplan">
         <div class="one column">
             <img id="collapse-icon-tplan" src="pics/collapse.png" />
@@ -396,6 +422,7 @@
             <input type="text" class="column_filter" id="tplan-searchfilter" placeholder="Search">
         </div>
     </div>
+
     <div class="row collapsed" id="filter-collapsed-tplan">
         <div class="one column">
             <img id="expand-icon-tplan" src="pics/expand.png" />
@@ -407,6 +434,7 @@
             &nbsp;
         </div>
     </div>
+
     <div class="row">
         <div class="twelve columns">
             <table id="testplanstable" rowscount="{{context.testplans.length}}">
@@ -439,6 +467,7 @@
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="myselection">
             <div class="two columns">
@@ -449,6 +478,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <!-- +++++++++++++++++++++++++++ ROWS 5 ++++++++++++++++++++++++++ -->
 <div class="row" id="testrailruns" {{{display reptemplate.calls.testrail.runs}}}>
@@ -457,6 +487,7 @@
             <h4>TestRail Runs</h4>
         </div>
     </div>
+
     <div class="row expanded" id="filter-expanded-trun">
         <div class="one column">
             <img id="collapse-icon-trun" src="pics/collapse.png" />
@@ -480,6 +511,7 @@
             <input type="text" class="column_filter" id="trun-searchfilter" placeholder="Search">
         </div>
     </div>
+
     <div class="row collapsed" id="filter-collapsed-trun">
         <div class="one column">
             <img id="expand-icon-trun" src="pics/expand.png" />
@@ -491,6 +523,7 @@
             &nbsp;
         </div>
     </div>
+
     <div class="row">
         <div class="twelve columns">
             <table id="testrunstable" rowscount="{{context.testruns.length}}">
@@ -523,6 +556,7 @@
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="myselection">
             <div class="two columns">
@@ -533,6 +567,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- ++++++++++++++++++++++++ ROWS LAST ++++++++++++++++++++++++++ -->

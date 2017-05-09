@@ -16,9 +16,7 @@ const GLOBALS = {
             storyStatus: "story-statusfilter-select",
             storySprint: "story-sprintfilter-select",
             storyStartDate: "story-datefilter-start",
-            storyEndDate: "story-datefilter-end",
-            storyClearStartDate: "story-datefilter-start-clear",
-            storyClearEndDate: "story-datefilter-end-clear"
+            storyEndDate: "story-datefilter-end"
         }, 
 
         Task: {
@@ -28,7 +26,9 @@ const GLOBALS = {
             taskCollapsed: "filter-collapsed-task",
             taskVersion: "task-versionfilter-select",
             taskStatus: "task-statusfilter-select",
-            taskSprint: "task-sprintfilter-select"
+            taskSprint: "task-sprintfilter-select",
+            taskStartDate: "task-datefilter-start",
+            taskEndDate: "task-datefilter-end"
         },
 
         Bug: {
@@ -38,7 +38,9 @@ const GLOBALS = {
             bugCollapsed: "filter-collapsed-bug",
             bugVersion: "bug-versionfilter-select",
             bugStatus: "bug-statusfilter-select",
-            bugSprint: "bug-sprintfilter-select"
+            bugSprint: "bug-sprintfilter-select",
+            bugStartDate: "bug-datefilter-start",
+            bugEndDate: "bug-datefilter-end"
         },
 
         TPlan: {
