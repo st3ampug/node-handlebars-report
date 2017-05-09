@@ -1,4 +1,7 @@
 const GLOBALS = {
+    EMPTY: "",
+    ERRORDISPLAY: "errordisplay",
+    ERRORDELAY: 4500,
     PROJECTSELECTIONPAGE: "projects",
     ISSUESSELECTIONPAGE: "issues",
     REPORTPAGE: "report",
@@ -11,7 +14,9 @@ const GLOBALS = {
             storyCollapsed: "filter-collapsed-story",
             storyVersion: "story-versionfilter-select",
             storyStatus: "story-statusfilter-select",
-            storySprint: "story-sprintfilter-select"
+            storySprint: "story-sprintfilter-select",
+            storyStartDate: "story-datefilter-start",
+            storyEndDate: "story-datefilter-end"
         }, 
 
         Task: {
@@ -79,5 +84,10 @@ const GLOBALS = {
         loading: "dashinfinity.gif",
         collapse: "collapse.png",
         expand: "expand.png"
+    },
+
+    errorMessages: {
+        startdateEarlier: "Start date has to be ealier than the end date",
+        enddateLater: "End date has to be later than the start date"
     }
 };

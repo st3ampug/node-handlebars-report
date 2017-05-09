@@ -93,6 +93,9 @@ window.addEventListener('load', function(){
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testplansTableID, 350);
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testrunsTableID, 350);
 
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyStartDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyEndDate);
+
     SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
     SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
@@ -186,36 +189,19 @@ window.addEventListener('load', function(){
         // submit selection
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
     });
-    
-    // storysprintfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storySprint, GLOBALS.tableIDs.storiesTableID, 4);
-    // });
-    // storyversionfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storyVersion, GLOBALS.tableIDs.storiesTableID, 5);
-    // });
-    // storystatusfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.storyStatus, GLOBALS.tableIDs.storiesTableID, 6);
-    // });
 
-    // tasksprintfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskSprint, GLOBALS.tableIDs.tasksTableID, 4);
-    // });
-    // taskversionfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskVersion, GLOBALS.tableIDs.tasksTableID, 5);
-    // });
-    // taskstatusfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.taskStatus, GLOBALS.tableIDs.tasksTableID, 6);
-    // });
-
-    // bugsprintfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugSprint, GLOBALS.tableIDs.bugsTableID, 4);
-    // });
-    // bugversionfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugVersion, GLOBALS.tableIDs.bugsTableID, 5);
-    // });
-    // bugstatusfilter.addEventListener("keyup", function(ev) {
-    //     DataFiltering.filterVersion(GLOBALS.filterIDs.bugStatus, GLOBALS.tableIDs.bugsTableID, 6);
-    // });
+    $("#" + GLOBALS.filterIDs.Story.storyStartDate).change(function(ev) {
+        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
+        }
+    });
+    $("#" + GLOBALS.filterIDs.Story.storyEndDate).change(function(ev) {
+        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
+        }
+    });
 
     $("#" + GLOBALS.filterIDs.Story.storySprint).change(function(ev) {
         var selected = $(ev.target).children().filter(":selected");

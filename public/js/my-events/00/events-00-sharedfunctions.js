@@ -148,6 +148,14 @@ var SharedFunctions = {
         window.location.href = $("#" + id).attr("href");
     },
 
+    convertToEpochFromString: function(dateStr) {
+        return new Date(dateStr).getTime();
+    },
+
+    convertToEpochFromDate: function(date) {
+        return date.getTime();
+    },
+
     Display: {
         jqueryHide: function(id) {
             $("#" + id).hide();
@@ -190,6 +198,64 @@ var SharedFunctions = {
                 item.setAttribute("class", "navitem");
                 item.removeAttribute("style");
             }
+        }
+    },
+
+    Init: {
+        initDatePicker: function(id) {
+            $("#" + id).datepicker();
+            $("#" + id).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        }
+    },
+
+    Validation: {
+        startDateInputFromDatePicker: function(startid, endid) {
+            var startdate = $("#" + startid).datepicker("getDate");
+            var enddate = $("#" + endid).datepicker("getDate");
+
+            if(enddate != null) {
+                if(startdate <= enddate) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } 
+
+            return true;
+        },
+
+        endDateInputFromDatePicker: function(startid, endid) {
+            var startdate = $("#" + startid).datepicker("getDate");
+            var enddate = $("#" + endid).datepicker("getDate");
+
+            if(startdate != null) {
+                if(startdate <= enddate) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } 
+
+            return true;
+        }
+    },
+
+    ErrorDisplay: {
+        errorMsg: function(msg, delay) {
+            var errorbox = $("." + GLOBALS.ERRORDISPLAY);
+            var msgbox = $("#" + GLOBALS.ERRORDISPLAY + "-msg");
+
+            msgbox.text(msg);
+
+            errorbox.css('display', 'block');
+            setTimeout(function() {
+                errorbox.css('display', 'none');
+            }, delay);
+
+        },
+
+        infoMsg: function(msg) {
+            // ?? maybe todo
         }
     }
 }

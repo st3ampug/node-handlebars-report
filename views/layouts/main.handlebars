@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/skeleton.css">
 
+        <link rel="stylesheet" href="css/jquery-ui.min.css">
+
         <!-- SCRIPT
         –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -34,11 +36,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
 
+        <script type="text/javascript" src="js/custom/jquery-ui.min.js"></script>
+
     </head>
     <body>
         <div class="container">
 
-        {{{body}}}
+            <div class="errordisplay">
+                <table id="errortable">
+                    <tr>
+                        <td>
+                            <div id="errordisplay-icon">
+                                <img src="pics/exclamation.png" />
+                            </div>
+                        </td>
+                        <td>
+                            <div id="errordisplay-msg">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {{{body}}}
 
         </div>
     </body>

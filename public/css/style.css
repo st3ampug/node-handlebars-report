@@ -1,5 +1,26 @@
 /* Custom
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.errordisplay {
+    position: fixed;
+    z-index: 100;
+    top: 35px;
+    left: 40%;
+    padding: 15px;
+
+    border: 3px solid chocolate;
+    border-radius: 3px;
+    background-color: white;
+    color: chocolate;
+    font-size: 1.7rem;
+
+    display: none;
+}
+
+#errortable, #errortable td, #errortable tr {
+    border: none;
+    margin-bottom: 0;
+}
+
 ::selection {
 background-color: darkorange;
 }

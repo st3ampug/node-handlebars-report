@@ -67,7 +67,7 @@ window.addEventListener('load', function(){
 
         // submit selection
         submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection);
-    });    
+    });
 });
 
 // =====================================================================================
