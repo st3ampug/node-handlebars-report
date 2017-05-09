@@ -1,7 +1,7 @@
 const GLOBALS = {
     EMPTY: "",
     ERRORDISPLAY: "errordisplay",
-    ERRORDELAY: 4500,
+    ERRORDELAY: 5000,
     PROJECTSELECTIONPAGE: "projects",
     ISSUESSELECTIONPAGE: "issues",
     REPORTPAGE: "report",
@@ -91,7 +91,7 @@ const GLOBALS = {
     },
 
     errorMessages: {
-        startdateEarlier: "Start date has to be ealier than the end date",
-        enddateLater: "End date has to be later than the start date"
+        startdateEarlier: "Start date has to be ealier than the end date!",
+        enddateLater: "End date has to be later than the start date!"
     }
 };

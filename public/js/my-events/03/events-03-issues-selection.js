@@ -97,10 +97,10 @@ window.addEventListener('load', function(){
 
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyStartDate);
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyEndDate);
-    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.taskStartDate);
-    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.taskEndDate);
-    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.bugStartDate);
-    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.bugEndDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Task.taskStartDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Task.taskEndDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugStartDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugEndDate);
 
     SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
     SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);

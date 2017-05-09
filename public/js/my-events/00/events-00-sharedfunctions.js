@@ -220,7 +220,7 @@ var SharedFunctions = {
                         min = NaN;
 
                     if(SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) != null)
-                        max = SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate"));
+                        max = SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) + 86400000; // added and extra day
                     else
                         max = NaN;
                         
@@ -280,7 +280,8 @@ var SharedFunctions = {
 
             errorbox.css('display', 'block');
             setTimeout(function() {
-                errorbox.css('display', 'none');
+                //errorbox.css('display', 'none');
+                errorbox.fadeOut();
             }, delay);
 
         },
