@@ -16,7 +16,9 @@ const GLOBALS = {
             storyStatus: "story-statusfilter-select",
             storySprint: "story-sprintfilter-select",
             storyStartDate: "story-datefilter-start",
-            storyEndDate: "story-datefilter-end"
+            storyEndDate: "story-datefilter-end",
+            storyClearStartDate: "story-datefilter-start-clear",
+            storyClearEndDate: "story-datefilter-end-clear"
         }, 
 
         Task: {

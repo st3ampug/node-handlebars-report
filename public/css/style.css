@@ -183,3 +183,7 @@ background-color: darkorange;
     text-align: center;
     font-weight: normal;
 }
+
+.date-filter-input {
+    max-width: 140px;
+}

@@ -153,7 +153,10 @@ var SharedFunctions = {
     },
 
     convertToEpochFromDate: function(date) {
-        return date.getTime();
+        if(date != null)
+            return date.getTime();
+        else
+            return null;
     },
 
     Display: {
@@ -205,6 +208,34 @@ var SharedFunctions = {
         initDatePicker: function(id) {
             $("#" + id).datepicker();
             $("#" + id).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        },
+
+        initDataTableDateFilter: function(startid, endid) {
+            $.fn.dataTable.ext.search.push(
+                function( settings, data, dataIndex ) {
+                    var min, max;
+                    if(SharedFunctions.convertToEpochFromDate($("#" + startid).datepicker("getDate")) != null)
+                        min = SharedFunctions.convertToEpochFromDate($("#" + startid).datepicker("getDate"));
+                    else
+                        min = NaN;
+
+                    if(SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) != null)
+                        max = SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate"));
+                    else
+                        max = NaN;
+                        
+                    var date = SharedFunctions.convertToEpochFromString(data[3]) || 0; // use data for the date column
+            
+                    if ( ( isNaN( min ) && isNaN( max ) ) ||
+                        ( isNaN( min ) && date <= max ) ||
+                        ( min <= date   && isNaN( max ) ) ||
+                        ( min <= date   && date <= max ) )
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            );
         }
     },
 

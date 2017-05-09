@@ -87,6 +87,8 @@ window.addEventListener('load', function(){
     SharedFunctions.setDisplayForRow(TESTRAILPLANSID);
     SharedFunctions.setDisplayForRow(TESTRAILRUNSID);
 
+    //SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
+
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
     SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
@@ -194,12 +196,18 @@ window.addEventListener('load', function(){
         if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
+            $("#" + GLOBALS.tableIDs.storiesTableID).DataTable().draw();
         }
     });
     $("#" + GLOBALS.filterIDs.Story.storyEndDate).change(function(ev) {
         if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
+            $("#" + GLOBALS.tableIDs.storiesTableID).DataTable().draw();
         }
     });
 
@@ -244,6 +252,7 @@ window.addEventListener('load', function(){
 
     testplansfilter.addEventListener("keyup", function(ev) {
         DataFiltering.filterVersion(GLOBALS.filterIDs.tplanSearch, GLOBALS.tableIDs.testplansTableID, 1);
+
     });
     testrunsfilter.addEventListener("keyup", function(ev) {
         DataFiltering.filterVersion(GLOBALS.filterIDs.trunSearch, GLOBALS.tableIDs.testrunsTableID, 1);
@@ -395,6 +404,10 @@ function concatArrayElements(pref, arr) {
 
     console.log(ret);
     return ret;
+}
+
+function clearDateInput(id) {
+    $("#" + id).val(GLOBALS.EMPTY);
 }
 
 // =====================================================================================

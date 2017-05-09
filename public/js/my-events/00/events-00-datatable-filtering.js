@@ -28,5 +28,23 @@ var DataFiltering = {
                 true,   // regex search ON
                 false   // smart search OFF (conflicts with regex)
             ).draw();
+    },
+
+    filterDate: function(startid, endid, tableid, columnnum) {
+        var startdate = $("#" + startid).datepicker("getDate");
+        var enddate = $("#" + endid).datepicker("getDate");
+
+        if(startdate != null)
+            startdate = SharedFunctions.convertToEpochFromDate(startdate);
+        else
+            startdate = 0;
+        
+        if(enddate != null)
+            enddate = SharedFunctions.convertToEpochFromDate(enddate);
+        else
+            enddate = 8640000000000000; // http://stackoverflow.com/questions/27093130/how-to-get-the-minimum-and-maximum-date
+
+        // this was never finished, used a different method to filter
+
     }
 }
