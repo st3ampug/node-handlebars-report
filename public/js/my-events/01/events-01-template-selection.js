@@ -29,7 +29,7 @@ window.addEventListener('load', function(){
 
     // INIT =============================================
 
-    SharedFunctions.changePageTitle(PAGETITLE);
+    SharedFunctions.Init.initDataTableCustom(PAGETITLE);
 
     SharedFunctions.NavBar.setNavBarElements(
         SharedFunctions.currentUrlWithPort(),
@@ -37,8 +37,8 @@ window.addEventListener('load', function(){
         "#"
     );
 
-    SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
-    SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.Display.elementDisplayNone(BUTTONOVERLAYID);
+    SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
     
@@ -57,13 +57,13 @@ window.addEventListener('load', function(){
 
         selection.templateid = info.id;
 
-        SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.Display.buttonEnabledSkeleton(SELECTIONSUBMITID);
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
-        SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
-        SharedFunctions.elementDisplayNone(BUTTONROWID);
-        SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
+        SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        SharedFunctions.Display.elementDisplayNone(BUTTONROWID);
+        SharedFunctions.Display.elementDisplayBlock(BUTTONOVERLAYID);
 
         // submit selection
         submitSelectionInfo(GLOBALS.PROJECTSELECTIONPAGE, selection);

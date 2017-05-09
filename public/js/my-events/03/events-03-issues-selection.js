@@ -72,7 +72,7 @@ window.addEventListener('load', function(){
 
     // INIT =============================================
 
-    SharedFunctions.changePageTitle(PAGETITLE);
+    SharedFunctions.Init.initDataTableCustom(PAGETITLE);
     setTemplateId();
 
     SharedFunctions.NavBar.setNavBarElements(
@@ -81,19 +81,19 @@ window.addEventListener('load', function(){
         window.location
     );
 
-    SharedFunctions.setDisplayForRow(JIRASTORIESID);
-    SharedFunctions.setDisplayForRow(JIRATASKSID);
-    SharedFunctions.setDisplayForRow(JIRABUGSID);
-    SharedFunctions.setDisplayForRow(TESTRAILPLANSID);
-    SharedFunctions.setDisplayForRow(TESTRAILRUNSID);
+    SharedFunctions.Display.setDisplayForRow(JIRASTORIESID);
+    SharedFunctions.Display.setDisplayForRow(JIRATASKSID);
+    SharedFunctions.Display.setDisplayForRow(JIRABUGSID);
+    SharedFunctions.Display.setDisplayForRow(TESTRAILPLANSID);
+    SharedFunctions.Display.setDisplayForRow(TESTRAILRUNSID);
 
     //SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
 
-    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
-    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
-    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
-    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testplansTableID, 350);
-    SharedFunctions.initDataTableCustom(GLOBALS.tableIDs.testrunsTableID, 350);
+    SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
+    SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
+    SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
+    SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.testplansTableID, 350);
+    SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.testrunsTableID, 350);
 
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyStartDate);
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Story.storyEndDate);
@@ -102,8 +102,8 @@ window.addEventListener('load', function(){
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugStartDate);
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugEndDate);
 
-    SharedFunctions.elementDisplayNone(BUTTONOVERLAYID);
-    SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.Display.elementDisplayNone(BUTTONOVERLAYID);
+    SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
     
@@ -186,11 +186,11 @@ window.addEventListener('load', function(){
     });
 
     selectionsubmit.addEventListener("click", function(ev) {
-        // SharedFunctions.buttonDisabledSkeleton(SELECTIONSUBMITID);
-        // SharedFunctions.elementDisplayNone(BUTTONROWID);
-        // SharedFunctions.elementDisplayBlock(BUTTONOVERLAYID);
+        // SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
+        // SharedFunctions.Display.elementDisplayNone(BUTTONROWID);
+        // SharedFunctions.Display.elementDisplayBlock(BUTTONOVERLAYID);
 
-        SharedFunctions.buttonDisabledSkeletonDelay(SELECTIONSUBMITID, 5000);
+        SharedFunctions.Display.buttonDisabledSkeletonDelay(SELECTIONSUBMITID, 5000);
 
         // submit selection
         submitSelectionInfo(GLOBALS.REPORTPAGE, selections, reporttitle.value);
@@ -392,11 +392,11 @@ function checkSelectionArrays() {
     //     ( testplanstable.getAttribute("rowscount") == "0" || selections.testplanselection.length > 0 ) &&
     //     ( testrunstable.getAttribute("rowscount") == "0" || selections.testrunselection.length > 0 )
     // ) {
-    //     SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
+    //     SharedFunctions.Display.buttonEnabledSkeleton(SELECTIONSUBMITID);
     // }
 
     // It is not necessary to restrict the user from generating the report when stuff is not selected
-    SharedFunctions.buttonEnabledSkeleton(SELECTIONSUBMITID);
+    SharedFunctions.Display.buttonEnabledSkeleton(SELECTIONSUBMITID);
 }
 
 function changeCollapseState(tocollapseID, toexpandID) {

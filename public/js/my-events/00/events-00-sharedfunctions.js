@@ -45,98 +45,9 @@ var SharedFunctions = {
         }
     },
 
-    setDisplayForRow: function (rowid) {
-        var row = document.getElementById(rowid);
-        
-        if(row.getAttribute("display") == "n")
-            SharedFunctions.elementDisplayNone(rowid);
-        else
-            SharedFunctions.elementDisplayBlock(rowid);
-    },
-
-    changePageTitle: function (title) {
-        document.title = title;
-    },
-
     openPageInNewTab: function (url) {
         var w = window.open(url, '_blank');
         w.focus();
-    },
-
-    elementVisibilityON: function (id) {
-        $("#" + id).css('visibility', 'visible');
-    },
-
-    elementVisibilityOFF: function (id) {
-        $("#" + id).css('visibility', 'hidden');
-    },
-
-    elementDisplayBlock: function (id) {
-        $("#" + id).css('display', 'block');
-    },
-
-    elementDisplayNone: function (id) {
-        $("#" + id).css('display', 'none');
-    },
-
-    buttonEnabledSkeleton: function (id) {
-        $("#" + id).removeAttr('disabled');
-        $("#" + id).addClass('button-primary');
-    },
-
-    buttonDisabledSkeleton: function (id) {
-        $("#" + id).attr('disabled', '');
-        $("#" + id).removeClass('button-primary');
-    },
-
-    buttonDisabledSkeletonDelay: function (id, delay) {
-        $("#" + id).attr('disabled', '');
-        $("#" + id).removeClass('button-primary');
-
-        setTimeout(function() {
-            $("#" + id).removeAttr('disabled');
-            $("#" + id).addClass('button-primary');
-        }, delay);
-    },
-
-    initDataTableDefault: function (id) {
-        $("#" + id).DataTable();
-    },
-
-    initDataTableMinimal: function (id) {
-        $("#" + id).DataTable({
-            "searching": false,
-            "paging":   false,
-            "ordering": true,
-            "info":     false
-        });
-    },
-
-    initDataTableMedium: function (id) {
-        $("#" + id).DataTable({
-            "paging":   true,
-            "ordering": true,
-            "info":     false
-        });
-    },
-
-    initDataTableMaximum: function (id) {
-        $("#" + id).DataTable({
-            "paging":   true,
-            "ordering": true,
-            "info":     true
-        });
-    },
-
-    initDataTableCustom: function (id, scrollY) {
-        $("#" + id).DataTable({
-            "searching": true,
-            "paging":   false,
-            "ordering": true,
-            "info":     false,
-            "scrollY":  scrollY,
-            "sDom": "ltr"
-        });
     },
 
     currentUrlWithPort: function() {
@@ -166,6 +77,55 @@ var SharedFunctions = {
 
         jqueryShow: function(id) {
             $("#" + id).show("slide", {direction: "up"}, 350);
+        },
+
+        elementVisibilityON: function (id) {
+            $("#" + id).css('visibility', 'visible');
+        },
+
+        elementVisibilityOFF: function (id) {
+            $("#" + id).css('visibility', 'hidden');
+        },
+
+        elementDisplayBlock: function (id) {
+            $("#" + id).css('display', 'block');
+        },
+
+        elementDisplayNone: function (id) {
+            $("#" + id).css('display', 'none');
+        },
+
+        buttonEnabledSkeleton: function (id) {
+            $("#" + id).removeAttr('disabled');
+            $("#" + id).addClass('button-primary');
+        },
+
+        buttonDisabledSkeleton: function (id) {
+            $("#" + id).attr('disabled', '');
+            $("#" + id).removeClass('button-primary');
+        },
+
+        buttonDisabledSkeletonDelay: function (id, delay) {
+            $("#" + id).attr('disabled', '');
+            $("#" + id).removeClass('button-primary');
+
+            setTimeout(function() {
+                $("#" + id).removeAttr('disabled');
+                $("#" + id).addClass('button-primary');
+            }, delay);
+        },
+
+        setDisplayForRow: function (rowid) {
+            var row = document.getElementById(rowid);
+            
+            if(row.getAttribute("display") == "n")
+                SharedFunctions.Display.elementDisplayNone(rowid);
+            else
+                SharedFunctions.Display.elementDisplayBlock(rowid);
+        },
+        
+        changePageTitle: function (title) {
+            document.title = title;
         }
     },
 
@@ -208,6 +168,46 @@ var SharedFunctions = {
         initDatePicker: function(id) {
             $("#" + id).datepicker();
             $("#" + id).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        },
+
+        initDataTableDefault: function (id) {
+            $("#" + id).DataTable();
+        },
+
+        initDataTableMinimal: function (id) {
+            $("#" + id).DataTable({
+                "searching": false,
+                "paging":   false,
+                "ordering": true,
+                "info":     false
+            });
+        },
+
+        initDataTableMedium: function (id) {
+            $("#" + id).DataTable({
+                "paging":   true,
+                "ordering": true,
+                "info":     false
+            });
+        },
+
+        initDataTableMaximum: function (id) {
+            $("#" + id).DataTable({
+                "paging":   true,
+                "ordering": true,
+                "info":     true
+            });
+        },
+
+        initDataTableCustom: function (id, scrollY) {
+            $("#" + id).DataTable({
+                "searching": true,
+                "paging":   false,
+                "ordering": true,
+                "info":     false,
+                "scrollY":  scrollY,
+                "sDom": "ltr"
+            });
         },
 
         initDataTableDateFilter: function(startid, endid) {
