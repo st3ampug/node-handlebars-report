@@ -6,6 +6,9 @@ const GLOBALS = {
     ISSUESSELECTIONPAGE: "issues",
     REPORTPAGE: "report",
 
+    SELECTED: "selected",
+    NOTSELECTED: "no",
+
     filterIDs: {
         Story: {
             storyCollapse: "collapse-icon-story",

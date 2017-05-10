@@ -10,9 +10,6 @@ const TEMPLATESELECTIONDESCID = "template-description";
 const TEMPLATEOPTIONSCLASS = "template-options";
 const TEMPLATESELECTID = "templateselect"
 
-const SELECTED          = "selected";
-const NOTSELECTED       = "no";
-
 var templateselect = document.getElementById(TEMPLATESELECTID);
 var selectionsubmit = document.getElementById(SELECTIONSUBMITID);
 
@@ -73,14 +70,6 @@ window.addEventListener('load', function(){
 // =====================================================================================
 
 // Helpers =============================================================================
-
-function highlightRow(id) {
-    var row = document.getElementById(id);
-    if(row.getAttribute(SELECTED) != SELECTED)
-        row.setAttribute(SELECTED, SELECTED);
-    else
-        row.setAttribute(SELECTED, NOTSELECTED);
-}
 
 function getSelectedInformation(str) {
     var retobj = {

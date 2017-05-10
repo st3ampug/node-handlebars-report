@@ -18,8 +18,8 @@ const JIRAKEYATTR = "id";
 const JIRANAMEATTR = "jiraname";
 const TESTRAILIDATTR = "id";
 const TESTRAILNAMEATTR = "testrailname";
-const SELECTED          = "selected";
-const NOTSELECTED       = "no";
+// const SELECTED          = "selected";
+// const NOTSELECTED       = "no";
 
 const PROJECTSELECTTEXT = "Selected: ";
 
@@ -98,15 +98,15 @@ function setTemplateId() {
     selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
 
-function highlightRow(id, projectrows) {
-    var row = document.getElementById(id);
+// function highlightSingleRow(id, projectrows) {
+//     var row = document.getElementById(id);
 
-    for(var i = 0; i < projectrows.length; i++) {
-        projectrows[i].setAttribute(SELECTED, NOTSELECTED);
-    }
-    row.setAttribute(SELECTED, SELECTED);
+//     for(var i = 0; i < projectrows.length; i++) {
+//         projectrows[i].setAttribute(SELECTED, NOTSELECTED);
+//     }
+//     row.setAttribute(SELECTED, SELECTED);
 
-}
+// }
 
 // wow this mess needs to be straightened out!
 
@@ -132,7 +132,7 @@ function tableEventListener(ev, selectedcontainerid, projectrows, attr, selectio
     if(ev.target.tagName.toLowerCase() == "td") {
         console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
 
-        highlightRow(ev.target.parentNode.id, projectrows);
+        SharedFunctions.Table.highlightSingleRow(ev.target.parentNode.id, projectrows);
         amendSelection(selectionarray, ev.target.parentNode.id)
         displaySelection(selectedcontainerid, ev.target.parentNode.id, attr);
     }

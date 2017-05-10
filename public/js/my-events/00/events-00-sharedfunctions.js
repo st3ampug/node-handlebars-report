@@ -70,6 +70,8 @@ var SharedFunctions = {
             return null;
     },
 
+
+
     Display: {
         jqueryHide: function(id) {
             $("#" + id).hide();
@@ -126,6 +128,25 @@ var SharedFunctions = {
         
         changePageTitle: function (title) {
             document.title = title;
+        }
+    },
+
+    Table: {
+        highlightSingleRow: function (id, projectrowsarray) {
+            var row = document.getElementById(id);
+
+            for(var i = 0; i < projectrowsarray.length; i++) {
+                projectrowsarray[i].setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
+            }
+            row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
+        },
+
+        highlightMultipleRows: function (id) {
+            var row = document.getElementById(id);
+            if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED)
+                row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
+            else
+                row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
         }
     },
 

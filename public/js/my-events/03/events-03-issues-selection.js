@@ -24,8 +24,8 @@ const SELECTIONSUBMITID = "selecitonsubmit";
 const BUTTONROWID = "button-row";
 const BUTTONOVERLAYID = "button-overlay";
 
-const SELECTED          = "selected";
-const NOTSELECTED       = "no";
+// const SELECTED          = "selected";
+// const NOTSELECTED       = "no";
 
 var reporttitle = document.getElementById(REPORTTITLEID);
 var storiestable = document.getElementById(GLOBALS.tableIDs.storiesTableID);
@@ -307,17 +307,17 @@ function setTemplateId() {
     selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
 
-function highlightRow(id) {
-    var row = document.getElementById(id);
-    if(row.getAttribute(SELECTED) != SELECTED)
-        row.setAttribute(SELECTED, SELECTED);
-    else
-        row.setAttribute(SELECTED, NOTSELECTED);
-}
+// function highlightMultipleRows(id) {
+//     var row = document.getElementById(id);
+//     if(row.getAttribute(SELECTED) != SELECTED)
+//         row.setAttribute(SELECTED, SELECTED);
+//     else
+//         row.setAttribute(SELECTED, NOTSELECTED);
+// }
 
 function amendSelection(container, selection) {
     var row = document.getElementById(selection);
-    if(row.getAttribute(SELECTED) != SELECTED) {
+    if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
         for(var i = 0; i < container.length; i++) {
             if(container[i] == selection)
                 container.splice(i, 1);
@@ -345,7 +345,7 @@ function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
         if(ev.shiftKey && selectionarray.length > 0) {
             shiftModifier(ev, selectionarray, rowclass);
         } else {
-            highlightRow(ev.target.parentNode.id);
+            SharedFunctions.Table.highlightMultipleRows(ev.target.parentNode.id);
             amendSelection(selectionarray, ev.target.parentNode.id);
         }
 
@@ -378,7 +378,7 @@ function shiftModifier(ev, selectionarray, rowclass) {
 
     if(needtochangeids.length > 0) {
         for(var j = 0; j < needtochangeids.length; j++) {
-            highlightRow(needtochangeids[j]);
+            SharedFunctions.Table.highlightMultipleRows(needtochangeids[j]);
             amendSelection(selectionarray, needtochangeids[j]);
         }
     }
