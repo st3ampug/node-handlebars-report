@@ -173,7 +173,12 @@ var SharedFunctions = {
             row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
         },
 
-        highlightMultipleRows: function (id) {
+        highlightMultipleRowsAll: function (id) {
+            var row = document.getElementById(id);
+            row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
+        },
+
+        highlightMultipleRowsInvert: function (id) {
             var row = document.getElementById(id);
             if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED)
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
@@ -181,11 +186,19 @@ var SharedFunctions = {
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
         },
 
-        selectAllVisibleRows: function(rowclass) {
+        selectAllVisibleRowsAll: function(rowclass) {
             var rows = document.getElementsByClassName(rowclass);
 
             for(var i = 0; i < rows.length; i++) {
-                SharedFunctions.Table.highlightMultipleRows(rows[i].getAttribute("id"));
+                SharedFunctions.Table.highlightMultipleRowsAll(rows[i].getAttribute("id"));
+            }
+        },
+
+        selectAllVisibleRowsInvert: function(rowclass) {
+            var rows = document.getElementsByClassName(rowclass);
+
+            for(var i = 0; i < rows.length; i++) {
+                SharedFunctions.Table.highlightMultipleRowsInvert(rows[i].getAttribute("id"));
             }
         }
     },

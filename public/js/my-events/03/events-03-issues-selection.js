@@ -298,8 +298,13 @@ window.addEventListener('load', function(){
         DataFiltering.filterVersion(GLOBALS.filterIDs.trunSearch, GLOBALS.tableIDs.testrunsTableID, 1);
     });
 
+    $("#" + GLOBALS.Selection.Story.storySelectAll).click(function(ev) {
+        SharedFunctions.Table.selectAllVisibleRowsAll(GLOBALS.rowClasses.storyRows);
+        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
+        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
+    });
     $("#" + GLOBALS.Selection.Story.storySelectInvert).click(function(ev) {
-        SharedFunctions.Table.selectAllVisibleRows(GLOBALS.rowClasses.storyRows);
+        SharedFunctions.Table.selectAllVisibleRowsInvert(GLOBALS.rowClasses.storyRows);
         selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
         SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
     });
@@ -351,7 +356,7 @@ function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
         if(ev.shiftKey && selectionarray.length > 0) {
             shiftModifier(ev, selectionarray, rowclass);
         } else {
-            SharedFunctions.Table.highlightMultipleRows(ev.target.parentNode.id);
+            SharedFunctions.Table.highlightMultipleRowsInvert(ev.target.parentNode.id);
             SharedFunctions.Display.amendSelection(selectionarray, ev.target.parentNode.id);
         }
 
@@ -384,7 +389,7 @@ function shiftModifier(ev, selectionarray, rowclass) {
 
     if(needtochangeids.length > 0) {
         for(var j = 0; j < needtochangeids.length; j++) {
-            SharedFunctions.Table.highlightMultipleRows(needtochangeids[j]);
+            SharedFunctions.Table.highlightMultipleRowsInvert(needtochangeids[j]);
             SharedFunctions.Display.amendSelection(selectionarray, needtochangeids[j]);
         }
     }
