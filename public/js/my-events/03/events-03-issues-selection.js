@@ -87,8 +87,6 @@ window.addEventListener('load', function(){
     SharedFunctions.Display.setDisplayForRow(TESTRAILPLANSID);
     SharedFunctions.Display.setDisplayForRow(TESTRAILRUNSID);
 
-    //SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
-
     SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.storiesTableID, 550);
     SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.tasksTableID, 550);
     SharedFunctions.Init.initDataTableCustom(GLOBALS.tableIDs.bugsTableID, 550);
@@ -356,35 +354,6 @@ window.addEventListener('load', function(){
 function setTemplateId() {
     selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
-
-// function highlightMultipleRows(id) {
-//     var row = document.getElementById(id);
-//     if(row.getAttribute(SELECTED) != SELECTED)
-//         row.setAttribute(SELECTED, SELECTED);
-//     else
-//         row.setAttribute(SELECTED, NOTSELECTED);
-// }
-
-// function SharedFunctions.Display.amendSelection(container, selection) {
-//     var row = document.getElementById(selection);
-//     if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
-//         for(var i = 0; i < container.length; i++) {
-//             if(container[i] == selection)
-//                 container.splice(i, 1);
-//         }
-//     } else {
-//         container.push(selection);
-//     }
-// }
-
-// function SharedFunctions.Display.displaySelection(id, container){
-//     var tmp = "";
-//     for(var i = 0; i < container.length; i++) {
-//         tmp += "<span class='mylabel'>" + container[i] + "</span>"
-//     }
-
-//     $("#" + id).html(tmp);
-// }
 
 function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
     console.log(ev.currentTarget);
