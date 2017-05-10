@@ -302,11 +302,19 @@ window.addEventListener('load', function(){
         SharedFunctions.Table.selectAllVisibleRowsAll(GLOBALS.rowClasses.storyRows);
         selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
         SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
+        checkSelectionArrays();
     });
     $("#" + GLOBALS.Selection.Story.storySelectInvert).click(function(ev) {
         SharedFunctions.Table.selectAllVisibleRowsInvert(GLOBALS.rowClasses.storyRows);
         selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
         SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
+        checkSelectionArrays();
+    });
+    $("#" + GLOBALS.Selection.Story.storySelectNone).click(function(ev) {
+        SharedFunctions.Table.selectAllVisibleRowsNone(GLOBALS.rowClasses.storyRows);
+        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
+        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
+        // checkSelectionArrays(); // just deselects
     });
 });
 

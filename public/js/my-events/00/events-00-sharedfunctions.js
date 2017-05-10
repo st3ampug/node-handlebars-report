@@ -186,6 +186,11 @@ var SharedFunctions = {
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
         },
 
+        highlightMultipleRowsNone: function (id) {
+            var row = document.getElementById(id);
+            row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
+        },
+
         selectAllVisibleRowsAll: function(rowclass) {
             var rows = document.getElementsByClassName(rowclass);
 
@@ -200,7 +205,15 @@ var SharedFunctions = {
             for(var i = 0; i < rows.length; i++) {
                 SharedFunctions.Table.highlightMultipleRowsInvert(rows[i].getAttribute("id"));
             }
-        }
+        },
+
+        selectAllVisibleRowsNone: function(rowclass) {
+            var rows = document.getElementsByClassName(rowclass);
+
+            for(var i = 0; i < rows.length; i++) {
+                SharedFunctions.Table.highlightMultipleRowsNone(rows[i].getAttribute("id"));
+            }
+        },
     },
 
     NavBar: {

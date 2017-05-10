@@ -76,7 +76,8 @@ const GLOBALS = {
     Selection: {
         Story: {
             storySelectAll: "story-selectall",
-            storySelectInvert: "story-selectinvert"
+            storySelectInvert: "story-selectinvert",
+            storySelectNone: "story-selectnone"
         }
     },
 
