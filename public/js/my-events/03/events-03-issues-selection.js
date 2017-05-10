@@ -299,22 +299,53 @@ window.addEventListener('load', function(){
     });
 
     $("#" + GLOBALS.Selection.Story.storySelectAll).click(function(ev) {
-        SharedFunctions.Table.selectAllVisibleRowsAll(GLOBALS.rowClasses.storyRows);
-        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
-        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
-        checkSelectionArrays();
+        selections.storyselection = selectVisibleRowsAll(GLOBALS.rowClasses.storyRows, selections.storyselection, SELECTEDSTORIESID, true);
     });
     $("#" + GLOBALS.Selection.Story.storySelectInvert).click(function(ev) {
-        SharedFunctions.Table.selectAllVisibleRowsInvert(GLOBALS.rowClasses.storyRows);
-        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
-        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
-        checkSelectionArrays();
+        selections.storyselection = selectVisibleRowsInvert(GLOBALS.rowClasses.storyRows, selections.storyselection, SELECTEDSTORIESID, true);
     });
     $("#" + GLOBALS.Selection.Story.storySelectNone).click(function(ev) {
-        SharedFunctions.Table.selectAllVisibleRowsNone(GLOBALS.rowClasses.storyRows);
-        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
-        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
-        // checkSelectionArrays(); // just deselects
+        selections.storyselection = selectVisibleRowsNone(GLOBALS.rowClasses.storyRows, selections.storyselection, SELECTEDSTORIESID, false);
+    });
+
+    $("#" + GLOBALS.Selection.Task.taskSelectAll).click(function(ev) {
+        selections.taskselection = selectVisibleRowsAll(GLOBALS.rowClasses.taskRows, selections.taskselection, SELECTEDTASKSID, true);
+    });
+    $("#" + GLOBALS.Selection.Task.taskSelectInvert).click(function(ev) {
+        selections.taskselection = selectVisibleRowsInvert(GLOBALS.rowClasses.taskRows, selections.taskselection, SELECTEDTASKSID, true);
+    });
+    $("#" + GLOBALS.Selection.Task.taskSelectNone).click(function(ev) {
+        selections.taskselection = selectVisibleRowsNone(GLOBALS.rowClasses.taskRows, selections.taskselection, SELECTEDTASKSID, false);
+    });
+
+    $("#" + GLOBALS.Selection.Bug.bugSelectAll).click(function(ev) {
+        selections.bugselection = selectVisibleRowsAll(GLOBALS.rowClasses.bugRows, selections.bugselection, SELECTEDBUGSID, true);
+    });
+    $("#" + GLOBALS.Selection.Bug.bugSelectInvert).click(function(ev) {
+        selections.bugselection = selectVisibleRowsInvert(GLOBALS.rowClasses.bugRows, selections.bugselection, SELECTEDBUGSID, true);
+    });
+    $("#" + GLOBALS.Selection.Bug.bugSelectNone).click(function(ev) {
+        selections.bugselection = selectVisibleRowsNone(GLOBALS.rowClasses.bugRows, selections.bugselection, SELECTEDBUGSID, false);
+    });
+
+    $("#" + GLOBALS.Selection.TPlan.tplanSelectAll).click(function(ev) {
+        selections.testplanselection = selectVisibleRowsAll(GLOBALS.rowClasses.tplanRows, selections.testplanselection, SELECTEDTESTPLANSID, true);
+    });
+    $("#" + GLOBALS.Selection.TPlan.tplanSelectInvert).click(function(ev) {
+        selections.testplanselection = selectVisibleRowsInvert(GLOBALS.rowClasses.tplanRows, selections.testplanselection, SELECTEDTESTPLANSID, true);
+    });
+    $("#" + GLOBALS.Selection.TPlan.tplanSelectNone).click(function(ev) {
+        selections.testplanselection = selectVisibleRowsNone(GLOBALS.rowClasses.tplanRows, selections.testplanselection, SELECTEDTESTPLANSID, false);
+    });
+
+    $("#" + GLOBALS.Selection.TRun.trunSelectAll).click(function(ev) {
+        selections.testrunselection = selectVisibleRowsAll(GLOBALS.rowClasses.trunRows, selections.testrunselection, SELECTEDTESTRUNSID, true);
+    });
+    $("#" + GLOBALS.Selection.TRun.trunSelectInvert).click(function(ev) {
+        selections.testrunselection = selectVisibleRowsInvert(GLOBALS.rowClasses.trunRows, selections.testrunselection, SELECTEDTESTRUNSID, true);
+    });
+    $("#" + GLOBALS.Selection.TRun.trunSelectNone).click(function(ev) {
+        selections.testrunselection = selectVisibleRowsNone(GLOBALS.rowClasses.trunRows, selections.testrunselection, SELECTEDTESTRUNSID, false);
     });
 });
 
@@ -376,6 +407,36 @@ function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
     }
 
     checkSelectionArrays();
+}
+
+function selectVisibleRowsAll(rowid, selarr, selectedid, check) {
+    SharedFunctions.Table.selectAllVisibleRowsAll(rowid);
+    selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
+    SharedFunctions.Display.displaySelection(selectedid, selarr);
+    if(check)
+        checkSelectionArrays();
+
+    return selarr;
+}
+
+function selectVisibleRowsInvert(rowid, selarr, selectedid, check) {
+    SharedFunctions.Table.selectAllVisibleRowsInvert(rowid);
+    selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
+    SharedFunctions.Display.displaySelection(selectedid, selarr);
+    if(check)
+        checkSelectionArrays();
+
+    return selarr;
+}
+
+function selectVisibleRowsNone(rowid, selarr, selectedid, check) {
+    SharedFunctions.Table.selectAllVisibleRowsNone(rowid);
+    selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
+    SharedFunctions.Display.displaySelection(selectedid, selarr);
+    if(check)
+        checkSelectionArrays();
+
+    return selarr;
 }
 
 function shiftModifier(ev, selectionarray, rowclass) {

@@ -131,7 +131,7 @@ var SharedFunctions = {
         },
 
         displaySelection: function(id, container){
-            console.log("container in displaySelection: " + container)
+            //console.log("container in displaySelection: " + container)
             var tmp = "";
             for(var i = 0; i < container.length; i++) {
                 tmp += "<span class='mylabel'>" + container[i] + "</span>"

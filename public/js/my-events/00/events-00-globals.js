@@ -78,6 +78,26 @@ const GLOBALS = {
             storySelectAll: "story-selectall",
             storySelectInvert: "story-selectinvert",
             storySelectNone: "story-selectnone"
+        },
+        Task: {
+            taskSelectAll: "task-selectall",
+            taskSelectInvert: "task-selectinvert",
+            taskSelectNone: "task-selectnone"
+        },
+        Bug: {
+            bugSelectAll: "bug-selectall",
+            bugSelectInvert: "bug-selectinvert",
+            bugSelectNone: "bug-selectnone"
+        },
+        TPlan: {
+            tplanSelectAll: "tplan-selectall",
+            tplanSelectInvert: "tplan-selectinvert",
+            tplanSelectNone: "tplan-selectnone"
+        },
+        TRun: {
+            trunSelectAll: "trun-selectall",
+            trunSelectInvert: "trun-selectinvert",
+            trunSelectNone: "trun-selectnone"
         }
     },
 
@@ -90,7 +110,11 @@ const GLOBALS = {
     },
 
     rowClasses: {
-        storyRows: "storyrow"
+        storyRows: "storyrow",
+        taskRows: "taskrow",
+        bugRows: "bugrow",
+        tplanRows: "testplanrow",
+        trunRows: "testrunrow"
     },
 
     navIDs: {
