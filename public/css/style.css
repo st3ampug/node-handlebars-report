@@ -195,6 +195,7 @@ background-color: darkorange;
 .filter-title {
     text-align: center;
     font-weight: normal;
+    white-space: nowrap;
 }
 
 .date-filter-input {
