@@ -73,12 +73,22 @@ const GLOBALS = {
         trunSearch: "trun-searchfilter"
     },
 
+    Selection: {
+        Story: {
+            storySelectInvert: "story-selectinvert"
+        }
+    },
+
     tableIDs: {
         storiesTableID: "storiestable",
         tasksTableID: "taskstable",
         bugsTableID: "bugstable",
         testplansTableID: "testplanstable",
         testrunsTableID: "testrunstable"
+    },
+
+    rowClasses: {
+        storyRows: "storyrow"
     },
 
     navIDs: {

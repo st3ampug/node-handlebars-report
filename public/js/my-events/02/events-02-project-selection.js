@@ -98,18 +98,6 @@ function setTemplateId() {
     selections.templateid = SharedFunctions.getUrlParameter("templateid");
 }
 
-// function highlightSingleRow(id, projectrows) {
-//     var row = document.getElementById(id);
-
-//     for(var i = 0; i < projectrows.length; i++) {
-//         projectrows[i].setAttribute(SELECTED, NOTSELECTED);
-//     }
-//     row.setAttribute(SELECTED, SELECTED);
-
-// }
-
-// wow this mess needs to be straightened out!
-
 function displaySelection(selectionID, trID, attr) {
     $("#" + selectionID).text( PROJECTSELECTTEXT + $("#" + trID).attr(attr) );
 }

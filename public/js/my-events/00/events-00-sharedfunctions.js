@@ -128,6 +128,38 @@ var SharedFunctions = {
         
         changePageTitle: function (title) {
             document.title = title;
+        },
+
+        displaySelection: function(id, container){
+            console.log("container in displaySelection: " + container)
+            var tmp = "";
+            for(var i = 0; i < container.length; i++) {
+                tmp += "<span class='mylabel'>" + container[i] + "</span>"
+            }
+
+            $("#" + id).html(tmp);
+        },
+
+        amendSelection: function(container, selection) {
+            var row = document.getElementById(selection);
+            if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
+                for(var i = 0; i < container.length; i++) {
+                    if(container[i] == selection)
+                        container.splice(i, 1);
+                }
+            } else {
+                container.push(selection);
+            }
+        },
+
+        pushSelection: function(container, rowclass) {
+            container = [];
+            var rows = document.getElementsByClassName(rowclass);
+            for(var i = 0; i < rows.length; i++) {
+                if(rows[i].getAttribute(GLOBALS.SELECTED) == GLOBALS.SELECTED)
+                    container.push(rows[i].getAttribute("id"));
+            }
+            return container;
         }
     },
 
@@ -147,6 +179,14 @@ var SharedFunctions = {
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
             else
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
+        },
+
+        selectAllVisibleRows: function(rowclass) {
+            var rows = document.getElementsByClassName(rowclass);
+
+            for(var i = 0; i < rows.length; i++) {
+                SharedFunctions.Table.highlightMultipleRows(rows[i].getAttribute("id"));
+            }
         }
     },
 

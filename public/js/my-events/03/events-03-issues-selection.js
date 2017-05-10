@@ -297,6 +297,12 @@ window.addEventListener('load', function(){
     testrunsfilter.addEventListener("keyup", function(ev) {
         DataFiltering.filterVersion(GLOBALS.filterIDs.trunSearch, GLOBALS.tableIDs.testrunsTableID, 1);
     });
+
+    $("#" + GLOBALS.Selection.Story.storySelectInvert).click(function(ev) {
+        SharedFunctions.Table.selectAllVisibleRows(GLOBALS.rowClasses.storyRows);
+        selections.storyselection = SharedFunctions.Display.pushSelection(selections.storyselection, GLOBALS.rowClasses.storyRows);
+        SharedFunctions.Display.displaySelection(SELECTEDSTORIESID, selections.storyselection);
+    });
 });
 
 // =====================================================================================
@@ -315,26 +321,26 @@ function setTemplateId() {
 //         row.setAttribute(SELECTED, NOTSELECTED);
 // }
 
-function amendSelection(container, selection) {
-    var row = document.getElementById(selection);
-    if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
-        for(var i = 0; i < container.length; i++) {
-            if(container[i] == selection)
-                container.splice(i, 1);
-        }
-    } else {
-        container.push(selection);
-    }
-}
+// function SharedFunctions.Display.amendSelection(container, selection) {
+//     var row = document.getElementById(selection);
+//     if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
+//         for(var i = 0; i < container.length; i++) {
+//             if(container[i] == selection)
+//                 container.splice(i, 1);
+//         }
+//     } else {
+//         container.push(selection);
+//     }
+// }
 
-function displaySelection(id, container){
-    var tmp = "";
-    for(var i = 0; i < container.length; i++) {
-        tmp += "<span class='mylabel'>" + container[i] + "</span>"
-    }
+// function SharedFunctions.Display.displaySelection(id, container){
+//     var tmp = "";
+//     for(var i = 0; i < container.length; i++) {
+//         tmp += "<span class='mylabel'>" + container[i] + "</span>"
+//     }
 
-    $("#" + id).html(tmp);
-}
+//     $("#" + id).html(tmp);
+// }
 
 function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
     console.log(ev.currentTarget);
@@ -346,10 +352,10 @@ function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
             shiftModifier(ev, selectionarray, rowclass);
         } else {
             SharedFunctions.Table.highlightMultipleRows(ev.target.parentNode.id);
-            amendSelection(selectionarray, ev.target.parentNode.id);
+            SharedFunctions.Display.amendSelection(selectionarray, ev.target.parentNode.id);
         }
 
-        displaySelection(selectedcontainerid, selectionarray);
+        SharedFunctions.Display.displaySelection(selectedcontainerid, selectionarray);
 
     }
     if(ev.target.tagName.toLowerCase() == "tr") {
@@ -379,7 +385,7 @@ function shiftModifier(ev, selectionarray, rowclass) {
     if(needtochangeids.length > 0) {
         for(var j = 0; j < needtochangeids.length; j++) {
             SharedFunctions.Table.highlightMultipleRows(needtochangeids[j]);
-            amendSelection(selectionarray, needtochangeids[j]);
+            SharedFunctions.Display.amendSelection(selectionarray, needtochangeids[j]);
         }
     }
 }
