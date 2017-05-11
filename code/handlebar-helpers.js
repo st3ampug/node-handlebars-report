@@ -189,10 +189,9 @@ module.exports = {
         return dateFormat(d, "yyyy-mm-dd HH:MM");
     }, 
     date_trail: (d)=>{
-        console.log(d);
         var dateFormat = require('dateformat');
         var mydate = new Date(d*1000);
-        console.log(mydate);
+        
         return dateFormat(mydate, "yyyy-mm-dd HH:MM");
     }
 }
