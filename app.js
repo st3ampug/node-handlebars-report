@@ -585,6 +585,8 @@ function uniqueSprints(arr, jkey) {
             }
         }
     }
+    
+    tmp.push("-"); // need the "-" value for the filter to display issues without sprints
     return uniques(tmp);
 }
 
@@ -598,6 +600,8 @@ function uniqueVersions(arr, jkey) {
             }
         }
     }
+
+    tmp.push("-"); // need the "-" value for the filter to display issues without sprints
     return uniques(tmp);
 }
 
