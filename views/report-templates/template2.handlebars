@@ -380,12 +380,12 @@
                             {{#each fields.issuelinks}}
                                 {{#if this.outwardIssue}}
                                     <div>
-                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary}}}
+                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary this.outwardIssue.fields.status}}}
                                     </div>
                                 {{/if}}
                                 {{#if this.inwardIssue}}
                                     <div>
-                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary}}}
+                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary this.inwardIssue.fields.status}}}
                                     </div>
                                 {{/if}}
                             {{/each}}
@@ -394,7 +394,7 @@
                         {{/if}}
                     </td>
                     <th>
-                        {{fields.status.name}}
+                        {{{status_withcolour fields.status}}}
                     </th>
                 </tr>
                 {{/each}}

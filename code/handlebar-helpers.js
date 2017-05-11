@@ -36,11 +36,17 @@ module.exports = {
 
         return '<span title="Bug">[' + iconimg + ' ' + key + ']</span>';
     },
-    buglabel_summary: (icon, key, summary)=>{
+    buglabel_summary: (icon, key, summary, statusobj)=>{
         var iconimg = '<img src="' + icon + '" style="margin-bottom:-4px" />';
+        var statusspan = '<span style="font-weight:bold;color:' + resolveColour(statusobj.statusCategory.colorName) + '">' + statusobj.name + '</span>';
 
-        return '<span title="' + summary + '">[' + iconimg + ' ' + key + ']</span>';
+        return '<span title="' + summary + '">[' + iconimg + ' ' + key + ' (' + statusspan + ')]</span>';
     },
+
+    status_withcolour: (statusobj)=>{
+        return '<span style="color:' + resolveColour(statusobj.statusCategory.colorName) + '">' + statusobj.name + '</span>';
+    },
+
     versions: (arr)=>{
         if(arr.length > 0) {
             var tmp = '';
@@ -274,4 +280,23 @@ function getSprintValue(str, jkey) {
             return strarr[i].slice(keystr.length);
         }
     }
+}
+
+function resolveColour(c) {
+    var colour = "";
+    switch(c) {
+        case "green":
+            colour = "green";
+            break;
+        case "yellow":
+            colour = "orange";
+            break;
+        case "blue-gray":
+            colour = "DarkSlateGray";
+            break;
+        default:
+            colour = "black";
+    }
+
+    return colour;
 }
