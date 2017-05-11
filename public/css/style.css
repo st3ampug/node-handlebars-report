@@ -141,7 +141,7 @@ background-color: darkorange;
     width: 45%;
 }
 
-.td-key, .td-sprint, .td-version, .td-created, .td-updated {
+.td-key, .td-sprint, .td-version, .td-created, .td-datetime {
     white-space: nowrap;
 }
 

@@ -297,7 +297,7 @@ var SharedFunctions = {
             });
         },
 
-        initDataTableDateFilter: function(startid, endid) {
+        initDataTableDateFilter: function(startid, endid, columnnum) {
             $.fn.dataTable.ext.search.push(
                 function( settings, data, dataIndex ) {
                     var min, max;
@@ -311,7 +311,7 @@ var SharedFunctions = {
                     else
                         max = NaN;
                         
-                    var date = SharedFunctions.convertToEpochFromString(data[3]) || 0; // use data for the date column
+                    var date = SharedFunctions.convertToEpochFromString(data[columnnum]) || 0; // use data for the date column
             
                     if ( ( isNaN( min ) && isNaN( max ) ) ||
                         ( isNaN( min ) && date <= max ) ||

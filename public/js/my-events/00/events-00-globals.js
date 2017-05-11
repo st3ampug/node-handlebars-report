@@ -50,14 +50,18 @@ const GLOBALS = {
             tplanCollapse: "collapse-icon-tplan",
             tplanExpand: "expand-icon-tplan",
             tplanExpanded: "filter-expanded-tplan",
-            tplanCollapsed: "filter-collapsed-tplan"
+            tplanCollapsed: "filter-collapsed-tplan",
+            tplanStartDate: "tplan-datefilter-start",
+            tplanEndDate: "tplan-datefilter-end"
         },
 
         TRun: {
             trunCollapse: "collapse-icon-trun",
             trunExpand: "expand-icon-trun",
             trunExpanded: "filter-expanded-trun",
-            trunCollapsed: "filter-collapsed-trun"
+            trunCollapsed: "filter-collapsed-trun",
+            trunStartDate: "trun-datefilter-start",
+            trunEndDate: "trun-datefilter-end"
         },
 
         storyVersion: "story-versionfilter",

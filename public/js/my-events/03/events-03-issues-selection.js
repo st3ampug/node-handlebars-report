@@ -99,6 +99,10 @@ window.addEventListener('load', function(){
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Task.taskEndDate);
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugStartDate);
     SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.Bug.bugEndDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.TPlan.tplanEndDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.TRun.trunStartDate);
+    SharedFunctions.Init.initDatePicker(GLOBALS.filterIDs.TRun.trunEndDate);
 
     SharedFunctions.Display.elementDisplayNone(BUTTONOVERLAYID);
     SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
@@ -199,7 +203,7 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate, 3);
             $("#" + GLOBALS.tableIDs.storiesTableID).DataTable().draw();
         }
     });
@@ -208,7 +212,7 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate, 3);
             $("#" + GLOBALS.tableIDs.storiesTableID).DataTable().draw();
         }
     });
@@ -217,7 +221,7 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate, 3);
             $("#" + GLOBALS.tableIDs.tasksTableID).DataTable().draw();
         }
     });
@@ -226,7 +230,7 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate, 3);
             $("#" + GLOBALS.tableIDs.tasksTableID).DataTable().draw();
         }
     });
@@ -235,7 +239,7 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate, 3);
             $("#" + GLOBALS.tableIDs.bugsTableID).DataTable().draw();
         }
     });
@@ -244,8 +248,44 @@ window.addEventListener('load', function(){
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate);
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate, 3);
             $("#" + GLOBALS.tableIDs.bugsTableID).DataTable().draw();
+        }
+    });
+    $("#" + GLOBALS.filterIDs.TPlan.tplanStartDate).change(function(ev) {
+        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate), 2;
+            $("#" + GLOBALS.tableIDs.testplansTableID).DataTable().draw();
+        }
+    });
+    $("#" + GLOBALS.filterIDs.TPlan.tplanEndDate).change(function(ev) {
+        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate, 2);
+            $("#" + GLOBALS.tableIDs.testplansTableID).DataTable().draw();
+        }
+    });
+    $("#" + GLOBALS.filterIDs.TRun.trunStartDate).change(function(ev) {
+        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate), 2;
+            $("#" + GLOBALS.tableIDs.testrunsTableID).DataTable().draw();
+        }
+    });
+    $("#" + GLOBALS.filterIDs.TRun.trunEndDate).change(function(ev) {
+        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
+            $(this).val(GLOBALS.EMPTY);
+            SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
+        } else {
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate, 2);
+            $("#" + GLOBALS.tableIDs.testrunsTableID).DataTable().draw();
         }
     });
 

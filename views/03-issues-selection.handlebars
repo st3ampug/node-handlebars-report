@@ -160,7 +160,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td class="td-updated">{{date this.fields.updated}}</td>
+                        <td class="td-datetime">{{date this.fields.updated}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
@@ -288,7 +288,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td class="td-updated">{{date this.fields.updated}}</td>
+                        <td class="td-datetime">{{date this.fields.updated}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
@@ -416,7 +416,7 @@
                         <td><img src="{{this.fields.issuetype.iconUrl}}" style="margin-bottom:-4px" /></td>
                         <td class="td-key">{{this.key}}</td>
                         <td>{{this.fields.summary}}</td>
-                        <td class="td-updated">{{date this.fields.updated}}</td>
+                        <td class="td-datetime">{{date this.fields.updated}}</td>
                         <td class="td-sprint">{{{resolve_sprint this.fields.customfield_10019 ../projectkey.key}}}</td>
                         <td class="td-version">{{{versions this.fields.fixVersions}}}</td>
                         <td>{{this.fields.status.name}}</td>
@@ -459,7 +459,14 @@
             &nbsp;
         </div>
         <div class="two columns">
-            &nbsp;
+            <div class="filter-title">Start Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Nov 5, 1955" id="tplan-datefilter-start">
+            </div>
+            <div class="filter-title">End Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Oct 2, 2015" id="tplan-datefilter-end">
+            </div>
         </div>
         <div class="two columns">
             &nbsp;
@@ -507,6 +514,7 @@
                     <tr>
                         <th>ID</th>
                         <th>NAME</th>
+                        <th>CREATED DATE</th>
                         <th>PASSED</th>
                         <th>BLOCKED</th>
                         <th>UNTESTED</th>
@@ -520,6 +528,7 @@
                     <tr class="testplanrow" id="{{this.id}}">
                         <td>{{this.id}}</td>
                         <td>{{this.name}}</td>
+                        <td class="td-datetime">{{date_trail this.created_on}}</td>
                         <td>{{this.passed_count}}</td>
                         <td>{{this.blocked_count}}</td>
                         <td>{{this.untested_count}}</td>
@@ -564,7 +573,14 @@
             &nbsp;
         </div>
         <div class="two columns">
-            &nbsp;
+            <div class="filter-title">Start Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Nov 5, 1955" id="trun-datefilter-start">
+            </div>
+            <div class="filter-title">End Date</div>
+            <div class="u-full-width">
+                <input class="u-full-width" type="text" placeholder="Oct 2, 2015" id="trun-datefilter-end">
+            </div>
         </div>
         <div class="two columns">
             &nbsp;
@@ -612,6 +628,7 @@
                     <tr>
                         <th>ID</th>
                         <th>NAME</th>
+                        <th>CREATED DATE</th>
                         <th>PASSED</th>
                         <th>BLOCKED</th>
                         <th>UNTESTED</th>
@@ -625,6 +642,7 @@
                     <tr class="testrunrow" id="{{this.id}}">
                         <td>{{this.id}}</td>
                         <td>{{this.name}}</td>
+                        <td class="td-datetime">{{date_trail this.created_on}}</td>
                         <td>{{this.passed_count}}</td>
                         <td>{{this.blocked_count}}</td>
                         <td>{{this.untested_count}}</td>
