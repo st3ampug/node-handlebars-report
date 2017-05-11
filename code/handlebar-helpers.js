@@ -127,8 +127,8 @@ module.exports = {
 
     // test related helpers
 
-    sumcounts: (passed, blocked, untested, retest, failed)=>{
-        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
+    sumcounts: (passed, blocked, untested, retest, failed, partialpass, nir)=>{
+        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed) + parseInt(partialpass) + parseInt(nir);
         
         return sum;
     },
@@ -143,8 +143,10 @@ module.exports = {
         var blockedc = countPropInArr(plans, "blocked_count") + countPropInArr(runs, "blocked_count");
         var retestc = countPropInArr(plans, "retest_count") + countPropInArr(runs, "retest_count");
         var untestc = countPropInArr(plans, "untested_count") + countPropInArr(runs, "untested_count");
+        var partialpc = countPropInArr(plans, "custom_status1_count") + countPropInArr(runs, "custom_status1_count");;
+        var nirc = countPropInArr(plans, "custom_status2_count") + countPropInArr(runs, "custom_status2_count");;
 
-        return passc + failedc + blockedc + retestc + untestc;
+        return passc + failedc + blockedc + retestc + untestc + partialpc + nirc;
     },
     percent: (plans, runs, prop)=>{
         var passc = countPropInArr(plans, "passed_count") + countPropInArr(runs, "passed_count");
@@ -152,9 +154,11 @@ module.exports = {
         var blockedc = countPropInArr(plans, "blocked_count") + countPropInArr(runs, "blocked_count");
         var retestc = countPropInArr(plans, "retest_count") + countPropInArr(runs, "retest_count");
         var untestc = countPropInArr(plans, "untested_count") + countPropInArr(runs, "untested_count");
+        var partialpc = countPropInArr(plans, "custom_status1_count") + countPropInArr(runs, "custom_status1_count");;
+        var nirc = countPropInArr(plans, "custom_status2_count") + countPropInArr(runs, "custom_status2_count");;
         var myc = countPropInArr(plans, prop) + countPropInArr(runs, prop);
 
-        return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
+        return ((myc / (passc + failedc + blockedc + retestc + untestc + partialpc + nirc)) * 100).toFixed(1);
     },
     individualPercent: (arr, prop)=>{
         console.log(arr[1]);
@@ -167,8 +171,8 @@ module.exports = {
 
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
     },
-    passed_percent: (passed, blocked, untested, retest, failed)=>{
-        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
+    passed_percent: (passed, blocked, untested, retest, failed, partialpass, nir)=>{
+        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed) + parseInt(partialpass) + parseInt(nir);
 
         return ((parseInt(passed) / sum) * 100).toFixed(1);
     },

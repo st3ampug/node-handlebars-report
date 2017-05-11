@@ -516,10 +516,12 @@
                         <th>NAME</th>
                         <th>CREATED DATE</th>
                         <th>PASSED</th>
+                        <th>PARTIAL PASS</th>
                         <th>BLOCKED</th>
                         <th>UNTESTED</th>
                         <th>RETEST</th>
                         <th>FAILED</th>
+                        <th>NOT IN RELEASE</th>
                         <th>RUNS SUM</th>
                     </tr>
                 </thead>
@@ -530,11 +532,13 @@
                         <td>{{this.name}}</td>
                         <td class="td-datetime">{{date_trail this.created_on}}</td>
                         <td>{{this.passed_count}}</td>
+                        <td>{{this.custom_status1_count}}</td>
                         <td>{{this.blocked_count}}</td>
                         <td>{{this.untested_count}}</td>
                         <td>{{this.retest_count}}</td>
                         <td>{{this.failed_count}}</td>
-                        <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count}}</td>
+                        <td>{{this.custom_status2_count}}</td>
+                        <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count custom_status1_count custom_status2_count}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -630,10 +634,12 @@
                         <th>NAME</th>
                         <th>CREATED DATE</th>
                         <th>PASSED</th>
+                        <th>PARTIAL PASS</th>
                         <th>BLOCKED</th>
                         <th>UNTESTED</th>
                         <th>RETEST</th>
                         <th>FAILED</th>
+                        <th>NOT IN RELEASE</th>
                         <th>RUNS SUM</th>
                     </tr>
                 </thead>
@@ -644,11 +650,13 @@
                         <td>{{this.name}}</td>
                         <td class="td-datetime">{{date_trail this.created_on}}</td>
                         <td>{{this.passed_count}}</td>
+                        <td>{{this.custom_status1_count}}</td>
                         <td>{{this.blocked_count}}</td>
                         <td>{{this.untested_count}}</td>
                         <td>{{this.retest_count}}</td>
                         <td>{{this.failed_count}}</td>
-                        <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count}}</td>
+                        <td>{{this.custom_status2_count}}</td>
+                        <td>{{sumcounts passed_count blocked_count untested_count retest_count failed_count custom_status1_count custom_status2_count}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
