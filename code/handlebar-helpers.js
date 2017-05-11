@@ -157,6 +157,7 @@ module.exports = {
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
     },
     individualPercent: (arr, prop)=>{
+        console.log(arr[1]);
         var passc = countPropInArr(arr, "passed_count");
         var failedc = countPropInArr(arr, "failed_count");
         var blockedc = countPropInArr(arr, "blocked_count");
@@ -165,6 +166,11 @@ module.exports = {
         var myc = countPropInArr(arr, prop);
 
         return ((myc / (passc + failedc + blockedc + retestc + untestc)) * 100).toFixed(1);
+    },
+    passed_percent: (passed, blocked, untested, retest, failed)=>{
+        var sum =  parseInt(passed) + parseInt(blocked) + parseInt(untested) + parseInt(retest) + parseInt(failed);
+
+        return ((parseInt(passed) / sum) * 100).toFixed(1);
     },
 
     // general helpers
@@ -187,12 +193,17 @@ module.exports = {
         //var mydate = new Date(d);
         //dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
         return dateFormat(d, "yyyy-mm-dd HH:MM");
-    }, 
+    },
+
     date_trail: (d)=>{
         var dateFormat = require('dateformat');
         var mydate = new Date(d*1000);
         
         return dateFormat(mydate, "yyyy-mm-dd HH:MM");
+    },
+
+    concatTwoArrays: (a, b)=>{
+        return a.concat(b);
     }
 }
 
@@ -206,6 +217,7 @@ function countPropInArr(arr, prop) {
     for(var i = 0; i < arr.length; i++) {
         count += arr[i][prop];
     }
+    
     //console.log("count of " + prop + ": " + count);
     return count;
 }

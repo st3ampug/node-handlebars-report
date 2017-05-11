@@ -124,56 +124,11 @@
 </script>
 
 <!-- +++++++++++++++++++++++++++ ROW 2 +++++++++++++++++++++++++++ -->
-<div class="row">
-    <div class="twelve columns">
-        <div class="my-title">
-            <h2>Stories, Tasks, Bugs</h2>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="one column">
-        &nbsp;
-    </div>
-    <div class="ten columns">
-        <table class="u-full-width">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Total</th>
-                    <th>Done</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Stories</th>
-                    <td>{{context.stories.length}}</td>
-                    <td>{{done context.stories}}</td>
-                </tr>
-                <tr>
-                    <th>Tasks</th>
-                    <td>{{context.tasks.length}}</td>
-                    <td>{{done context.tasks}}</td>
-                </tr>
-                <tr>
-                    <th>Bugs</th>
-                    <td>{{context.bugs.length}}</td>
-                    <td>{{done context.bugs}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="one column">
-        &nbsp;
-    </div>
-</div>
-
-<!-- +++++++++++++++++++++++++++ ROW 3 +++++++++++++++++++++++++++ -->
 
 <div class="row">
     <div class="twelve columns">
         <div class="my-title">
-            <h3>Stories</h3>
+            <h3>List of tests</h3>
         </div>
     </div>
 </div>
@@ -188,48 +143,33 @@
             <thead>
                 <tr>
                     <th>
-                        KEY
+                        TITLE
                     </th>
                     <th>
-                        SUMMARY
+                        CREATED DATE
                     </th>
                     <th>
-                        RELATED
+                        # OF CASES
                     </th>
                     <th>
-                        STATUS
+                        PASSED %
                     </th>
                 </tr>
             </thead>
             <tbody>
-                {{#each context.stories}}
+                {{#each (concatTwoArrays context.testplans context.testruns)}}
                 <tr>
                     <td>
-                        {{{jiralabel fields.issuetype.iconUrl fields.issuetype.name key}}}
-                    </td>
-                    <td class="td-summary">
-                        {{{fields.summary}}}
+                        {{this.name}}
                     </td>
                     <td>
-                        {{#if fields.issuelinks.length}}
-                            {{#each fields.issuelinks}}
-                                {{#if this.outwardIssue}}
-                                    <div>
-                                    {{this.type.outward}} {{{buglabel_summary this.outwardIssue.fields.issuetype.iconUrl this.outwardIssue.key this.outwardIssue.fields.summary this.outwardIssue.fields.status}}}
-                                    </div>
-                                {{/if}}
-                                {{#if this.inwardIssue}}
-                                    <div>
-                                    {{this.type.inward}} {{{buglabel_summary this.inwardIssue.fields.issuetype.iconUrl this.inwardIssue.key this.inwardIssue.fields.summary this.inwardIssue.fields.status}}}
-                                    </div>
-                                {{/if}}
-                            {{/each}}
-                        {{else}}
-                            -
-                        {{/if}}
+                        {{date_trail this.created_on}}
+                    </td>
+                    <td>
+                        {{sumcounts this.passed_count this.blocked_count this.untested_count this.retest_count this.failed_count}}
                     </td>
                     <th>
-                        {{{status_withcolour fields.status}}}
+                        {{passed_percent this.passed_count this.blocked_count this.untested_count this.retest_count this.failed_count}}%
                     </th>
                 </tr>
                 {{/each}}
