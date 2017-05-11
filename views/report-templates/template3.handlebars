@@ -41,6 +41,10 @@
                         <th>Passed</th>
                     </tr>
                     <tr>
+                        <td>{{count context.testplans context.testruns "custom_status1_count"}} ({{percent context.testplans context.testruns "custom_status1_count"}}%)</td>
+                        <th>Partial Pass</th>
+                    </tr>
+                    <tr>
                         <td>{{count context.testplans context.testruns "failed_count"}} ({{percent context.testplans context.testruns "failed_count"}}%)</td>
                         <th>Failed</th>
                     </tr>
@@ -55,6 +59,10 @@
                     <tr>
                         <td>{{count context.testplans context.testruns "untested_count"}} ({{percent context.testplans context.testruns "untested_count"}}%)</td>
                         <th>Untested</th>
+                    </tr>
+                    <tr>
+                        <td>{{count context.testplans context.testruns "custom_status2_count"}} ({{percent context.testplans context.testruns "custom_status2_count"}}%)</td>
+                        <th>Not In Release</th>
                     </tr>
                 </tbody>
             </table>
@@ -86,29 +94,35 @@
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ["Passed", "Blocked", "Untested", "Retest", "Failed"],
+            labels: ["Passed", "Partial Pass", "Blocked", "Untested", "Retest", "Failed", "Not In Release"],
             datasets: [{
                 label: '# of Votes',
                 data: [
                     {{count context.testplans context.testruns "passed_count"}},
+                    {{count context.testplans context.testruns "custom_status1_count"}},
                     {{count context.testplans context.testruns "blocked_count"}},
                     {{count context.testplans context.testruns "untested_count"}},
                     {{count context.testplans context.testruns "retest_count"}},
                     {{count context.testplans context.testruns "failed_count"}},
+                    {{count context.testplans context.testruns "custom_status2_count"}}
                     ],
                 backgroundColor: [
                     'rgba(3, 192, 60, 0.9)',
+                    'rgba(253, 253, 150, 0.7)',
                     'rgba(207, 207, 196, 0.7)',
                     'rgba(179, 158, 181, 0.7)',
-                    'rgba(253, 253, 150, 0.7)',
-                    'rgba(255, 105, 97, 0.9)'
+                    'rgba(199, 199, 95, 0.7)',
+                    'rgba(255, 105, 97, 0.9)',
+                    'rgba(214, 120, 229, 0.7)',
                 ],
                 borderColor: [
                     'rgba(3, 192, 60, 1)',
+                    'rgba(253, 253, 150, 1)',
                     'rgba(207, 207, 196, 1)',
                     'rgba(179, 158, 181, 1)',
-                    'rgba(253, 253, 150, 1)',
-                    'rgba(255, 105, 97, 1)'
+                    'rgba(199, 199, 95, 1)',
+                    'rgba(255, 105, 97, 1)',
+                    'rgba(214, 120, 229, 1)',
                 ],
                 borderWidth: 1
             }]
