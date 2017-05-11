@@ -204,6 +204,13 @@ module.exports = {
 
     concatTwoArrays: (a, b)=>{
         return a.concat(b);
+    },
+
+    current_date: ()=>{
+        var dateFormat = require('dateformat');
+        var d = new Date();
+        
+        return dateFormat(d, "yyyy-mm-dd");
     }
 }
 
