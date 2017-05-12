@@ -125,7 +125,7 @@ body {
   font-size: 1.3em; /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
-  font-family: "OpenSans", sans-serif, "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+  font-family: "Open Sans", "Roboto", sans-serif, "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
   color: #222; }
 
 
