@@ -8,12 +8,12 @@ var DataFiltering = {
     selectFilter: function(arr, tableid, columnnum) {
         // ((^|, )(.*part1.*|.part2.|.part3.))+$
         var regex = "";
-        if(arr.length != 0) {
+        if (arr.length != 0) {
             var first = true;
             regex = "((^|, )(";
 
-            for(var i = 0; i < arr.length; i++) {
-                if(!first) {
+            for (var i = 0; i < arr.length; i++) {
+                if (!first) {
                     regex += "|"
                 }
                 regex += ".*" + arr[i].text + "\\D*";
@@ -24,22 +24,22 @@ var DataFiltering = {
         }
 
         $("#" + tableid).DataTable().column(columnnum).search(
-                regex,  // my regex
-                true,   // regex search ON
-                false   // smart search OFF (conflicts with regex)
-            ).draw();
+            regex, // my regex
+            true, // regex search ON
+            false // smart search OFF (conflicts with regex)
+        ).draw();
     },
 
     filterDate: function(startid, endid, tableid, columnnum) {
         var startdate = $("#" + startid).datepicker("getDate");
         var enddate = $("#" + endid).datepicker("getDate");
 
-        if(startdate != null)
+        if (startdate != null)
             startdate = SharedFunctions.convertToEpochFromDate(startdate);
         else
             startdate = 0;
-        
-        if(enddate != null)
+
+        if (enddate != null)
             enddate = SharedFunctions.convertToEpochFromDate(enddate);
         else
             enddate = 8640000000000000; // http://stackoverflow.com/questions/27093130/how-to-get-the-minimum-and-maximum-date

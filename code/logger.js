@@ -1,26 +1,26 @@
 module.exports = {
     log(type, str) {
         var retstr = currentDate();
-        switch(type) {
-        case "deb":
-            retstr += " [ DEBUG  ]: ";
-            break;
-        case "set":
-            retstr += " [setting ]: ";
-            break;
-        case "err":
-            retstr += " [error   ]: ";
-            break;
-        case "inf":
-        default: 
-            retstr += " [info    ]: ";
-            break;
+        switch (type) {
+            case "deb":
+                retstr += " [ DEBUG  ]: ";
+                break;
+            case "set":
+                retstr += " [setting ]: ";
+                break;
+            case "err":
+                retstr += " [error   ]: ";
+                break;
+            case "inf":
+            default:
+                retstr += " [info    ]: ";
+                break;
         }
 
-        if(typeof str === 'object')
-        retstr += JSON.stringify(str);
+        if (typeof str === 'object')
+            retstr += JSON.stringify(str);
         else
-        retstr += str;
+            retstr += str;
 
         console.log(retstr);
     }

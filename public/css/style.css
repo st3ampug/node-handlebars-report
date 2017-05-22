@@ -1,69 +1,79 @@
 /* Custom
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .errordisplay {
     position: fixed;
     z-index: 100;
     top: 35px;
     left: 37%;
     padding: 15px;
-
     border: 3px solid chocolate;
     border-radius: 3px;
     background-color: white;
     color: chocolate;
     font-size: 1.7rem;
-
     display: none;
 }
 
-#errortable, #errortable td, #errortable tr {
+#errortable,
+#errortable td,
+#errortable tr {
     border: none;
     margin-bottom: 0;
 }
 
 ::selection {
-background-color: darkorange;
+    background-color: darkorange;
 }
 
 .unselectable {
-   -moz-user-select: -moz-none;
-   -khtml-user-select: none;
-   -webkit-user-select: none;
-
-   /*
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
      Introduced in IE 10.
      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
    */
-   -ms-user-select: none;
-   user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-#logo { 
-    display: block; 
-    float: left; 
-    margin: 15px 0; 
+#logo {
+    display: block;
+    float: left;
+    margin: 15px 0;
     padding: 0;
-    width: 10px; /* portion of the image you wish to display */
-    height: 10px; /* portion of the image you wish to display */
-    overflow: hidden; /* hide the rest of the image */
+    width: 10px;
+    /* portion of the image you wish to display */
+    height: 10px;
+    /* portion of the image you wish to display */
+    overflow: hidden;
+    /* hide the rest of the image */
 }
+
 #logo img {
-    width: 16px; 
-    height: 16px; /* you'll see this is 2x the height of the viewed image */
-    padding: 0; 
+    width: 16px;
+    height: 16px;
+    /* you'll see this is 2x the height of the viewed image */
+    padding: 0;
     margin: 0;
 }
-#logo a { 
-    display: block; 
-    float: left; 
-    margin: 0; 
-    padding: 0; 
-}
-#logo a:hover { 
-    margin-top: -50px; /* move up to show the over portion of the image */
+
+#logo a {
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
 }
 
+#logo a:hover {
+    margin-top: -50px;
+    /* move up to show the over portion of the image */
+}
+
+
 /* Has to be more specific than the DataTable's css! */
+
 #jiraprojecttable tr[selected='selected'],
 #testrailprojecttable tr[selected='selected'],
 #storiestable tr[selected='selected'],
@@ -71,7 +81,7 @@ background-color: darkorange;
 #bugstable tr[selected='selected'],
 #testplanstable tr[selected='selected'],
 #testrunstable tr[selected='selected'] {
-  background-color: orange;
+    background-color: orange;
 }
 
 #projectbody-collapsed {
@@ -82,19 +92,22 @@ background-color: darkorange;
     visibility: visible;
 }
 
-#project-expand, #project-collapse, .hidden-msg, .textalign-middle {
+#project-expand,
+#project-collapse,
+.hidden-msg,
+.textalign-middle {
     text-align: center;
     vertical-align: middle;
     line-height: 58px;
 }
 
-.myselection{
+.myselection {
     margin-top: 10px;
     margin-top: 25px;
 }
 
-.mylabel{
-    display:inline-block;
+.mylabel {
+    display: inline-block;
     border: 1px solid darkorange;
     border-radius: 3px;
     margin-right: 2px;
@@ -114,11 +127,13 @@ background-color: darkorange;
     width: 100%;
     height: 100%;
     z-index: 10;
-    background-color: rgba(0,0,0,0.5); /*dim the background*/
+    background-color: rgba(0, 0, 0, 0.5);
+    /*dim the background*/
     visibility: visible;
 }
 
-#chart-table, #chart-passed {
+#chart-table,
+#chart-passed {
     margin-top: 25px;
 }
 
@@ -145,22 +160,29 @@ background-color: darkorange;
     width: 45%;
 }
 
-.td-key, .td-sprint, .td-version, .td-created, .td-datetime {
+.td-key,
+.td-sprint,
+.td-version,
+.td-created,
+.td-datetime {
     white-space: nowrap;
 }
 
 .navbar {
     background-color: #e6e6e6;
     border-radius: 5px;
-    margin-top: 1px; 
+    margin-top: 1px;
     cursor: default;
 }
+
 .navheader {
     color: grey;
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-weight: normal;
-    font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem;
+    font-size: 2.4rem;
+    line-height: 1.35;
+    letter-spacing: -.08rem;
     margin-left: 5px;
 }
 
@@ -169,7 +191,9 @@ background-color: darkorange;
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-weight: 300;
-    font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem;
+    font-size: 2.4rem;
+    line-height: 1.35;
+    letter-spacing: -.08rem;
     margin-left: 50px;
 }
 
@@ -178,7 +202,9 @@ background-color: darkorange;
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-weight: 300;
-    font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem;
+    font-size: 2.4rem;
+    line-height: 1.35;
+    letter-spacing: -.08rem;
     margin-left: 50px;
 }
 
