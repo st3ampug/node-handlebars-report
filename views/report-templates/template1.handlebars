@@ -169,6 +169,9 @@
                         # OF CASES
                     </th>
                     <th>
+                        UNTESTED
+                    </th>
+                    <th>
                         PASSED %
                     </th>
                 </tr>
@@ -179,11 +182,14 @@
                     <td>
                         {{this.name}}
                     </td>
-                    <td>
+                    <td class="td-datetime">
                         {{date_trail this.created_on}}
                     </td>
                     <td>
                         {{sumcounts this.passed_count this.blocked_count this.untested_count this.retest_count this.failed_count this.custom_status1_count this.custom_status2_count}}
+                    </td>
+                    <td>
+                        {{this.untested_count}}
                     </td>
                     <th>
                         {{passed_percent this.passed_count this.blocked_count this.untested_count this.retest_count this.failed_count this.custom_status1_count this.custom_status2_count}}%

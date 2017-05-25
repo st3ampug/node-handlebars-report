@@ -17,6 +17,7 @@ module.exports = {
     resolve_sprint: resolve_sprint,
     sumcounts: sumcounts,
     count: count,
+    countSingleArr: countSingleArr,
     countall: countall,
     percent: percent,
     individualPercent: individualPercent,
@@ -176,6 +177,12 @@ function sumcounts(passed, blocked, untested, retest, failed, partialpass, nir) 
 
 function count(plans, runs, prop) {
     var sumcounts = countPropInArr(plans, prop) + countPropInArr(runs, prop);
+
+    return sumcounts;
+}
+
+function countSingleArr(arr, prop) {
+    var sumcount = countPropInArr(arr, prop);
 
     return sumcounts;
 }
