@@ -67,7 +67,7 @@ var selections = {
 
 // Page load ===========================================================================
 
-window.addEventListener('load', function(){
+window.addEventListener('load', function() {
     console.log("onload");
 
     // INIT =============================================
@@ -108,7 +108,7 @@ window.addEventListener('load', function(){
     SharedFunctions.Display.buttonDisabledSkeleton(SELECTIONSUBMITID);
 
     // element states ===================================
-    
+
 
     // LISTENERS =======================================
 
@@ -122,47 +122,47 @@ window.addEventListener('load', function(){
         SharedFunctions.takeToHrefLink(ev.target.id)
     });
 
-    $("#" + GLOBALS.filterIDs.Story.storyCollapse).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Story.storyCollapse).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Story.storyExpanded);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Story.storyCollapsed);
     });
-      $("#" + GLOBALS.filterIDs.Story.storyExpand).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Story.storyExpand).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Story.storyCollapsed);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Story.storyExpanded);
     });
 
-    $("#" + GLOBALS.filterIDs.Task.taskCollapse).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Task.taskCollapse).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Task.taskExpanded);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Task.taskCollapsed);
     });
-      $("#" + GLOBALS.filterIDs.Task.taskExpand).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Task.taskExpand).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Task.taskCollapsed);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Task.taskExpanded);
     });
 
-    $("#" + GLOBALS.filterIDs.Bug.bugCollapse).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Bug.bugCollapse).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Bug.bugExpanded);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Bug.bugCollapsed);
     });
-      $("#" + GLOBALS.filterIDs.Bug.bugExpand).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.Bug.bugExpand).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.Bug.bugCollapsed);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.Bug.bugExpanded);
     });
 
-    $("#" + GLOBALS.filterIDs.TPlan.tplanCollapse).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.TPlan.tplanCollapse).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TPlan.tplanExpanded);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TPlan.tplanCollapsed);
     });
-      $("#" + GLOBALS.filterIDs.TPlan.tplanExpand).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.TPlan.tplanExpand).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TPlan.tplanCollapsed);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TPlan.tplanExpanded);
     });
 
-    $("#" + GLOBALS.filterIDs.TRun.trunCollapse).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.TRun.trunCollapse).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TRun.trunExpanded);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TRun.trunCollapsed);
     });
-      $("#" + GLOBALS.filterIDs.TRun.trunExpand).click(function (ev) {
+    $("#" + GLOBALS.filterIDs.TRun.trunExpand).click(function(ev) {
         SharedFunctions.Display.jqueryHide(GLOBALS.filterIDs.TRun.trunCollapsed);
         SharedFunctions.Display.jqueryShow(GLOBALS.filterIDs.TRun.trunExpanded);
     });
@@ -199,7 +199,7 @@ window.addEventListener('load', function(){
     });
 
     $("#" + GLOBALS.filterIDs.Story.storyStartDate).change(function(ev) {
-        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
+        if (!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
@@ -208,7 +208,7 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.Story.storyEndDate).change(function(ev) {
-        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
+        if (!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Story.storyStartDate, GLOBALS.filterIDs.Story.storyEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
@@ -217,7 +217,7 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.Task.taskStartDate).change(function(ev) {
-        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate)) {
+        if (!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
@@ -226,7 +226,7 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.Task.taskEndDate).change(function(ev) {
-        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate)) {
+        if (!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Task.taskStartDate, GLOBALS.filterIDs.Task.taskEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
@@ -235,7 +235,7 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.Bug.bugStartDate).change(function(ev) {
-        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate)) {
+        if (!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
@@ -244,7 +244,7 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.Bug.bugEndDate).change(function(ev) {
-        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate)) {
+        if (!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.Bug.bugStartDate, GLOBALS.filterIDs.Bug.bugEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
@@ -253,16 +253,16 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.TPlan.tplanStartDate).change(function(ev) {
-        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
+        if (!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate), 2;
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate, 2);
             $("#" + GLOBALS.tableIDs.testplansTableID).DataTable().draw();
         }
     });
     $("#" + GLOBALS.filterIDs.TPlan.tplanEndDate).change(function(ev) {
-        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
+        if (!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TPlan.tplanStartDate, GLOBALS.filterIDs.TPlan.tplanEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
@@ -271,16 +271,16 @@ window.addEventListener('load', function(){
         }
     });
     $("#" + GLOBALS.filterIDs.TRun.trunStartDate).change(function(ev) {
-        if(!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
+        if (!SharedFunctions.Validation.startDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.startdateEarlier, GLOBALS.ERRORDELAY);
         } else {
-            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate), 2;
+            SharedFunctions.Init.initDataTableDateFilter(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate, 2);
             $("#" + GLOBALS.tableIDs.testrunsTableID).DataTable().draw();
         }
     });
     $("#" + GLOBALS.filterIDs.TRun.trunEndDate).change(function(ev) {
-        if(!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
+        if (!SharedFunctions.Validation.endDateInputFromDatePicker(GLOBALS.filterIDs.TRun.trunStartDate, GLOBALS.filterIDs.TRun.trunEndDate)) {
             $(this).val(GLOBALS.EMPTY);
             SharedFunctions.ErrorDisplay.errorMsg(GLOBALS.errorMessages.enddateLater, GLOBALS.ERRORDELAY);
         } else {
@@ -398,10 +398,10 @@ function setTemplateId() {
 function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
     console.log(ev.currentTarget);
 
-    if(ev.target.tagName.toLowerCase() == "td") {
+    if (ev.target.tagName.toLowerCase() == "td") {
         console.log(ev.target.tagName.toLowerCase() + " >> " + ev.target.parentNode.id);
 
-        if(ev.shiftKey && selectionarray.length > 0) {
+        if (ev.shiftKey && selectionarray.length > 0) {
             shiftModifier(ev, selectionarray, rowclass);
         } else {
             SharedFunctions.Table.highlightMultipleRowsInvert(ev.target.parentNode.id);
@@ -411,7 +411,7 @@ function tableEventListener(ev, selectedcontainerid, selectionarray, rowclass) {
         SharedFunctions.Display.displaySelection(selectedcontainerid, selectionarray);
 
     }
-    if(ev.target.tagName.toLowerCase() == "tr") {
+    if (ev.target.tagName.toLowerCase() == "tr") {
         console.log(ev.target.id);
     }
 
@@ -422,7 +422,7 @@ function selectVisibleRowsAll(rowid, selarr, selectedid, check) {
     SharedFunctions.Table.selectAllVisibleRowsAll(rowid);
     selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
     SharedFunctions.Display.displaySelection(selectedid, selarr);
-    if(check)
+    if (check)
         checkSelectionArrays();
 
     return selarr;
@@ -432,7 +432,7 @@ function selectVisibleRowsInvert(rowid, selarr, selectedid, check) {
     SharedFunctions.Table.selectAllVisibleRowsInvert(rowid);
     selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
     SharedFunctions.Display.displaySelection(selectedid, selarr);
-    if(check)
+    if (check)
         checkSelectionArrays();
 
     return selarr;
@@ -442,7 +442,7 @@ function selectVisibleRowsNone(rowid, selarr, selectedid, check) {
     SharedFunctions.Table.selectAllVisibleRowsNone(rowid);
     selarr = SharedFunctions.Display.pushSelection(selarr, rowid);
     SharedFunctions.Display.displaySelection(selectedid, selarr);
-    if(check)
+    if (check)
         checkSelectionArrays();
 
     return selarr;
@@ -453,20 +453,20 @@ function shiftModifier(ev, selectionarray, rowclass) {
     var lastselectedpassed = false;
     var needtochangeids = [];
 
-    for(var i = 0; i < rows.length; i++) {
-        if(lastselectedpassed) {
+    for (var i = 0; i < rows.length; i++) {
+        if (lastselectedpassed) {
             needtochangeids.push(rows[i].getAttribute("id"));
         }
-        if(rows[i].getAttribute("id") == selectionarray[selectionarray.length-1]) {
+        if (rows[i].getAttribute("id") == selectionarray[selectionarray.length - 1]) {
             lastselectedpassed = true;
         }
-        if(rows[i].getAttribute("id") == ev.target.parentNode.id) {
+        if (rows[i].getAttribute("id") == ev.target.parentNode.id) {
             lastselectedpassed = false;
         }
     }
 
-    if(needtochangeids.length > 0) {
-        for(var j = 0; j < needtochangeids.length; j++) {
+    if (needtochangeids.length > 0) {
+        for (var j = 0; j < needtochangeids.length; j++) {
             SharedFunctions.Table.highlightMultipleRowsInvert(needtochangeids[j]);
             SharedFunctions.Display.amendSelection(selectionarray, needtochangeids[j]);
         }
@@ -496,22 +496,22 @@ function changeCollapseState(tocollapseID, toexpandID) {
 function submitSelectionInfo(nextpage, selections, title) {
     // using href so the user can navigate back
     var loc = window.location;
-    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/"
-                + nextpage + "?" + "templateid=" + selections.templateid + "&title=" + title;
+    var rdyurl = loc.protocol + "//" + loc.hostname + ":" + loc.port + "/" +
+        nextpage + "?" + "templateid=" + selections.templateid + "&title=" + title;
 
-    if(storiestable.getAttribute("rowscount") != "0") {
+    if (storiestable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("&st[]", selections.storyselection);
     }
-    if(taskstable.getAttribute("rowscount") != "0") {
+    if (taskstable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("&ta[]", selections.taskselection);
     }
-    if(bugstable.getAttribute("rowscount") != "0") {
+    if (bugstable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("&bu[]", selections.bugselection);
     }
-    if(testplanstable.getAttribute("rowscount") != "0") {
+    if (testplanstable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("&tp[]", selections.testplanselection);
     }
-    if(testrunstable.getAttribute("rowscount") != "0") {
+    if (testrunstable.getAttribute("rowscount") != "0") {
         rdyurl += concatArrayElements("&tr[]", selections.testrunselection);
     }
 
@@ -525,7 +525,7 @@ function submitSelectionInfo(nextpage, selections, title) {
 
 function concatArrayElements(pref, arr) {
     var ret = "";
-    for(var i = 0; i < arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         ret += pref + "=" + arr[i];
         // if( !(i+1 == arr.length) )
         //     ret += "&";

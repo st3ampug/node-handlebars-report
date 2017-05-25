@@ -1,16 +1,16 @@
 var SharedFunctions = {
     setCookie: function setCookie(cname, cvalue, exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     },
 
-    getCookie: function (cname) {
+    getCookie: function(cname) {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
@@ -22,15 +22,104 @@ var SharedFunctions = {
         return "";
     },
 
-    basicAuth: function (u, p) {
-        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+    basicAuth: function(u, p) {
+        var Base64 = {
+            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+            encode: function(e) {
+                var t = "";
+                var n, r, i, s, o, u, a;
+                var f = 0;
+                e = Base64._utf8_encode(e);
+                while (f < e.length) {
+                    n = e.charCodeAt(f++);
+                    r = e.charCodeAt(f++);
+                    i = e.charCodeAt(f++);
+                    s = n >> 2;
+                    o = (n & 3) << 4 | r >> 4;
+                    u = (r & 15) << 2 | i >> 6;
+                    a = i & 63;
+                    if (isNaN(r)) {
+                        u = a = 64
+                    } else if (isNaN(i)) {
+                        a = 64
+                    }
+                    t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+                }
+                return t
+            },
+            decode: function(e) {
+                var t = "";
+                var n, r, i;
+                var s, o, u, a;
+                var f = 0;
+                e = e.replace(/[^A-Za-z0-9+/=]/g, "");
+                while (f < e.length) {
+                    s = this._keyStr.indexOf(e.charAt(f++));
+                    o = this._keyStr.indexOf(e.charAt(f++));
+                    u = this._keyStr.indexOf(e.charAt(f++));
+                    a = this._keyStr.indexOf(e.charAt(f++));
+                    n = s << 2 | o >> 4;
+                    r = (o & 15) << 4 | u >> 2;
+                    i = (u & 3) << 6 | a;
+                    t = t + String.fromCharCode(n);
+                    if (u != 64) {
+                        t = t + String.fromCharCode(r)
+                    }
+                    if (a != 64) {
+                        t = t + String.fromCharCode(i)
+                    }
+                }
+                t = Base64._utf8_decode(t);
+                return t
+            },
+            _utf8_encode: function(e) {
+                e = e.replace(/rn/g, "n");
+                var t = "";
+                for (var n = 0; n < e.length; n++) {
+                    var r = e.charCodeAt(n);
+                    if (r < 128) {
+                        t += String.fromCharCode(r)
+                    } else if (r > 127 && r < 2048) {
+                        t += String.fromCharCode(r >> 6 | 192);
+                        t += String.fromCharCode(r & 63 | 128)
+                    } else {
+                        t += String.fromCharCode(r >> 12 | 224);
+                        t += String.fromCharCode(r >> 6 & 63 | 128);
+                        t += String.fromCharCode(r & 63 | 128)
+                    }
+                }
+                return t
+            },
+            _utf8_decode: function(e) {
+                var t = "";
+                var n = 0;
+                var r = c1 = c2 = 0;
+                while (n < e.length) {
+                    r = e.charCodeAt(n);
+                    if (r < 128) {
+                        t += String.fromCharCode(r);
+                        n++
+                    } else if (r > 191 && r < 224) {
+                        c2 = e.charCodeAt(n + 1);
+                        t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+                        n += 2
+                    } else {
+                        c2 = e.charCodeAt(n + 1);
+                        c3 = e.charCodeAt(n + 2);
+                        t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+                        n += 3
+                    }
+                }
+                return t
+            }
+        }
         var encodedString = Base64.encode(u + ":" + p);
-        
+
         return encodedString;
     },
 
 
-    getUrlParameter: function (sParam) {
+    getUrlParameter: function(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
             sParameterName,
@@ -45,7 +134,7 @@ var SharedFunctions = {
         }
     },
 
-    openPageInNewTab: function (url) {
+    openPageInNewTab: function(url) {
         var w = window.open(url, '_blank');
         w.focus();
     },
@@ -64,7 +153,7 @@ var SharedFunctions = {
     },
 
     convertToEpochFromDate: function(date) {
-        if(date != null)
+        if (date != null)
             return date.getTime();
         else
             return null;
@@ -78,36 +167,38 @@ var SharedFunctions = {
         },
 
         jqueryShow: function(id) {
-            $("#" + id).show("slide", {direction: "up"}, 350);
+            $("#" + id).show("slide", {
+                direction: "up"
+            }, 350);
         },
 
-        elementVisibilityON: function (id) {
+        elementVisibilityON: function(id) {
             $("#" + id).css('visibility', 'visible');
         },
 
-        elementVisibilityOFF: function (id) {
+        elementVisibilityOFF: function(id) {
             $("#" + id).css('visibility', 'hidden');
         },
 
-        elementDisplayBlock: function (id) {
+        elementDisplayBlock: function(id) {
             $("#" + id).css('display', 'block');
         },
 
-        elementDisplayNone: function (id) {
+        elementDisplayNone: function(id) {
             $("#" + id).css('display', 'none');
         },
 
-        buttonEnabledSkeleton: function (id) {
+        buttonEnabledSkeleton: function(id) {
             $("#" + id).removeAttr('disabled');
             $("#" + id).addClass('button-primary');
         },
 
-        buttonDisabledSkeleton: function (id) {
+        buttonDisabledSkeleton: function(id) {
             $("#" + id).attr('disabled', '');
             $("#" + id).removeClass('button-primary');
         },
 
-        buttonDisabledSkeletonDelay: function (id, delay) {
+        buttonDisabledSkeletonDelay: function(id, delay) {
             $("#" + id).attr('disabled', '');
             $("#" + id).removeClass('button-primary');
 
@@ -117,23 +208,23 @@ var SharedFunctions = {
             }, delay);
         },
 
-        setDisplayForRow: function (rowid) {
+        setDisplayForRow: function(rowid) {
             var row = document.getElementById(rowid);
-            
-            if(row.getAttribute("display") == "n")
+
+            if (row.getAttribute("display") == "n")
                 SharedFunctions.Display.elementDisplayNone(rowid);
             else
                 SharedFunctions.Display.elementDisplayBlock(rowid);
         },
-        
-        changePageTitle: function (title) {
+
+        changePageTitle: function(title) {
             document.title = title;
         },
 
-        displaySelection: function(id, container){
+        displaySelection: function(id, container) {
             //console.log("container in displaySelection: " + container)
             var tmp = "";
-            for(var i = 0; i < container.length; i++) {
+            for (var i = 0; i < container.length; i++) {
                 tmp += "<span class='mylabel'>" + container[i] + "</span>"
             }
 
@@ -142,9 +233,9 @@ var SharedFunctions = {
 
         amendSelection: function(container, selection) {
             var row = document.getElementById(selection);
-            if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
-                for(var i = 0; i < container.length; i++) {
-                    if(container[i] == selection)
+            if (row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED) {
+                for (var i = 0; i < container.length; i++) {
+                    if (container[i] == selection)
                         container.splice(i, 1);
                 }
             } else {
@@ -155,8 +246,8 @@ var SharedFunctions = {
         pushSelection: function(container, rowclass) {
             container = [];
             var rows = document.getElementsByClassName(rowclass);
-            for(var i = 0; i < rows.length; i++) {
-                if(rows[i].getAttribute(GLOBALS.SELECTED) == GLOBALS.SELECTED)
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].getAttribute(GLOBALS.SELECTED) == GLOBALS.SELECTED)
                     container.push(rows[i].getAttribute("id"));
             }
             return container;
@@ -164,29 +255,29 @@ var SharedFunctions = {
     },
 
     Table: {
-        highlightSingleRow: function (id, projectrowsarray) {
+        highlightSingleRow: function(id, projectrowsarray) {
             var row = document.getElementById(id);
 
-            for(var i = 0; i < projectrowsarray.length; i++) {
+            for (var i = 0; i < projectrowsarray.length; i++) {
                 projectrowsarray[i].setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
             }
             row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
         },
 
-        highlightMultipleRowsAll: function (id) {
+        highlightMultipleRowsAll: function(id) {
             var row = document.getElementById(id);
             row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
         },
 
-        highlightMultipleRowsInvert: function (id) {
+        highlightMultipleRowsInvert: function(id) {
             var row = document.getElementById(id);
-            if(row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED)
+            if (row.getAttribute(GLOBALS.SELECTED) != GLOBALS.SELECTED)
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.SELECTED);
             else
                 row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
         },
 
-        highlightMultipleRowsNone: function (id) {
+        highlightMultipleRowsNone: function(id) {
             var row = document.getElementById(id);
             row.setAttribute(GLOBALS.SELECTED, GLOBALS.NOTSELECTED);
         },
@@ -194,7 +285,7 @@ var SharedFunctions = {
         selectAllVisibleRowsAll: function(rowclass) {
             var rows = document.getElementsByClassName(rowclass);
 
-            for(var i = 0; i < rows.length; i++) {
+            for (var i = 0; i < rows.length; i++) {
                 SharedFunctions.Table.highlightMultipleRowsAll(rows[i].getAttribute("id"));
             }
         },
@@ -202,7 +293,7 @@ var SharedFunctions = {
         selectAllVisibleRowsInvert: function(rowclass) {
             var rows = document.getElementsByClassName(rowclass);
 
-            for(var i = 0; i < rows.length; i++) {
+            for (var i = 0; i < rows.length; i++) {
                 SharedFunctions.Table.highlightMultipleRowsInvert(rows[i].getAttribute("id"));
             }
         },
@@ -210,7 +301,7 @@ var SharedFunctions = {
         selectAllVisibleRowsNone: function(rowclass) {
             var rows = document.getElementsByClassName(rowclass);
 
-            for(var i = 0; i < rows.length; i++) {
+            for (var i = 0; i < rows.length; i++) {
                 SharedFunctions.Table.highlightMultipleRowsNone(rows[i].getAttribute("id"));
             }
         },
@@ -223,15 +314,15 @@ var SharedFunctions = {
             $("#" + GLOBALS.navIDs.projectSelection).attr("href", link02);
             $("#" + GLOBALS.navIDs.issueSelection).attr("href", link03);
 
-            if(link01 != "#") {
+            if (link01 != "#") {
                 SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.templateSelection);
                 $("#" + GLOBALS.navIDs.templateSelection).attr("title", link01);
             }
-            if(link02 != "#") {
+            if (link02 != "#") {
                 SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.projectSelection);
                 $("#" + GLOBALS.navIDs.projectSelection).attr("title", link02);
             }
-            if(link03 != "#") {
+            if (link03 != "#") {
                 SharedFunctions.NavBar.changeNavItemState(GLOBALS.navIDs.issueSelection);
                 $("#" + GLOBALS.navIDs.issueSelection).attr("title", link03);
             }
@@ -239,12 +330,11 @@ var SharedFunctions = {
 
         changeNavItemState: function(id) {
             var item = document.getElementById(id);
-            
-            if(item.getAttribute("class") == "navitem") {
+
+            if (item.getAttribute("class") == "navitem") {
                 item.setAttribute("class", "navitem-enabled");
                 item.setAttribute("style", "cursor:pointer");
-            }
-            else {
+            } else {
                 item.setAttribute("class", "navitem");
                 item.removeAttribute("style");
             }
@@ -254,70 +344,73 @@ var SharedFunctions = {
     Init: {
         initDatePicker: function(id) {
             $("#" + id).datepicker();
-            $("#" + id).datepicker( "option", "dateFormat", "yy-mm-dd" );
+            $("#" + id).datepicker("option", "dateFormat", "yy-mm-dd");
         },
 
-        initDataTableDefault: function (id) {
+        initDataTableDefault: function(id) {
             $("#" + id).DataTable();
         },
 
-        initDataTableMinimal: function (id) {
+        initDataTableMinimal: function(id) {
             $("#" + id).DataTable({
                 "searching": false,
-                "paging":   false,
+                "paging": false,
                 "ordering": true,
-                "info":     false
+                "info": false
             });
         },
 
-        initDataTableMedium: function (id) {
+        initDataTableMedium: function(id) {
             $("#" + id).DataTable({
-                "paging":   true,
+                "paging": true,
                 "ordering": true,
-                "info":     false
+                "info": false
             });
         },
 
-        initDataTableMaximum: function (id) {
+        initDataTableMaximum: function(id) {
             $("#" + id).DataTable({
-                "paging":   true,
+                "paging": true,
                 "ordering": true,
-                "info":     true
+                "info": true
             });
         },
 
-        initDataTableCustom: function (id, scrollY) {
+        initDataTableCustom: function(id, scrollY) {
             $("#" + id).DataTable({
                 "searching": true,
-                "paging":   false,
+                "paging": false,
                 "ordering": true,
-                "info":     false,
-                "scrollY":  scrollY,
+                "info": false,
+                "scrollY": scrollY,
                 "sDom": "ltr"
             });
         },
 
         initDataTableDateFilter: function(startid, endid, columnnum) {
             $.fn.dataTable.ext.search.push(
-                function( settings, data, dataIndex ) {
+                function(settings, data, dataIndex) {
                     var min, max;
-                    if(SharedFunctions.convertToEpochFromDate($("#" + startid).datepicker("getDate")) != null)
+                    if (SharedFunctions.convertToEpochFromDate($("#" + startid).datepicker("getDate")) != null)
                         min = SharedFunctions.convertToEpochFromDate($("#" + startid).datepicker("getDate"));
                     else
                         min = NaN;
 
-                    if(SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) != null)
+                    if (SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) != null)
                         max = SharedFunctions.convertToEpochFromDate($("#" + endid).datepicker("getDate")) + 86400000; // added and extra day
                     else
                         max = NaN;
-                        
+
                     var date = SharedFunctions.convertToEpochFromString(data[columnnum]) || 0; // use data for the date column
-            
-                    if ( ( isNaN( min ) && isNaN( max ) ) ||
-                        ( isNaN( min ) && date <= max ) ||
-                        ( min <= date   && isNaN( max ) ) ||
-                        ( min <= date   && date <= max ) )
-                    {
+
+                    // console.log("Comparing start date: " + min);
+                    // console.log("and end date: " + max);
+                    // console.log("with date from column " + columnnum + ": " + date);
+
+                    if ((isNaN(min) && isNaN(max)) ||
+                        (isNaN(min) && date <= max) ||
+                        (min <= date && isNaN(max)) ||
+                        (min <= date && date <= max)) {
                         return true;
                     }
                     return false;
@@ -331,13 +424,13 @@ var SharedFunctions = {
             var startdate = $("#" + startid).datepicker("getDate");
             var enddate = $("#" + endid).datepicker("getDate");
 
-            if(enddate != null) {
-                if(startdate <= enddate) {
+            if (enddate != null) {
+                if (startdate <= enddate) {
                     return true;
                 } else {
                     return false;
                 }
-            } 
+            }
 
             return true;
         },
@@ -346,13 +439,13 @@ var SharedFunctions = {
             var startdate = $("#" + startid).datepicker("getDate");
             var enddate = $("#" + endid).datepicker("getDate");
 
-            if(startdate != null) {
-                if(startdate <= enddate) {
+            if (startdate != null) {
+                if (startdate <= enddate) {
                     return true;
                 } else {
                     return false;
                 }
-            } 
+            }
 
             return true;
         }
